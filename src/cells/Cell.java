@@ -5,9 +5,14 @@ import java.util.List;
 
 public class Cell {
 
+	// the state list may also hold cell type for the information
+	private int id;
 	private List<Double> state;
 	private List<Cell> connections;
 	
+	public int getId() {
+		return id;
+	}
 	public List<Double> getState() {
 		return state;
 	}
@@ -24,7 +29,8 @@ public class Cell {
 		this.connections = connections;
 	}
 	
-	public Cell(List<Double> s) {
+	public Cell(int id, List<Double> s) {
+		this.id = id;
 		state = s;
 		connections = new ArrayList<Cell>();
 	}
