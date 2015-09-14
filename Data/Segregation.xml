@@ -1,0 +1,40 @@
+<Data>
+	<Simulation>
+
+	</Simulation>
+	<Dimension>
+		<X>
+		
+		</X>
+		<Y>
+		
+		</Y>
+	</Dimension>
+	<Parameters>
+
+	</Parameters>
+	<Cell>
+		<ID>
+	
+		</ID>
+		<State>
+		
+		</State>
+	</Cell>
+		<Cell>
+		<ID>
+	
+		</ID>
+		<State>
+		
+		</State>
+	</Cell>
+		<Cell>
+		<ID>
+	
+		</ID>
+		<State>
+		
+		</State>
+	</Cell>
+</Data>
