@@ -19,7 +19,7 @@ public class CellGraph {
 		return all_cells;
 	}
 	
-	private void updateCells(Rule r) {
+	public void updateCells(Rule r) {
 		Map<Integer, List<Double>> current_states = new HashMap<Integer, List<Double>>();
 		for (int id: all_cells.keySet()) {
 			Cell c = all_cells.get(id);
