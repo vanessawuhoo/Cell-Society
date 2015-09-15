@@ -2,10 +2,11 @@ Assumptions and parameters:
 - dimensions: mxn
 - mn initial states
 - Map<Integer, Cell> cells initialized
+- Cell indices are numbered 1->mn
 
-for (int i = 0; i < m; i++) {
-	for (int j = 0; j < n; j++) {
-		int curr_index = in + j;
+for (int i = 1; i <= m; i++) {
+	for (int j = 1; j <= n; j++) {
+		int curr_index = n(i-1) + j;
 		List<Cell> neighbors = new List<Cell>();
 		Cell c = cells.get(curr_index);
 		// handle up
