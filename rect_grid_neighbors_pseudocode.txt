@@ -1,0 +1,37 @@
+Assumptions and parameters:
+- dimensions: mxn
+- mn initial states
+- Map<Integer, Cell> cells initialized
+
+for (int i = 0; i < m; i++) {
+	for (int j = 0; j < n; j++) {
+		int curr_index = in + j;
+		List<Cell> neighbors = new List<Cell>();
+		Cell c = cells.get(curr_index);
+		// handle up
+		int up_index = curr_index - n;
+		if (up_index >= 0) {
+			up_c = cells.get(up_index);
+			neighbors.add(up_c);
+		}
+		// handle right
+		int right_index = cur_index + 1;
+		if (right_index % n != 1) {
+			right_c = cells.get(right_index);
+			neighbors.add(right_c);
+		}
+		// handle down
+		int down_index = cur_index + n;
+		if (down_index <= mn) {
+			down_c = cells.get(down_index);
+			neighbors.add(down_c);
+		}
+		//handle left
+		int left_index = cur_index - 1;
+		if (left_index % n != 0) {
+			left_c = cells.get(left_index);
+			neighbors.add(left_c);
+		}
+		c.addNeighbors(neighbors);
+	}
+}
