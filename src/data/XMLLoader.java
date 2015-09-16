@@ -17,6 +17,9 @@ import org.w3c.dom.DocumentType;
 import org.w3c.dom.Entity;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Element;
+
 
 import java.util.List;
 import java.util.ArrayList;
@@ -32,8 +35,10 @@ public class XMLLoader {
 	private Map<Integer, Map<String, String>> cells;
 	private String fileName;
 	private DocumentBuilderFactory dbf;
-	DocumentBuilder db;
+	private DocumentBuilder db;
 	private List<DataParser> parserList;
+	private Document doc;
+	private NodeList rootList;
 	
 	public XMLLoader(){
 		dbf = DocumentBuilderFactory.newInstance();
@@ -47,13 +52,13 @@ public class XMLLoader {
 	
 	public void setFileName(String name){
 		fileName = name;
+		System.out.println(fileName);
 	}
-	/*
-	 * load xml 
-	 */
+
 	public void load(){
 		try {
-			Document doc = db.parse(new File(fileName));
+			doc = db.parse(new File(fileName));
+			System.out.println("File Loaded");
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,13 +66,27 @@ public class XMLLoader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		doc.getDocumentElement().normalize();
+		this.getRoot();
 	};
 	
-	/*
-	 * grab data
-	 */
-	public void parse(){
-		
+	private void getRoot(){
+		rootList = doc.getElementsByTagName("Data");
 	}
+	
+	public void getRule(){
+		Node tempNode = rootList.item(0);
+		if(tempNode.getNodeType() == Node.ELEMENT_NODE){
+			Element eElement = (Element) tempNode;
+			simulationType = eElement.getElementsByTagName("Simulation").item(0).getTextContent();
+			System.out.println(simulationType);
+		}
+	}
+
+	public Object[] getData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

@@ -42,7 +42,9 @@ public class Hub {
 	 */
 	public Object[] loadSimulation(String xml_file_name) {
 		if (!simulation_running) {
-			Object[] cell_graph_and_rule = xml_loader.getData(xml_file_name);
+			xml_loader.setFileName(xml_file_name);
+			xml_loader.load();
+			Object[] cell_graph_and_rule = xml_loader.getData();
 			if ((Boolean) cell_graph_and_rule[0]) {
 				Map<Integer, Cell> cell_graph_init_map =
 						(Map<Integer, Cell>) cell_graph_and_rule[1];
