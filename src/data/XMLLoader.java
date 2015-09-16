@@ -29,18 +29,22 @@ import java.util.Map;
 import cells.Cell;
 
 
-public class XMLLoader {
+public class XMLLoader extends nodeTraverser{
 	private String simulationType;
+	private int dimensions[] = new int[2];
+
 	private Map<String, String> parameters;
 	private Map<Integer, Map<String, String>> cells;
+	
 	private String fileName;
 	private DocumentBuilderFactory dbf;
 	private DocumentBuilder db;
-	private List<DataParser> parserList;
 	private Document doc;
 	private NodeList rootList;
 	private Node root;
-	private int dimensions[] = new int[2];
+	private DataParser[] parserList = {
+			new SegregationDataParser(),
+	};
 	
 	public XMLLoader(){
 		dbf = DocumentBuilderFactory.newInstance();
@@ -49,13 +53,15 @@ public class XMLLoader {
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 	}
 	
 	public Object[] getData() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 	
 	public void setFileName(String name){
 		fileName = name;
@@ -80,45 +86,27 @@ public class XMLLoader {
 	private void getRoot(){
 		rootList = doc.getChildNodes();
 		root = getNode("Data", rootList);
-
 	}
 	
-	public void getRule(){
+	public String getRule(){
 		simulationType = getNodeValue("Simulation", root.getChildNodes());
-		System.out.println(simulationType);
+		return simulationType;
 	}
 	
-	public void getDimensions(){
+	public int[] getDimensions(){
 		Node dimension = getNode("Dimension", root.getChildNodes());
 		dimensions[0] = Integer.parseInt(getNodeValue("X", dimension.getChildNodes()));
 		dimensions[1] = Integer.parseInt(getNodeValue("y", dimension.getChildNodes()));
-		System.out.println("("+dimensions[0]+", "+dimensions[1]+")");
+		return dimensions;
 	}
 
-	protected Node getNode(String tagName, NodeList nodes) {
-	    for ( int x = 0; x < nodes.getLength(); x++ ) {
-	        Node node = nodes.item(x);
-	        if (node.getNodeName().equalsIgnoreCase(tagName)) {
-	            return node;
-	        }
-	    }
-	 
-	    return null;
+	public void parseDataSpecific(int index){
+		parserList[index].parseData(root, doc);
+		cells = parserList[index].getCellMap();
 	}
-	 
-	protected String getNodeValue(String tagName, NodeList nodes ) {
-	    for ( int x = 0; x < nodes.getLength(); x++ ) {
-	        Node node = nodes.item(x);
-	        if (node.getNodeName().equalsIgnoreCase(tagName)) {
-	            NodeList childNodes = node.getChildNodes();
-	            for (int y = 0; y < childNodes.getLength(); y++ ) {
-	                Node data = childNodes.item(y);
-	                if ( data.getNodeType() == Node.TEXT_NODE )
-	                    return data.getNodeValue();
-	            }
-	        }
-	    }
-	    return "";
+	
+	public Map<Integer, Map<String, String>> getCellMap(){
+		return cells;
 	}
 
 }

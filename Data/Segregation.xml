@@ -9,39 +9,39 @@
 		<Stay>5</Stay>
 	</Parameters>
 	<Cell>
-		<ID>0</ID>
-		<State>0</State>
-	</Cell>
-	<Cell>
 		<ID>1</ID>
 		<State>1</State>
 	</Cell>
 	<Cell>
 		<ID>2</ID>
-		<State>1</State>
+		<State>2</State>
 	</Cell>
 	<Cell>
 		<ID>3</ID>
+		<State>2</State>
+	</Cell>
+	<Cell>
+		<ID>4</ID>
 		<State>0</State>
 	</Cell>
 		<Cell>
-		<ID>4</ID>
-		<State>1</State>
-	</Cell>
-	<Cell>
 		<ID>5</ID>
 		<State>1</State>
 	</Cell>
 	<Cell>
 		<ID>6</ID>
-		<State>0</State>
+		<State>2</State>
 	</Cell>
-		<Cell>
+	<Cell>
 		<ID>7</ID>
-		<State>1</State>
+		<State>2</State>
 	</Cell>
 		<Cell>
 		<ID>8</ID>
-		<State>0</State>
+		<State>1</State>
+	</Cell>
+		<Cell>
+		<ID>9</ID>
+		<State>2</State>
 	</Cell>
 </Data>

@@ -5,7 +5,13 @@ public class DataTester {
 		XMLLoader loader = new XMLLoader();
 		loader.setFileName("Data/Segregation.xml");
 		loader.load();
-		loader.getRule();
-		loader.getDimensions();
+		System.out.println(loader.getRule());
+		loader.parseDataSpecific(0);
+		for(int i: loader.getCellMap().keySet()){
+			System.out.println(i);
+			for(String s: loader.getCellMap().get(i).keySet()){
+				System.out.println("("+ s + ", " + loader.getCellMap().get(i).get(s) + ")");
+			}
+		}
 	}
 }
