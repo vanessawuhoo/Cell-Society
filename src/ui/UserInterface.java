@@ -20,7 +20,7 @@ public class UserInterface {
 	private Scene myUserInterface; 
 	private Group root;
 	//replace with a variable later from XML reader
-	private int GRID_DIMENSIONS = 20;
+	private int GRID_DIMENSIONS = 40;
 	
 	
 	//give the display the title
@@ -68,11 +68,12 @@ public class UserInterface {
 	
 	public void initGrid(Map<Integer, List<Double>>states, double width, double height){
 		FlowPane flowpane = new FlowPane();
-		flowpane.setPrefWrapLength(width/40 * GRID_DIMENSIONS);
-		flowpane.setLayoutX((width-width/40*GRID_DIMENSIONS)/2);
-		flowpane.setLayoutY((height-width/40*GRID_DIMENSIONS)/1.5);
+		flowpane.setPrefWrapLength(width/3*2);
+		flowpane.setLayoutX((width-(width/3*2))/2);
+		flowpane.setLayoutY(height/8);
+	
 		for (int i = 0; i < states.size(); i++) {
-			Rectangle rectangle = new Rectangle(width/40, width/40);
+			Rectangle rectangle = new Rectangle(width/3*2/GRID_DIMENSIONS,width/3*2/GRID_DIMENSIONS);
 			List<Double> hold = states.get(i);
 			if (hold.get(0) == 2.0){
 				rectangle.setFill(Color.PINK);

@@ -5,15 +5,12 @@ import java.util.Map;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 
 public class Display extends Application {
 	
 	private UserInterface myUserInterface;
-	private int COLUMNCONSTRAINT = 10; 
 	
 	//get the screen resolution width of the computer
 	public double getWidth() {
