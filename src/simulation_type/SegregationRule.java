@@ -3,8 +3,7 @@ package simulation_type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import cells.Cell;
+import java.util.Set;
 
 public class SegregationRule extends Rule {
 
@@ -25,7 +24,7 @@ public class SegregationRule extends Rule {
 	 * States: 0=empty, 1=X, 2=O
 	 */
 	@Override
-	public void updateCell(int id, List<Double> cell_state, Map<Integer, Cell> all_cells, List<List<Double>> neighboring_states,
+	public void updateCell(int id, List<Double> cell_state, List<List<Double>> neighboring_states,
 			Map<Integer, List<Double>> current_states, Map<Integer, List<Double>> next_states) {
 		if (next_states.containsKey(id))
 			return;
@@ -54,12 +53,11 @@ public class SegregationRule extends Rule {
 		} else {
 			next_states.put(id, cell_state);
 		}
-
 	}
 	
 	@Override
-	public void fillVoids(Map<Integer, Cell> all_cells, Map<Integer, List<Double>> next_states) {
-		for (int id: all_cells.keySet()) {
+	public void fillVoids(Set<Integer> ids, Map<Integer, List<Double>> next_states) {
+		for (int id: ids) {
 			if (!next_states.containsKey(id)) {
 				ArrayList<Double> zero = new ArrayList<Double>();
 				zero.add((double) 0);
