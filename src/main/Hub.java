@@ -37,6 +37,7 @@ public class Hub {
 		simulation_loaded = false;
 		animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
+		display.startTestSim();
 	}
 	
 	/* Initialize cell_graph and rule
