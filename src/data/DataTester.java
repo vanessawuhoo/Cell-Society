@@ -6,5 +6,6 @@ public class DataTester {
 		loader.setFileName("Data/Segregation.xml");
 		loader.load();
 		loader.getRule();
+		loader.getDimensions();
 	}
 }

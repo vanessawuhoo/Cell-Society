@@ -39,6 +39,8 @@ public class XMLLoader {
 	private List<DataParser> parserList;
 	private Document doc;
 	private NodeList rootList;
+	private Node root;
+	private int dimensions[] = new int[2];
 	
 	public XMLLoader(){
 		dbf = DocumentBuilderFactory.newInstance();
@@ -50,11 +52,16 @@ public class XMLLoader {
 		} 
 	}
 	
+	public Object[] getData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	public void setFileName(String name){
 		fileName = name;
 		System.out.println(fileName);
 	}
-
+	
 	public void load(){
 		try {
 			doc = db.parse(new File(fileName));
@@ -71,22 +78,47 @@ public class XMLLoader {
 	};
 	
 	private void getRoot(){
-		rootList = doc.getElementsByTagName("Data");
+		rootList = doc.getChildNodes();
+		root = getNode("Data", rootList);
+
 	}
 	
 	public void getRule(){
-		Node tempNode = rootList.item(0);
-		if(tempNode.getNodeType() == Node.ELEMENT_NODE){
-			Element eElement = (Element) tempNode;
-			simulationType = eElement.getElementsByTagName("Simulation").item(0).getTextContent();
-			System.out.println(simulationType);
-		}
+		simulationType = getNodeValue("Simulation", root.getChildNodes());
+		System.out.println(simulationType);
+	}
+	
+	public void getDimensions(){
+		Node dimension = getNode("Dimension", root.getChildNodes());
+		dimensions[0] = Integer.parseInt(getNodeValue("X", dimension.getChildNodes()));
+		dimensions[1] = Integer.parseInt(getNodeValue("y", dimension.getChildNodes()));
+		System.out.println("("+dimensions[0]+", "+dimensions[1]+")");
 	}
 
-	public Object[] getData() {
-		// TODO Auto-generated method stub
-		return null;
+	protected Node getNode(String tagName, NodeList nodes) {
+	    for ( int x = 0; x < nodes.getLength(); x++ ) {
+	        Node node = nodes.item(x);
+	        if (node.getNodeName().equalsIgnoreCase(tagName)) {
+	            return node;
+	        }
+	    }
+	 
+	    return null;
 	}
-
+	 
+	protected String getNodeValue(String tagName, NodeList nodes ) {
+	    for ( int x = 0; x < nodes.getLength(); x++ ) {
+	        Node node = nodes.item(x);
+	        if (node.getNodeName().equalsIgnoreCase(tagName)) {
+	            NodeList childNodes = node.getChildNodes();
+	            for (int y = 0; y < childNodes.getLength(); y++ ) {
+	                Node data = childNodes.item(y);
+	                if ( data.getNodeType() == Node.TEXT_NODE )
+	                    return data.getNodeValue();
+	            }
+	        }
+	    }
+	    return "";
+	}
 
 }
