@@ -18,6 +18,7 @@ public class UserInterface {
 	private String TITLE = "Group 1 Cellular Automata Simulator";
 	private Button start, stop, step, slow, fast, load;
 	private Scene myUserInterface; 
+	private FlowPane flowpane;
 	private Group root;
 	//replace with a variable later from XML reader
 	private int GRID_DIMENSIONS = 40;
@@ -53,6 +54,8 @@ public class UserInterface {
 			
 		}
 		initGrid(states, width, height);
+		flowpane = initGrid(states, width, height);
+		root.getChildren().add(flowpane);
 		return myUserInterface;
 	}
 	
@@ -66,22 +69,35 @@ public class UserInterface {
 		
 	}
 	
-	public void initGrid(Map<Integer, List<Double>>states, double width, double height){
+	public FlowPane initGrid(Map<Integer, List<Double>>states, double width, double height){
 		FlowPane flowpane = new FlowPane();
 		flowpane.setPrefWrapLength(width/3*2);
 		flowpane.setLayoutX((width-(width/3*2))/2);
 		flowpane.setLayoutY(height/8);
-	
 		for (int i = 0; i < states.size(); i++) {
 			Rectangle rectangle = new Rectangle(width/3*2/GRID_DIMENSIONS,width/3*2/GRID_DIMENSIONS);
 			List<Double> hold = states.get(i);
 			if (hold.get(0) == 2.0){
-				rectangle.setFill(Color.PINK);
+				rectangle.setFill(Color.BLACK);
 			} else{
-				rectangle.setFill(Color.LIGHTBLUE);
+				rectangle.setFill(Color.WHITE);
 			}
 			flowpane.getChildren().add(rectangle);
 		}
-		root.getChildren().add(flowpane);
+		return flowpane;
+	}
+	
+	public void replaceGrid(Map<Integer, List<Double>> states, double width, double height) {
+		flowpane.getChildren().clear();
+		for (int i = 0; i < states.size(); i++) {
+			Rectangle rectangle = new Rectangle(width/3*2/GRID_DIMENSIONS,width/3*2/GRID_DIMENSIONS);
+			List<Double> hold = states.get(i);
+			if (hold.get(0) == 2.0){
+				rectangle.setFill(Color.RED);
+			} else{
+				rectangle.setFill(Color.GREEN);
+			}
+			flowpane.getChildren().add(rectangle);
+		}
 	}
 }

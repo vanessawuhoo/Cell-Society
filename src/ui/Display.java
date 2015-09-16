@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,10 +31,31 @@ public class Display extends Application {
         Scene myScene = myUserInterface.init(stage, getWidth(), getHeight());
         stage.setScene(myScene);
         stage.show();
+        
+        //tester
+        Map<Integer, List<Double>> states = new HashMap<Integer,List<Double>>();
+		List<Double> list1 = new ArrayList<Double>();
+		List<Double> list2 = new ArrayList<Double>();
+		list1.add(2.0);
+		list2.add(3.0);
+		for (int i = 0; i < 300; i++) {
+			if (i%2==0) {
+				states.put(i, list1);
+			} else {
+				states.put(i, list2);
+			}
+			
+		}
+        
+        update(states);
 	}	
 	
 
 	public void update(Map<Integer, List<Double>> states){
+		myUserInterface.replaceGrid(states, getWidth(), getHeight());
+	}
+	
+	public void startTestSim(){
 		
 	}
 	
