@@ -2,8 +2,7 @@ package simulation_type;
 
 import java.util.List;
 import java.util.Map;
-
-import cells.Cell;
+import java.util.Set;
 
 public abstract class Rule {
 	
@@ -30,7 +29,6 @@ public abstract class Rule {
 	 * Update cell states
 	 */
 	public abstract void updateCell(int id, List<Double> cell_state,
-			Map<Integer, Cell> all_cells,
 			List<List<Double>> neighboring_states, 
 			Map<Integer, List<Double>> current_states,
 			Map<Integer, List<Double>> next_states);
@@ -38,7 +36,7 @@ public abstract class Rule {
 	/*
 	 * Fill in voids
 	 */
-	public abstract void fillVoids(Map<Integer, Cell> all_cells,
+	public abstract void fillVoids(Set<Integer> ids,
 			Map<Integer, List<Double>> next_states);
 	
 	/*

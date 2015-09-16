@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import simulation_type.Rule;
 
@@ -15,8 +16,14 @@ public class CellGraph {
 		all_cells = cells;
 	}
 	
-	public Map<Integer, Cell> getCells() {
-		return all_cells;
+	public Map<Integer, List<Double>> getStates() {
+		Map<Integer, List<Double>> states = new HashMap<Integer, List<Double>>();
+		for (int id: all_cells.keySet()) {
+			Cell c = all_cells.get(id);
+			List<Double> s = c.getState();
+			states.put(id, s);
+		}
+		return states;
 	}
 	
 	public void updateCells(Rule r) {
@@ -35,10 +42,11 @@ public class CellGraph {
 			for (Cell connection: connections) {
 				neighboring_states.add(connection.getState());
 			}
-			r.updateCell(id, c.getState(), all_cells, neighboring_states,
+			r.updateCell(id, c.getState(), neighboring_states,
 					current_states, next_states);
 		}
-		r.fillVoids(all_cells, next_states);
+		Set<Integer> ids = all_cells.keySet();
+		r.fillVoids(ids, next_states);
 		// set updates
 		for (int id: next_states.keySet()) {
 			List<Double> next_state = next_states.get(id);
