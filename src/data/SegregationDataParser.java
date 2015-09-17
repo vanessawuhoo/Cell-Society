@@ -9,6 +9,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.*;
 
+import simulation_type.Rule;
 import simulation_type.SegregationRule;
 
 import java.io.File;
@@ -45,8 +46,7 @@ public class SegregationDataParser extends DataParser {
 		doc = document;
 		this.parseCells();
 		this.setDimensions();
-		// TODO Auto-generated method stub
-		
+		this.initRule();		
 	}
 	
 	private void parseCells(){
@@ -74,6 +74,14 @@ public class SegregationDataParser extends DataParser {
 	
 	public int[] getDimensions(){
 		return dimensions;
+	}
+	
+	private void initRule(){
+		sr = new SegregationRule(dimensions[0], dimensions[1]);
+	}
+	
+	public Rule getRule(){
+		return sr;
 	}
 	
 	public Map<Integer, Map<String, String>> getCellMap(){

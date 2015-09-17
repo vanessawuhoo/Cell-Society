@@ -46,6 +46,7 @@ public class XMLLoader extends nodeTraverser{
 	private Node root;
 	private Map<String, DataParser> ruleMap = new HashMap<String, DataParser>();
 	private int dimensions[];
+	private Rule rule;
 	
 	public XMLLoader(){
 		dbf = DocumentBuilderFactory.newInstance();
@@ -109,6 +110,7 @@ public class XMLLoader extends nodeTraverser{
 		ruleMap.get(index).parseData(root, doc);
 		cellMap = ruleMap.get(index).getCellMap();
 		dimensions = ruleMap.get(index).getDimensions();
+		rule = ruleMap.get(index).getRule();
 	}
 	
 	public Map<Integer, Map<String, String>> getCellMap(){

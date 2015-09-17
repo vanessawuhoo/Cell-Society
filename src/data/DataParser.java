@@ -5,6 +5,8 @@ import java.util.Map;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import simulation_type.Rule;
+
 
 public abstract class DataParser extends nodeTraverser {
 
@@ -14,5 +16,5 @@ public abstract class DataParser extends nodeTraverser {
 
 	public abstract int[] getDimensions();
 
-	
+	public abstract Rule getRule();
 }
