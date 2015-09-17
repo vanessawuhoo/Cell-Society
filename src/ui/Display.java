@@ -6,9 +6,15 @@ import java.util.Map;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import main.Hub;
 
 
 public class Display extends Application {
+	private Hub hub;
+	
+	public void setHub(Hub h) {
+		hub = h;
+	}
 	
 	private UserInterface myUserInterface;
 	

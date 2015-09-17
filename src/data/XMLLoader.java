@@ -1,35 +1,24 @@
 package data;
 
-import javax.xml.parsers.DocumentBuilder; 
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException; 
-import org.xml.sax.SAXParseException;
-import org.xml.sax.helpers.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
-import org.w3c.dom.Entity;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
-
-import java.util.List;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import cells.Cell;
+import main.Hub;
 
 
 public class XMLLoader extends nodeTraverser{
+	private Hub hub;
+	
 	private String simulationType;
 	private int dimensions[] = new int[2];
 
@@ -54,6 +43,10 @@ public class XMLLoader extends nodeTraverser{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void setHub(Hub h) {
+		hub = h;
 	}
 	
 	public Object[] getData() {
