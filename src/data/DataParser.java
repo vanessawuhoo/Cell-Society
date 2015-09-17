@@ -17,4 +17,6 @@ public abstract class DataParser extends nodeTraverser {
 	public abstract int[] getDimensions();
 
 	public abstract Rule getRule();
+	
+	public abstract Map<String, String> getParameter();
 }

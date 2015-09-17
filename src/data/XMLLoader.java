@@ -95,26 +95,16 @@ public class XMLLoader extends nodeTraverser{
 		root = getNode("Data", rootList);
 	}
 	
-	public String getRule(){
+	public String getRuleName(){
 		simulationType = getNodeValue("Simulation", root.getChildNodes());
 		return simulationType;
 	}
 	
-	public void printDimensions(){
-		for(int i = 0; i<dimensions.length; i++){
-			System.out.println(dimensions[i]);
-		}
-	}
-
 	public void parseDataSpecific(String index){
 		ruleMap.get(index).parseData(root, doc);
-		cellMap = ruleMap.get(index).getCellMap();
-		dimensions = ruleMap.get(index).getDimensions();
-		rule = ruleMap.get(index).getRule();
 	}
 	
-	public Map<Integer, Map<String, String>> getCellMap(){
-		return cellMap;
-	}
-
+	public DataParser getParser(String index){
+		return ruleMap.get(index);
+	}	
 }

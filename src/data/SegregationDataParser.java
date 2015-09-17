@@ -44,12 +44,12 @@ public class SegregationDataParser extends DataParser {
 	public void parseData(Node head, Document document) {
 		root = head;
 		doc = document;
-		this.parseCells();
+		this.setCellToMap();
 		this.setDimensions();
-		this.initRule();		
+		this.setRule();		
 	}
 	
-	private void parseCells(){
+	private void setCellToMap(){
 		NodeList cellNodeList = doc.getElementsByTagName("Cell");
 		for(int i = 0; i<cellNodeList.getLength(); i++){
 			Node tempNode = cellNodeList.item(i);
@@ -61,8 +61,12 @@ public class SegregationDataParser extends DataParser {
 		}
 	}
 	
+	private void setCelltoGraph(){
+		
+	}
+	
 	//Segregation has no parameters
-	private void parceParameters(){
+	private void setParameters(){
 		NodeList parameterNodeList = doc.getElementsByTagName("Parameters");
 	}
 	
@@ -72,20 +76,28 @@ public class SegregationDataParser extends DataParser {
 		dimensions[1] = Integer.parseInt(getNodeValue("y", dimension.getChildNodes()));
 	}
 	
+	private void setRule(){
+		sr = new SegregationRule(dimensions[0], dimensions[1]);
+	}
+	
+	@Override
 	public int[] getDimensions(){
 		return dimensions;
 	}
 	
-	private void initRule(){
-		sr = new SegregationRule(dimensions[0], dimensions[1]);
-	}
-	
+	@Override
 	public Rule getRule(){
 		return sr;
 	}
 	
+	@Override
 	public Map<Integer, Map<String, String>> getCellMap(){
 		return cells;
+	}
+
+	@Override
+	public Map<String, String> getParameter() {
+		return parameters;
 	}
 	
 
