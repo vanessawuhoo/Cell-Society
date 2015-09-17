@@ -9,6 +9,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.*;
 
+import cells.Cell;
 import simulation_type.Rule;
 import simulation_type.SegregationRule;
 
@@ -28,7 +29,8 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
 
 public class SegregationDataParser extends DataParser {
-	private Map<Integer, Map<String, String>> cells = new HashMap<Integer, Map<String, String>>();
+	private Map<Integer, Map<String, String>> cellMap = new HashMap<Integer, Map<String, String>>();
+	private Map<Integer, Cell> cellGraph = new HashMap<Integer, Cell>();
 	private Map<String, String> parameters;
 	private Node root;
 	private Document doc;
@@ -57,12 +59,14 @@ public class SegregationDataParser extends DataParser {
 			String stateValue = this.getNodeValue("State", tempNode.getChildNodes());
 			Map<String, String> parameterMap = new HashMap<String, String>();
 			parameterMap.put("State", stateValue);
-			cells.put(id, parameterMap);
+			cellMap.put(id, parameterMap);
 		}
 	}
 	
 	private void setCelltoGraph(){
-		
+		for(int i: cellMap.keySet()){
+	//		Cell tempCell = new Cell(i, cellMap.get(i));
+		}
 	}
 	
 	//Segregation has no parameters
@@ -92,7 +96,7 @@ public class SegregationDataParser extends DataParser {
 	
 	@Override
 	public Map<Integer, Map<String, String>> getCellMap(){
-		return cells;
+		return cellMap;
 	}
 
 	@Override
