@@ -11,5 +11,8 @@ public abstract class DataParser extends nodeTraverser {
 	public abstract void parseData(Node head, Document document);
 	
 	public abstract Map<Integer, Map<String, String>> getCellMap();
+
+	public abstract int[] getDimensions();
+
 	
 }

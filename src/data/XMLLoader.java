@@ -34,10 +34,9 @@ import simulation_type.SegregationRule;
 
 public class XMLLoader extends nodeTraverser{
 	private String simulationType;
-	private int dimensions[] = new int[2];
 
 	private Map<String, String> parameters;
-	private Map<Integer, Map<String, String>> cells;
+	private Map<Integer, Map<String, String>> cellMap;
 	
 	private String fileName;
 	private DocumentBuilderFactory dbf;
@@ -46,6 +45,7 @@ public class XMLLoader extends nodeTraverser{
 	private NodeList rootList;
 	private Node root;
 	private Map<String, DataParser> ruleMap = new HashMap<String, DataParser>();
+	private int dimensions[];
 	
 	public XMLLoader(){
 		dbf = DocumentBuilderFactory.newInstance();
@@ -99,20 +99,20 @@ public class XMLLoader extends nodeTraverser{
 		return simulationType;
 	}
 	
-	public int[] getDimensions(){
-		Node dimension = getNode("Dimension", root.getChildNodes());
-		dimensions[0] = Integer.parseInt(getNodeValue("X", dimension.getChildNodes()));
-		dimensions[1] = Integer.parseInt(getNodeValue("y", dimension.getChildNodes()));
-		return dimensions;
+	public void printDimensions(){
+		for(int i = 0; i<dimensions.length; i++){
+			System.out.println(dimensions[i]);
+		}
 	}
 
 	public void parseDataSpecific(String index){
 		ruleMap.get(index).parseData(root, doc);
-		cells = ruleMap.get(index).getCellMap();
+		cellMap = ruleMap.get(index).getCellMap();
+		dimensions = ruleMap.get(index).getDimensions();
 	}
 	
 	public Map<Integer, Map<String, String>> getCellMap(){
-		return cells;
+		return cellMap;
 	}
 
 }
