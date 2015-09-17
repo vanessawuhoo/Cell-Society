@@ -49,6 +49,7 @@ public class Hub {
 			xml_loader.setFileName(xml_file_name);
 			xml_loader.load();
 			Object[] cell_graph_and_rule = xml_loader.getData();
+			//xml_loader calls graph, rule, 
 			if ((Boolean) cell_graph_and_rule[0]) {
 				Map<Integer, Cell> cell_graph_init_map =
 						(Map<Integer, Cell>) cell_graph_and_rule[1];

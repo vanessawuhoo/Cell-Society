@@ -23,10 +23,13 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import cells.Cell;
+import simulation_type.Rule;
+import simulation_type.SegregationRule;
 
 
 public class XMLLoader extends nodeTraverser{
@@ -42,9 +45,7 @@ public class XMLLoader extends nodeTraverser{
 	private Document doc;
 	private NodeList rootList;
 	private Node root;
-	private DataParser[] parserList = {
-			new SegregationDataParser(),
-	};
+	private Map<String, DataParser> ruleMap = new HashMap<String, DataParser>();
 	
 	public XMLLoader(){
 		dbf = DocumentBuilderFactory.newInstance();
@@ -54,6 +55,11 @@ public class XMLLoader extends nodeTraverser{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.addRulesToMap();
+	}
+	
+	private void addRulesToMap(){
+		ruleMap.put("Segregation", new SegregationDataParser());
 	}
 	
 	public Object[] getData() {
@@ -100,9 +106,9 @@ public class XMLLoader extends nodeTraverser{
 		return dimensions;
 	}
 
-	public void parseDataSpecific(int index){
-		parserList[index].parseData(root, doc);
-		cells = parserList[index].getCellMap();
+	public void parseDataSpecific(String index){
+		ruleMap.get(index).parseData(root, doc);
+		cells = ruleMap.get(index).getCellMap();
 	}
 	
 	public Map<Integer, Map<String, String>> getCellMap(){

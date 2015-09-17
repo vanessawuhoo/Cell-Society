@@ -6,7 +6,7 @@ public class DataTester {
 		loader.setFileName("Data/Segregation.xml");
 		loader.load();
 		System.out.println(loader.getRule());
-		loader.parseDataSpecific(0);
+		loader.parseDataSpecific(loader.getRule());
 		for(int i: loader.getCellMap().keySet()){
 			System.out.println(i);
 			for(String s: loader.getCellMap().get(i).keySet()){
