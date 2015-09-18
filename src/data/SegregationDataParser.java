@@ -41,6 +41,7 @@ public class SegregationDataParser extends DataParser {
 	private Document doc;
 	private SegregationRule sr;
 	private int dimensions[];
+	private AllData allData;
 
 	
 	public SegregationDataParser(){
@@ -57,6 +58,7 @@ public class SegregationDataParser extends DataParser {
 		this.setRule();		
 		this.setCelltoGraph();
 		this.setColor();
+		this.setAllData();
 	}
 	
 	private void setCellToMap(){
@@ -142,6 +144,11 @@ public class SegregationDataParser extends DataParser {
 		}
 	}
 	
+	@Override
+	public void setAllData() {
+		allData = new AllData(sr, cellGraph);		
+	}
+	
 	//Segregation has no parameters
 	private void setParameters(){
 		NodeList parameterNodeList = doc.getElementsByTagName("Parameters");
@@ -192,6 +199,12 @@ public class SegregationDataParser extends DataParser {
 		cellGraph = null;
 		cellMapGraph = null;
 		
+	}
+
+
+	@Override
+	public AllData getAllData() {
+		return allData;
 	}
 	
 

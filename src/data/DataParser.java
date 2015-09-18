@@ -22,7 +22,9 @@ public abstract class DataParser extends nodeTraverser {
 	
 	public abstract Map<Double, String> getColor();
 	
-	public abstract allData getAllData();
+	public abstract void setAllData();
+	
+	public abstract AllData getAllData();
 	
 	public abstract void reset();
 }
