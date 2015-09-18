@@ -11,6 +11,7 @@ public class Main {
 		XMLLoader xml_loader = new XMLLoader();
 		Display display = new Display();
 		Hub hub = new Hub(xml_loader, display);
-
+		xml_loader.setHub(hub);
+		display.setHub(hub);
 	}
 }
