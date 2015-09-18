@@ -31,6 +31,7 @@ public class UserInterface {
 		return TITLE;
 	}
 	
+	//set internal representation of hub so hub methods can be called
 	public void setHub(Hub h){
 		hub = h;
 	}
@@ -58,9 +59,10 @@ public class UserInterface {
 		Map<String, Double> states = ui.getState();
 		q = ui.getQueueState();
 		initGrid(states);
-		
 		return myUserInterface;
 	}
+	
+	//helper method to initialize buttons with proper x and y placement 
 	private Button buttonInit(String text, double x, double y){
 		Button myButton = new Button(text);
 		myButton.setLayoutX(x);
@@ -69,7 +71,7 @@ public class UserInterface {
 		return myButton;
 	}
 
-	
+	//button event handler method
 	private void initButtonEvents(){
 		fast.setOnMouseClicked(e -> hub.increaseRate());
 		slow.setOnMouseClicked(e->hub.decreaseRate());
@@ -79,6 +81,7 @@ public class UserInterface {
 		load.setOnMouseClicked(e->hub.loadTestSim());
 	}
 	
+	//initializes the grid upon loading an XML
 	private void initGrid(Map<String, Double> states){
 		myArray = new Shape[myParameters[0]][myParameters[1]];
 		int row = 0;
@@ -124,11 +127,13 @@ public class UserInterface {
 //		}
 	}
 	
+	//calculates the placement of the grid depending on the size of the blocks
 	private void calcOffset(){
 		offsetX= (screenWidth - myParameters[0] * blockLength)/2;
 		offsetY =(screenHeight - myParameters[1] * blockLength)/2;
 	}
 	
+	//calculates the optimal side length based on scaling vertically or horizontally
 	private void calcSideLength(){
 		double maxGridWidth = screenWidth *2/3;
 		double maxGridHeight = screenHeight*2/3;
@@ -141,13 +146,13 @@ public class UserInterface {
 		}
 	}
 	
+	//helper method to set locations of squares in the grid
 	private void setLocation(Rectangle square, int row, int col){
 		square.setLayoutX(offsetX + row*blockLength);
 		square.setLayoutY(offsetY + col*blockLength);
 	}
 	
-	//helper method to clean up initializing and placing buttons
-
+	//method to run updates on the grid square states
 	public void replaceGrid(Map<String, Double> states) {
 		//QUEUE IMPLEMENTATION
 		q = ui.getQueueState();

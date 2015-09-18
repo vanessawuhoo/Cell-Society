@@ -40,13 +40,13 @@ public class Display extends Application {
         stage.setTitle(myUserInterface.getTitle());
         Scene myScene = myUserInterface.init(stage, getWidth(), getHeight(), gridParameters, "Data");
         stage.setScene(myScene);
-        Map<String, Double> m = new HashMap<String, Double>();
-        myUserInterface.replaceGrid(m);
+//        Map<String, Double> m = new HashMap<String, Double>();
+//        myUserInterface.replaceGrid(m);
         myUserInterface.setHub(hub);
         stage.show();
 	}	
 	
-
+	//method to update the states of squares in the grid
 	public void update(Map<Integer, Map<String, Double>> states){
 //		myUserInterface.replaceGrid(states);
 	}
