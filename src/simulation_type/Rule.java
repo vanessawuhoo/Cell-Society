@@ -28,16 +28,16 @@ public abstract class Rule {
 	/*
 	 * Update cell states
 	 */
-	public abstract void updateCell(int id, List<Double> cell_state,
-			List<List<Double>> neighboring_states, 
-			Map<Integer, List<Double>> current_states,
-			Map<Integer, List<Double>> next_states);
+	public abstract void updateCell(int id, Map<String, Double> cell_state,
+			List<Map<String, Double>> neighboring_states, 
+			Map<Integer, Map<String, Double>> current_states,
+			Map<Integer, Map<String, Double>> next_states);
 	
 	/*
 	 * Fill in voids
 	 */
 	public abstract void fillVoids(Set<Integer> ids,
-			Map<Integer, List<Double>> next_states);
+			Map<Integer, Map<String, Double>> next_states);
 	
 	/*
 	 * Update any general parameters

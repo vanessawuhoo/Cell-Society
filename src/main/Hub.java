@@ -37,7 +37,14 @@ public class Hub {
 		simulation_loaded = false;
 		animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
-		display.startTestSim();
+		//display.startTestSim();
+	}
+	
+	public Hub() {
+		simulation_running = false;
+		simulation_loaded = false;
+		animation = new Timeline();
+		animation.setCycleCount(Timeline.INDEFINITE);
 	}
 	
 	/* Initialize cell_graph and rule
@@ -55,7 +62,7 @@ public class Hub {
 				cell_graph = new CellGraph(cell_graph_init_map);
 				rule = (Rule) cell_graph_and_rule[2];
 				simulation_loaded = true;
-				Map<Integer, List<Double>> states = cell_graph.getStates();
+				Map<Integer, Map<String, Double>> states = cell_graph.getStates();
 				return new SimVars(true, rule, states, "");
 			} else {
 				// Note, errors should be stored in resource file
@@ -85,12 +92,12 @@ public class Hub {
 		cell_graph = new CellGraph(cell_graph_init_map);
 		rule = new SegregationRule(2,2);
 		simulation_loaded = true;
-		Map<Integer, List<Double>> states = cell_graph.getStates();
+		Map<Integer, Map<String, Double>> states = cell_graph.getStates();
 		return new SimVars(true, rule, states, "");
 	}
 	private Cell getTestCell(int id, int segregation_state) {
-		List<Double> s = new ArrayList<Double>();
-		s.add((double) segregation_state);
+		Map<String, Double> s = new HashMap<String, Double>();
+		s.put("state", (double) segregation_state);
 		Cell c = new Cell(id, s);
 		return c;
 	}
@@ -98,7 +105,7 @@ public class Hub {
 		List<Cell> connections = new ArrayList<Cell>(Arrays.asList(conn_array));
 		curr_cell.setConnections(connections);
 	}
-	
+
 	public boolean playSimulation() {
 		if (!simulation_loaded | simulation_running)
 			return false;
@@ -116,17 +123,27 @@ public class Hub {
 		return true;
 	}
 	
-	public boolean simulationStep() {
-		if (!simulation_loaded | simulation_running)
-			return false;
-		step();
-		return true;
+	public void simulationStep() {
+		if (!simulation_loaded | simulation_running) {
+			//display.updateStep(new StepVars(false, null));
+		}
+		Map<Integer, Map<String, Double>> states = step();
+		//display.updateStep(new StepVars(true, states));
 	}
 	
-	private void step() {
+	public Map<Integer, Map<String, Double>> testStep() {
+		return step();
+	}
+	
+	private void animationStep() {
+		Map<Integer, Map<String, Double>> states = step();
+		//display.update(states);
+	}
+	
+	private Map<Integer, Map<String, Double>> step() {
 		cell_graph.updateCells(rule);
-		Map<Integer, List<Double>> states = cell_graph.getStates();
-		display.update(states);
+		Map<Integer, Map<String, Double>> states = cell_graph.getStates();
+		return states;
 	}
 
 	private KeyFrame getStepKeyFrame() {

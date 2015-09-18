@@ -16,29 +16,29 @@ public class CellGraph {
 		all_cells = cells;
 	}
 	
-	public Map<Integer, List<Double>> getStates() {
-		Map<Integer, List<Double>> states = new HashMap<Integer, List<Double>>();
+	public Map<Integer, Map<String, Double>> getStates() {
+		Map<Integer, Map<String, Double>> states = new HashMap<Integer, Map<String, Double>>();
 		for (int id: all_cells.keySet()) {
 			Cell c = all_cells.get(id);
-			List<Double> s = c.getState();
+			Map<String, Double> s = c.getState();
 			states.put(id, s);
 		}
 		return states;
 	}
 	
 	public void updateCells(Rule r) {
-		Map<Integer, List<Double>> current_states = new HashMap<Integer, List<Double>>();
+		Map<Integer, Map<String, Double>> current_states = new HashMap<Integer, Map<String, Double>>();
 		for (int id: all_cells.keySet()) {
 			Cell c = all_cells.get(id);
-			List<Double> s = c.getState();
+			Map<String, Double> s = c.getState();
 			current_states.put(id, s);
 		}
-		Map<Integer, List<Double>> next_states = new HashMap<Integer, List<Double>>();
+		Map<Integer, Map<String, Double>> next_states = new HashMap<Integer, Map<String, Double>>();
 		// calculate updates
 		for (int id: all_cells.keySet()) {
 			Cell c = all_cells.get(id);
 			List<Cell> connections = c.getConnections();
-			List<List<Double>> neighboring_states = new ArrayList<List<Double>>();
+			List<Map<String, Double>> neighboring_states = new ArrayList<Map<String, Double>>();
 			for (Cell connection: connections) {
 				neighboring_states.add(connection.getState());
 			}
@@ -49,7 +49,7 @@ public class CellGraph {
 		r.fillVoids(ids, next_states);
 		// set updates
 		for (int id: next_states.keySet()) {
-			List<Double> next_state = next_states.get(id);
+			Map<String, Double> next_state = next_states.get(id);
 			Cell c = all_cells.get(id);
 			c.setState(next_state);
 		}
