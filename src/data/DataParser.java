@@ -5,7 +5,10 @@ import java.util.Map;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import cells.Cell;
+import cells.CellGraph;
 import simulation_type.Rule;
+import simulation_type.SegregationRule;
 
 
 public abstract class DataParser extends nodeTraverser {
