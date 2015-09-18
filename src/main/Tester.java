@@ -1,11 +1,12 @@
 package main;
 
-import java.util.Map;
+import java.io.IOException;
 
 public class Tester {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Hub hub = new Hub();
-		//Map<Integer, Map<String, Double>> cell_states = hub.
+		TestInterface ti = new TestInterface(hub);
+		ti.makeConsoleInterface();
 	}
 }
