@@ -8,7 +8,7 @@ import java.util.Queue;
 
 public class UITester {
 	public int[] getParameters(){
-		int[] p = {8,5};
+		int[] p = {20,30};
 		return p;
 	}
 	

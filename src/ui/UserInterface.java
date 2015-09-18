@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import main.Hub;
 
 public class UserInterface {
 	private String TITLE = "Group 1 Cellular Automata Simulator";
@@ -23,10 +24,15 @@ public class UserInterface {
 	private Shape[][] myArray;
 	private Group root;
 	private UITester ui;
+	private Hub hub;
 
 	//give the display the title
 	public String getTitle() {
 		return TITLE;
+	}
+	
+	public void setHub(Hub h){
+		hub = h;
 	}
 	
 	//initialize all UI elements
@@ -41,18 +47,36 @@ public class UserInterface {
 		calcOffset();
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + resource);
 		myUserInterface = new Scene(root, width, height, Color.WHITE);
-		buttonInit(load, myResources.getString("LoadButton"), width/7, height/20);
-		buttonInit(start, myResources.getString("StartButton"), width*2/7, height/20);
-		buttonInit(stop, myResources.getString("StopButton"), width*3/7, height/20);
-		buttonInit(step, myResources.getString("StepButton"), width*4/7, height/20);
-		buttonInit(slow, myResources.getString("SlowButton"), width*5/7, height/20);
-		buttonInit(fast, myResources.getString("FastButton"), width*6/7, height/20);
-		
+		load = buttonInit(myResources.getString("LoadButton"), width/7, height/20);
+		start = buttonInit(myResources.getString("StartButton"), width*2/7, height/20);
+		stop = buttonInit(myResources.getString("StopButton"), width*3/7, height/20);
+		step = buttonInit(myResources.getString("StepButton"), width*4/7, height/20);
+		slow = buttonInit(myResources.getString("SlowButton"), width*5/7, height/20);
+		fast = buttonInit(myResources.getString("FastButton"), width*6/7, height/20);
+		initButtonEvents();
 		//test case
 		Map<String, Double> states = ui.getState();
 		q = ui.getQueueState();
 		initGrid(states);
+		
 		return myUserInterface;
+	}
+	private Button buttonInit(String text, double x, double y){
+		Button myButton = new Button(text);
+		myButton.setLayoutX(x);
+		myButton.setLayoutY(y);
+		root.getChildren().add(myButton);
+		return myButton;
+	}
+
+	
+	private void initButtonEvents(){
+		fast.setOnMouseClicked(e -> hub.increaseRate());
+		slow.setOnMouseClicked(e->hub.decreaseRate());
+		stop.setOnMouseClicked(e->hub.pauseSimulation());
+		start.setOnMouseClicked(e->hub.playSimulation());
+		step.setOnMouseClicked(e->hub.simulationStep());
+		load.setOnMouseClicked(e->hub.loadTestSim());
 	}
 	
 	private void initGrid(Map<String, Double> states){
@@ -123,13 +147,6 @@ public class UserInterface {
 	}
 	
 	//helper method to clean up initializing and placing buttons
-	private Button buttonInit(Button myButton, String text, double x, double y){
-		myButton = new Button(text);
-		myButton.setLayoutX(x);
-		myButton.setLayoutY(y);
-		root.getChildren().add(myButton);
-		return myButton;	
-	}
 
 	public void replaceGrid(Map<String, Double> states) {
 		//QUEUE IMPLEMENTATION

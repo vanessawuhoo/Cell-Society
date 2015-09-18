@@ -42,6 +42,7 @@ public class Display extends Application {
         stage.setScene(myScene);
         Map<String, Double> m = new HashMap<String, Double>();
         myUserInterface.replaceGrid(m);
+        myUserInterface.setHub(hub);
         stage.show();
 	}	
 	
