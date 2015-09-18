@@ -95,8 +95,8 @@ public class Hub {
 		return new SimVars(true, rule, states, "", frames_per_second);
 	}
 	private Cell getTestCell(int id, int segregation_state) {
-		List<Double> s = new ArrayList<Double>();
-		s.add((double) segregation_state);
+		Map<String, Double> s = new HashMap<String, Double>();
+		s.put("state", (double) segregation_state);
 		Cell c = new Cell(id, s);
 		return c;
 	}
