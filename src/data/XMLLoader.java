@@ -1,26 +1,17 @@
 package data;
 
-import javax.xml.parsers.DocumentBuilder; 
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException; 
-import org.xml.sax.SAXParseException;
-import org.xml.sax.helpers.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
-import org.w3c.dom.Entity;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Element;
-
-
+import org.xml.sax.SAXException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,9 +21,12 @@ import java.util.Map;
 import cells.Cell;
 import simulation_type.Rule;
 import simulation_type.SegregationRule;
+import main.Hub;
 
 
 public class XMLLoader extends nodeTraverser{
+	private Hub hub;
+	
 	private String simulationType;
 
 	private Map<String, String> parameters;
@@ -46,6 +40,7 @@ public class XMLLoader extends nodeTraverser{
 	private Node root;
 	private Map<String, DataParser> ruleMap = new HashMap<String, DataParser>();
 	private int dimensions[];
+	private Rule rule;
 	
 	public XMLLoader(){
 		dbf = DocumentBuilderFactory.newInstance();
@@ -60,6 +55,10 @@ public class XMLLoader extends nodeTraverser{
 	
 	private void addRulesToMap(){
 		ruleMap.put("Segregation", new SegregationDataParser());
+	}
+	
+	public void setHub(Hub h) {
+		hub = h;
 	}
 	
 	public Object[] getData() {
@@ -94,25 +93,16 @@ public class XMLLoader extends nodeTraverser{
 		root = getNode("Data", rootList);
 	}
 	
-	public String getRule(){
+	public String getRuleName(){
 		simulationType = getNodeValue("Simulation", root.getChildNodes());
 		return simulationType;
 	}
 	
-	public void printDimensions(){
-		for(int i = 0; i<dimensions.length; i++){
-			System.out.println(dimensions[i]);
-		}
-	}
-
 	public void parseDataSpecific(String index){
 		ruleMap.get(index).parseData(root, doc);
-		cellMap = ruleMap.get(index).getCellMap();
-		dimensions = ruleMap.get(index).getDimensions();
 	}
 	
-	public Map<Integer, Map<String, String>> getCellMap(){
-		return cellMap;
-	}
-
+	public DataParser getParser(String index){
+		return ruleMap.get(index);
+	}	
 }

@@ -9,6 +9,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.*;
 
+import cells.Cell;
+import simulation_type.Rule;
 import simulation_type.SegregationRule;
 
 import java.io.File;
@@ -27,7 +29,8 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
 
 public class SegregationDataParser extends DataParser {
-	private Map<Integer, Map<String, String>> cells = new HashMap<Integer, Map<String, String>>();
+	private Map<Integer, Map<String, String>> cellMap = new HashMap<Integer, Map<String, String>>();
+	private Map<Integer, Cell> cellGraph = new HashMap<Integer, Cell>();
 	private Map<String, String> parameters;
 	private Node root;
 	private Document doc;
@@ -43,13 +46,12 @@ public class SegregationDataParser extends DataParser {
 	public void parseData(Node head, Document document) {
 		root = head;
 		doc = document;
-		this.parseCells();
+		this.setCellToMap();
 		this.setDimensions();
-		// TODO Auto-generated method stub
-		
+		this.setRule();		
 	}
 	
-	private void parseCells(){
+	private void setCellToMap(){
 		NodeList cellNodeList = doc.getElementsByTagName("Cell");
 		for(int i = 0; i<cellNodeList.getLength(); i++){
 			Node tempNode = cellNodeList.item(i);
@@ -57,12 +59,18 @@ public class SegregationDataParser extends DataParser {
 			String stateValue = this.getNodeValue("State", tempNode.getChildNodes());
 			Map<String, String> parameterMap = new HashMap<String, String>();
 			parameterMap.put("State", stateValue);
-			cells.put(id, parameterMap);
+			cellMap.put(id, parameterMap);
+		}
+	}
+	
+	private void setCelltoGraph(){
+		for(int i: cellMap.keySet()){
+	//		Cell tempCell = new Cell(i, cellMap.get(i));
 		}
 	}
 	
 	//Segregation has no parameters
-	private void parceParameters(){
+	private void setParameters(){
 		NodeList parameterNodeList = doc.getElementsByTagName("Parameters");
 	}
 	
@@ -72,12 +80,28 @@ public class SegregationDataParser extends DataParser {
 		dimensions[1] = Integer.parseInt(getNodeValue("y", dimension.getChildNodes()));
 	}
 	
+	private void setRule(){
+		sr = new SegregationRule(dimensions[0], dimensions[1]);
+	}
+	
+	@Override
 	public int[] getDimensions(){
 		return dimensions;
 	}
 	
+	@Override
+	public Rule getRule(){
+		return sr;
+	}
+	
+	@Override
 	public Map<Integer, Map<String, String>> getCellMap(){
-		return cells;
+		return cellMap;
+	}
+
+	@Override
+	public Map<String, String> getParameter() {
+		return parameters;
 	}
 	
 

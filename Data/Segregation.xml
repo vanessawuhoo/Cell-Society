@@ -5,8 +5,6 @@
 		<Y>3</Y>
 	</Dimension>
 	<Parameters>
-		<Speed>10</Speed>
-		<Stay>5</Stay>
 	</Parameters>
 	<Cell>
 		<ID>1</ID>
