@@ -71,7 +71,7 @@ public class Hub {
 			cell_graph = data.cellGraph;
 			rule = data.rule;
 			simulation_loaded = true;
-			Map<Integer, Map<String, Double>> states = cell_graph.getStates();
+			Queue<Double> states = cell_graph.getRelevantStates();
 			return new SimVars(true, rule, states, color_map, "", frames_per_second);
 		}
 		return new SimVars(false, null, null, null, "Simulation running",
@@ -84,7 +84,7 @@ public class Hub {
 	public SimVars loadTestSim() {
 		Map<Integer, Cell> cell_graph_init_map = new HashMap<Integer, Cell>();
 		Cell c1 = getTestCell(1, 0); Cell c2 = getTestCell(2, 1); Cell c3 = getTestCell(3, 1);
-		Cell c4 = getTestCell(4, 2); 
+		Cell c4 = getTestCell(4, 2);
 		addConnections(c1, new Cell[] {c2,c3}); addConnections(c2, new Cell[] {c1,c4});
 		addConnections(c3, new Cell[] {c1,c4}); addConnections(c4, new Cell[] {c2,c3});
 		cell_graph_init_map.put(1, c1);
@@ -94,7 +94,7 @@ public class Hub {
 		cell_graph = new CellGraph(cell_graph_init_map);
 		rule = new SegregationRule(2,2);
 		simulation_loaded = true;
-		Map<Integer, Map<String, Double>> states = cell_graph.getStates();
+		Queue<Double> states = cell_graph.getRelevantStates();
 		return new SimVars(true, rule, states, null, "", frames_per_second);
 	}
 	private Cell getTestCell(int id, int segregation_state) {
