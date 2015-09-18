@@ -54,7 +54,7 @@ public abstract class NeighborDataParser extends DataParser{
 	
 	@Override
 	protected void setAllData() {
-		allData = new AllData(sr, cellGraph);		
+		allData = new AllData(sr, cellGraph, parameters);		
 	}
 	
 	@Override

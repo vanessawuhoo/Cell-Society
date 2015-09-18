@@ -6,14 +6,10 @@ public abstract class Shape {
 	private String hex;
 	
 	//sets the color of the shape to a hex value
-	public void setColor(String newColor){
-		this.hex = newColor;
-	}
+	public abstract void setColor(String newColor);
 	
 	
 	//returns the color of the Shape
-	public String getColor(){
-		return hex;
-	}
+	public abstract String getColor();
 	
 }

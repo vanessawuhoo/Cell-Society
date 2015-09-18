@@ -24,7 +24,7 @@ public class SquareShape extends Shape {
 	
 	//get current hex value
 	public String getColor(){
-		return super.getColor();
+		return hex;
 	}
 	
 	//retrieve a javafx shape representation of the object

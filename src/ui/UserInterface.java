@@ -1,7 +1,7 @@
 package ui;
 
 import java.util.Map;
-import java.util.Queue;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
 import javafx.scene.Group;
@@ -11,11 +11,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import main.Hub;
+import data.XMLLoader;
 
 public class UserInterface {
 	private String TITLE = "Group 1 Cellular Automata Simulator";
 	private int[] myParameters;
-	Queue<Double> q;
+	private Map<Double,String> colors;
 	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	private double screenWidth, screenHeight,blockLength,offsetX,offsetY;
 	private Button start, stop, step, slow, fast, load;
@@ -36,16 +37,21 @@ public class UserInterface {
 		hub = h;
 	}
 	
+	public void getColors(){
+		XMLLoader loader = hub.getLoader();
+		colors = loader.getParser(loader.getRuleName()).getColor();
+	}
+	
 	//initialize all UI elements
 	public Scene init(Stage stage, double width, double height, int[] gridParameters, String resource) {
 		root = new Group();
-		ui = new UITester();
-		ui.getQueueState();
+//		ui = new UITester();
+		getColors();
+		calcSideLength();
+		calcOffset();
 		screenWidth = width;
 		screenHeight = height;
 		myParameters = gridParameters;
-		calcSideLength();
-		calcOffset();
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + resource);
 		myUserInterface = new Scene(root, width, height, Color.WHITE);
 		load = buttonInit(myResources.getString("LoadButton"), width/7, height/20);
@@ -56,8 +62,7 @@ public class UserInterface {
 		fast = buttonInit(myResources.getString("FastButton"), width*6/7, height/20);
 		initButtonEvents();
 		//test case
-		Map<String, Double> states = ui.getState();
-		q = ui.getQueueState();
+		Map<Integer, Map<String, Double>> states = ui.getState();
 		initGrid(states);
 		return myUserInterface;
 	}
@@ -82,49 +87,26 @@ public class UserInterface {
 	}
 	
 	//initializes the grid upon loading an XML
-	private void initGrid(Map<String, Double> states){
+	private void initGrid(Map<Integer, Map<String,Double>> states){
 		myArray = new Shape[myParameters[0]][myParameters[1]];
 		int row = 0;
 		int col = 0;
-		while (!q.isEmpty()){
-			double d = q.remove();
-			String color = "";
-			if (d%2==0){
-				color = "#ff0000";
-			} else {
-				color = "#008080";
-			}
+		for (int i = 0; i < states.size(); i++) {
+			//wrong implementation for now, FIX LATER loader.getParser(loader.getRuleName()).getColor().get("INSERT STATE DOUBLE")
+			double currState = states.get(i).get("state");
+			String color = colors.get(currState);
+			//end of wrong implementation
 			SquareShape squareShape = new SquareShape(blockLength, color, myParameters);
 			myArray[row][col] = squareShape;
 			//setlocation- function?
 			root.getChildren().add(squareShape.getObject());
 			setLocation(squareShape.getObject(), row, col);
 			col++;
-			if (col > myParameters[1]-1){
+			if (col > myParameters[0]-1){
 				row++;
 				col=0;
 			}
 		}
-//		for (Entry<String, Double> entry : states.entrySet()) {
-//			//wrong implementation for now, FIX LATER loader.getParser(loader.getRuleName()).getColor().get("INSERT STATE DOUBLE")
-//			String color ="";
-//			if (entry.getValue()==1.0){
-//				color = "#ff0000";
-//			} else {
-//				color = "#008080";
-//			}
-//			//end of wrong implementation
-//			SquareShape squareShape = new SquareShape(blockLength, color, myParameters);
-//			myArray[row][col] = squareShape;
-//			//setlocation- function?
-//			root.getChildren().add(squareShape.getObject());
-//			setLocation(squareShape.getObject(), row, col);
-//			col++;
-//			if (col > myParameters[0]-1){
-//				row++;
-//				col=0;
-//			}
-//		}
 	}
 	
 	//calculates the placement of the grid depending on the size of the blocks
@@ -153,21 +135,18 @@ public class UserInterface {
 	}
 	
 	//method to run updates on the grid square states
-	public void replaceGrid(Map<String, Double> states) {
-		//QUEUE IMPLEMENTATION
-		q = ui.getQueueState();
-		int row = 0; int col = 0;
-		String color = "";
-		while (!q.isEmpty()){
-			double d = q.remove();
-			if (d%2==0){
-				color = "#ffff00";
-			} else {
-				color = "#c72780";
-			}
-			myArray[row][col].setColor(color);
+	public void replaceGrid(Map<Integer,Map<String,Double>> newStates) {
+		int row = 0;
+		int col = 0;
+		for (int i = 0; i < newStates.size(); i++) {
+			//wrong implementation for now, FIX LATER loader.getParser(loader.getRuleName()).getColor().get("INSERT STATE DOUBLE")
+			double currState = newStates.get(i).get("state");
+			String color = colors.get(currState);
+			//end of wrong implementation
+			Shape square = myArray[row][col];
+			square.setColor(color);
 			col++;
-			if (col > myParameters[1]-1){
+			if (col > myParameters[0]-1){
 				row++;
 				col=0;
 			}

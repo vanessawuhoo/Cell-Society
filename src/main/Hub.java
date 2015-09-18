@@ -50,6 +50,10 @@ public class Hub {
 		//display.startTestSim();
 	}
 	
+	public XMLLoader getLoader(){
+		return xml_loader;
+	}
+	
 	/* Initialize cell_graph and rule
 	 * If successful, return true, rule, and initial states of cells
 	 * If unsuccessful, return false and reason for error

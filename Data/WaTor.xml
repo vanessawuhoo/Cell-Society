@@ -8,6 +8,11 @@
 	<Color state="1">#ffff32</Color>
 	<Color state="2">#00cbff</Color>
 	<Parameters>
+	<FishStep>4</FishStep>
+	<SharkStep>4</SharkStep>
+	<SharkMax>10</SharkMax>
+	<SharkEatHealth>1</SharkEatHealth>
+	<SharkEnergyLoss>1</SharkEnergyLoss>
 	</Parameters>
 	<Cell>
 		<ID>1</ID>
