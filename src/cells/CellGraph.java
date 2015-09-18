@@ -49,7 +49,7 @@ public class CellGraph {
 		r.fillVoids(ids, next_states);
 		// set updates
 		for (int id: next_states.keySet()) {
-			List<Double> next_state = next_states.get(id);
+			Map<String, Double> next_state = next_states.get(id);
 			Cell c = all_cells.get(id);
 			c.setState(next_state);
 		}

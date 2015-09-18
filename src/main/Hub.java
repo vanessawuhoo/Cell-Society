@@ -95,8 +95,8 @@ public class Hub {
 		return new SimVars(true, rule, states, "", frames_per_second);
 	}
 	private Cell getTestCell(int id, int segregation_state) {
-		List<Double> s = new ArrayList<Double>();
-		s.add((double) segregation_state);
+		Map<String, Double> s = new HashMap<String, Double>();
+		s.put("state", (double) segregation_state);
 		Cell c = new Cell(id, s);
 		return c;
 	}
@@ -133,7 +133,15 @@ public class Hub {
 		Map<Integer, Map<String, Double>> states = cell_graph.getStates();
 		display.update(states);
 	}
-
+	
+	public Rule getRule(){
+		return rule;
+	}
+	
+	public int[] getParameters(){
+		return xml_loader.getParser(xml_loader.getRuleName()).getDimensions();
+	}
+	
 	private KeyFrame getStepKeyFrame() {
 		double second_delay = 1 / frames_per_second;
 		KeyFrame frame = new KeyFrame(Duration.seconds(second_delay),
