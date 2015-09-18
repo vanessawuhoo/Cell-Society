@@ -33,7 +33,7 @@ public class CellGraph {
 		// new HashMap<Integer, Map<String, Double>>();
 		for (int i = 0; i < all_cells.keySet().size(); i++) {
 			Cell c = all_cells.get(i);
-			Double s = c.getState().get("state");
+			Double s = c.getState().get("State");
 			states.add(s);
 		}
 		return states;
