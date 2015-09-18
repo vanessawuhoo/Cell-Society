@@ -111,7 +111,7 @@ public class Hub {
 		List<Cell> connections = new ArrayList<Cell>(Arrays.asList(conn_array));
 		curr_cell.setConnections(connections);
 	}
-	
+
 	public boolean playSimulation() {
 		if (!simulation_loaded | simulation_running)
 			return false;
@@ -128,17 +128,27 @@ public class Hub {
 		return true;
 	}
 	
-	public boolean simulationStep() {
-		if (!simulation_loaded | simulation_running)
-			return false;
-		step();
-		return true;
+	public void simulationStep() {
+		if (!simulation_loaded | simulation_running) {
+			//display.updateStep(new StepVars(false, null));
+		}
+		Map<Integer, Map<String, Double>> states = step();
+		//display.updateStep(new StepVars(true, states));
 	}
 	
-	private void step() {
+	public Map<Integer, Map<String, Double>> testStep() {
+		return step();
+	}
+	
+	private void animationStep() {
+		Map<Integer, Map<String, Double>> states = step();
+		//display.update(states);
+	}
+	
+	private Map<Integer, Map<String, Double>> step() {
 		cell_graph.updateCells(rule);
 		Map<Integer, Map<String, Double>> states = cell_graph.getStates();
-		display.update(states);
+		return states;
 	}
 	
 	public Rule getRule(){
