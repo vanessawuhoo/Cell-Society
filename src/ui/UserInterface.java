@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -16,8 +17,10 @@ import javafx.stage.Stage;
 
 public class UserInterface {
 	private String TITLE = "Group 1 Cellular Automata Simulator";
+	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	private Button start, stop, step, slow, fast, load;
-	private Scene myUserInterface; 
+	private Scene myUserInterface;
+	private ResourceBundle myResources;
 	private FlowPane flowpane;
 	private Group root;
 	//replace with a variable later from XML reader
@@ -30,8 +33,9 @@ public class UserInterface {
 	}
 	
 	//initialize all UI elements
-	public Scene init(Stage stage, double width, double height) {
+	public Scene init(Stage stage, double width, double height, String resource) {
 		root = new Group();
+		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + resource);
 		myUserInterface = new Scene(root, width, height, Color.WHITE);
 		buttonInit(load, "Load", width/7, height/20);
 		buttonInit(start, "Start", width*2/7, height/20);

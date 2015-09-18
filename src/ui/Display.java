@@ -28,7 +28,7 @@ public class Display extends Application {
 	public void start(Stage stage) {
         myUserInterface = new UserInterface();
         stage.setTitle(myUserInterface.getTitle());
-        Scene myScene = myUserInterface.init(stage, getWidth(), getHeight());
+        Scene myScene = myUserInterface.init(stage, getWidth(), getHeight(), "Data");
         stage.setScene(myScene);
         stage.show();
         
@@ -54,12 +54,10 @@ public class Display extends Application {
 	}
 	
 	public void startTestSim(){
-		
 	}
 	
     public static void main (String[] args) {
         launch(args);
     }
-
 
 }
