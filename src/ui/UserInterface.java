@@ -21,7 +21,7 @@ public class UserInterface {
 	private FlowPane flowpane;
 	private Group root;
 	//replace with a variable later from XML reader
-	private int GRID_DIMENSIONS = 40;
+	private int GRID_DIMENSIONS = 20;
 	
 	
 	//give the display the title

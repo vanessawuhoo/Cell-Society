@@ -43,10 +43,8 @@ public class Display extends Application {
 				states.put(i, list1);
 			} else {
 				states.put(i, list2);
-			}
-			
+			}	
 		}
-        
         update(states);
 	}	
 	
