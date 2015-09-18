@@ -13,6 +13,7 @@ import cells.Cell;
 import cells.CellGraph;
 import simulation_type.Rule;
 import simulation_type.SegregationRule;
+import simulation_type.WaTorRule;
 
 public class WaTorDataParser extends FourNeighborDataParser {
 
@@ -94,6 +95,11 @@ public class WaTorDataParser extends FourNeighborDataParser {
 		parameters.put("SharkEatHealth", Double.parseDouble(getNodeValue("SharkEatHealth", dimension.getChildNodes())));
 		parameters.put("SharkEnergyLoss", Double.parseDouble(getNodeValue("SharkEnergyLoss", dimension.getChildNodes())));
 
+	}
+	
+	@Override
+	protected void setRule(){
+		rule = new WaTorRule(dimensions[0], dimensions[1], parameters.get("FishStep").intValue(), (int) parameters.get("SharkStep").intValue(), (int) parameters.get("SharkMax").intValue());
 	}
 
 }

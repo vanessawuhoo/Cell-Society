@@ -52,4 +52,9 @@ public class SegregationDataParser extends EightNeighborDataParser {
 		parameters = new HashMap<String, Double>();
 	}
 	
+	@Override
+	protected void setRule(){
+		rule = new SegregationRule(dimensions[0], dimensions[1]);
+	}
+		
 }
