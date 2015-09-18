@@ -1,87 +1,176 @@
 package ui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.ResourceBundle;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import main.Hub;
 
 public class UserInterface {
 	private String TITLE = "Group 1 Cellular Automata Simulator";
+	private int[] myParameters;
+	Queue<Double> q;
+	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+	private double screenWidth, screenHeight,blockLength,offsetX,offsetY;
 	private Button start, stop, step, slow, fast, load;
-	private Scene myUserInterface; 
+	private Scene myUserInterface;
+	private ResourceBundle myResources;
+	private Shape[][] myArray;
 	private Group root;
-	//replace with a variable later from XML reader
-	private int GRID_DIMENSIONS = 40;
-	
-	
+	private UITester ui;
+	private Hub hub;
+
 	//give the display the title
 	public String getTitle() {
 		return TITLE;
 	}
 	
+	//set internal representation of hub so hub methods can be called
+	public void setHub(Hub h){
+		hub = h;
+	}
+	
 	//initialize all UI elements
-	public Scene init(Stage stage, double width, double height) {
+	public Scene init(Stage stage, double width, double height, int[] gridParameters, String resource) {
 		root = new Group();
+		ui = new UITester();
+		ui.getQueueState();
+		screenWidth = width;
+		screenHeight = height;
+		myParameters = gridParameters;
+		calcSideLength();
+		calcOffset();
+		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + resource);
 		myUserInterface = new Scene(root, width, height, Color.WHITE);
-		buttonInit(load, "Load", width/7, height/20);
-		buttonInit(start, "Start", width*2/7, height/20);
-		buttonInit(stop, "Stop", width*3/7, height/20);
-		buttonInit(step, "Step", width*4/7, height/20);
-		buttonInit(slow, "Slower", width*5/7, height/20);
-		buttonInit(fast, "Faster", width*6/7, height/20);
+		load = buttonInit(myResources.getString("LoadButton"), width/7, height/20);
+		start = buttonInit(myResources.getString("StartButton"), width*2/7, height/20);
+		stop = buttonInit(myResources.getString("StopButton"), width*3/7, height/20);
+		step = buttonInit(myResources.getString("StepButton"), width*4/7, height/20);
+		slow = buttonInit(myResources.getString("SlowButton"), width*5/7, height/20);
+		fast = buttonInit(myResources.getString("FastButton"), width*6/7, height/20);
+		initButtonEvents();
 		//test case
-		Map<Integer, List<Double>> states = new HashMap<Integer,List<Double>>();
-		List<Double> list1 = new ArrayList<Double>();
-		List<Double> list2 = new ArrayList<Double>();
-		list1.add(2.0);
-		list2.add(3.0);
-		for (int i = 0; i < 300; i++) {
-			if (i%2==0) {
-				states.put(i, list1);
-			} else {
-				states.put(i, list2);
-			}
-			
-		}
-		initGrid(states, width, height);
+		Map<String, Double> states = ui.getState();
+		q = ui.getQueueState();
+		initGrid(states);
 		return myUserInterface;
 	}
 	
-	//helper method to clean up initializing and placing buttons
-	public Button buttonInit(Button myButton, String text, double x, double y){
-		myButton = new Button(text);
+	//helper method to initialize buttons with proper x and y placement 
+	private Button buttonInit(String text, double x, double y){
+		Button myButton = new Button(text);
 		myButton.setLayoutX(x);
 		myButton.setLayoutY(y);
 		root.getChildren().add(myButton);
 		return myButton;
-		
+	}
+
+	//button event handler method
+	private void initButtonEvents(){
+		fast.setOnMouseClicked(e -> hub.increaseRate());
+		slow.setOnMouseClicked(e->hub.decreaseRate());
+		stop.setOnMouseClicked(e->hub.pauseSimulation());
+		start.setOnMouseClicked(e->hub.playSimulation());
+		step.setOnMouseClicked(e->hub.simulationStep());
+		load.setOnMouseClicked(e->hub.loadTestSim());
 	}
 	
-	public void initGrid(Map<Integer, List<Double>>states, double width, double height){
-		FlowPane flowpane = new FlowPane();
-		flowpane.setPrefWrapLength(width/3*2);
-		flowpane.setLayoutX((width-(width/3*2))/2);
-		flowpane.setLayoutY(height/8);
-	
-		for (int i = 0; i < states.size(); i++) {
-			Rectangle rectangle = new Rectangle(width/3*2/GRID_DIMENSIONS,width/3*2/GRID_DIMENSIONS);
-			List<Double> hold = states.get(i);
-			if (hold.get(0) == 2.0){
-				rectangle.setFill(Color.PINK);
-			} else{
-				rectangle.setFill(Color.LIGHTBLUE);
+	//initializes the grid upon loading an XML
+	private void initGrid(Map<String, Double> states){
+		myArray = new Shape[myParameters[0]][myParameters[1]];
+		int row = 0;
+		int col = 0;
+		while (!q.isEmpty()){
+			double d = q.remove();
+			String color = "";
+			if (d%2==0){
+				color = "#ff0000";
+			} else {
+				color = "#008080";
 			}
-			flowpane.getChildren().add(rectangle);
+			SquareShape squareShape = new SquareShape(blockLength, color, myParameters);
+			myArray[row][col] = squareShape;
+			//setlocation- function?
+			root.getChildren().add(squareShape.getObject());
+			setLocation(squareShape.getObject(), row, col);
+			col++;
+			if (col > myParameters[1]-1){
+				row++;
+				col=0;
+			}
 		}
-		root.getChildren().add(flowpane);
+//		for (Entry<String, Double> entry : states.entrySet()) {
+//			//wrong implementation for now, FIX LATER loader.getParser(loader.getRuleName()).getColor().get("INSERT STATE DOUBLE")
+//			String color ="";
+//			if (entry.getValue()==1.0){
+//				color = "#ff0000";
+//			} else {
+//				color = "#008080";
+//			}
+//			//end of wrong implementation
+//			SquareShape squareShape = new SquareShape(blockLength, color, myParameters);
+//			myArray[row][col] = squareShape;
+//			//setlocation- function?
+//			root.getChildren().add(squareShape.getObject());
+//			setLocation(squareShape.getObject(), row, col);
+//			col++;
+//			if (col > myParameters[0]-1){
+//				row++;
+//				col=0;
+//			}
+//		}
+	}
+	
+	//calculates the placement of the grid depending on the size of the blocks
+	private void calcOffset(){
+		offsetX= (screenWidth - myParameters[0] * blockLength)/2;
+		offsetY =(screenHeight - myParameters[1] * blockLength)/2;
+	}
+	
+	//calculates the optimal side length based on scaling vertically or horizontally
+	private void calcSideLength(){
+		double maxGridWidth = screenWidth *2/3;
+		double maxGridHeight = screenHeight*2/3;
+		double blockWidth = maxGridWidth/myParameters[0];
+		double blockHeight = maxGridHeight/myParameters[1];
+		if (blockWidth > blockHeight) {
+			blockLength = blockHeight;
+		} else {
+			blockLength = blockWidth;
+		}
+	}
+	
+	//helper method to set locations of squares in the grid
+	private void setLocation(Rectangle square, int row, int col){
+		square.setLayoutX(offsetX + row*blockLength);
+		square.setLayoutY(offsetY + col*blockLength);
+	}
+	
+	//method to run updates on the grid square states
+	public void replaceGrid(Map<String, Double> states) {
+		//QUEUE IMPLEMENTATION
+		q = ui.getQueueState();
+		int row = 0; int col = 0;
+		String color = "";
+		while (!q.isEmpty()){
+			double d = q.remove();
+			if (d%2==0){
+				color = "#ffff00";
+			} else {
+				color = "#c72780";
+			}
+			myArray[row][col].setColor(color);
+			col++;
+			if (col > myParameters[1]-1){
+				row++;
+				col=0;
+			}
+		}
 	}
 }

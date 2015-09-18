@@ -1,12 +1,10 @@
 package simulation_type;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class SegregationRule extends Rule {
-
 	public SegregationRule(int dim_x, int dim_y) {
 		super.setGrid_type("rectangle");
 		super.setGrid_parameters(new int[] {dim_x, dim_y});
@@ -21,11 +19,14 @@ public class SegregationRule extends Rule {
 	}
 	
 	/*
-	 * States: 0=empty, 1=X, 2=O
+	 * States: 
+	 * "state": 0=empty, 1=X, 2=O
 	 */
 	@Override
-	public void updateCell(int id, Map<String, Double> cell_state, List<Map<String, Double>> neighboring_states,
-			Map<Integer, Map<String, Double>> current_states, Map<Integer, Map<String, Double>> next_states) {
+	public void updateCell(int id, Map<String, Double> cell_state, 
+			List<Map<String, Double>> neighboring_states,
+			Map<Integer, Map<String, Double>> current_states, 
+			Map<Integer, Map<String, Double>> next_states) {
 		if (next_states.containsKey(id))
 			return;
 		double state = cell_state.get("state");

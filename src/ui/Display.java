@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,16 +9,18 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import main.Hub;
-
+import ui.UITester;
+import simulation_type.Rule;
 
 public class Display extends Application {
 	private Hub hub;
+	private UserInterface myUserInterface;
+	private Rule rule;
+	private int[] gridParameters;
 	
 	public void setHub(Hub h) {
 		hub = h;
 	}
-	
-	private UserInterface myUserInterface;
 	
 	//get the screen resolution width of the computer
 	public double getWidth() {
@@ -27,24 +31,33 @@ public class Display extends Application {
 	public double getHeight(){
 		return java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight()*.8;
 	}
-	
+
 	//initialize the UI and set the title
 	public void start(Stage stage) {
         myUserInterface = new UserInterface();
+        UITester ui = new UITester();
+        gridParameters = ui.getParameters();
         stage.setTitle(myUserInterface.getTitle());
-        Scene myScene = myUserInterface.init(stage, getWidth(), getHeight());
+        Scene myScene = myUserInterface.init(stage, getWidth(), getHeight(), gridParameters, "Data");
         stage.setScene(myScene);
+//        Map<String, Double> m = new HashMap<String, Double>();
+//        myUserInterface.replaceGrid(m);
+        myUserInterface.setHub(hub);
         stage.show();
 	}	
 	
-
-	public void update(Map<Integer, List<Double>> states){
-		
+	//method to update the states of squares in the grid
+	public void update(Map<Integer, Map<String, Double>> states){
+//		myUserInterface.replaceGrid(states);
+	}
+	
+	public void startTestSim(){
+//		hub.loadTestSim();
+//		hub.playSimulation();
 	}
 	
     public static void main (String[] args) {
         launch(args);
     }
-
 
 }

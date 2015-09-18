@@ -1,8 +1,8 @@
 <Data>
 	<Simulation>segregation</Simulation>
 	<Dimension>
-		<X>3</X>
-		<Y>3</Y>
+		<X>4</X>
+		<Y>4</Y>
 	</Dimension>
 	<Color state="0">#ffffff</Color>
 	<Color state="1">#0097ff</Color>
@@ -43,6 +43,34 @@
 	</Cell>
 		<Cell>
 		<ID>9</ID>
+		<State>2</State>
+	</Cell>
+	<Cell>
+		<ID>10</ID>
+		<State>2</State>
+	</Cell>
+	<Cell>
+		<ID>11</ID>
+		<State>2</State>
+	</Cell>
+		<Cell>
+		<ID>12</ID>
+		<State>1</State>
+	</Cell>
+	<Cell>
+		<ID>13</ID>
+		<State>2</State>
+	</Cell>
+		<Cell>
+		<ID>14</ID>
+		<State>2</State>
+	</Cell>
+		<Cell>
+		<ID>15</ID>
+		<State>2</State>
+	</Cell>
+		<Cell>
+		<ID>16</ID>
 		<State>2</State>
 	</Cell>
 </Data>

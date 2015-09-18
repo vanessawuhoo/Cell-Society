@@ -12,7 +12,15 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import cells.Cell;
+import simulation_type.Rule;
+import simulation_type.SegregationRule;
 import main.Hub;
 
 
@@ -20,10 +28,9 @@ public class XMLLoader extends nodeTraverser{
 	private Hub hub;
 	
 	private String simulationType;
-	private int dimensions[] = new int[2];
 
 	private Map<String, String> parameters;
-	private Map<Integer, Map<String, String>> cells;
+	private Map<Integer, Map<String, String>> cellMap;
 	
 	private String fileName;
 	private DocumentBuilderFactory dbf;
@@ -31,9 +38,9 @@ public class XMLLoader extends nodeTraverser{
 	private Document doc;
 	private NodeList rootList;
 	private Node root;
-	private DataParser[] parserList = {
-			new SegregationDataParser(),
-	};
+	private Map<String, DataParser> ruleMap = new HashMap<String, DataParser>();
+	private int dimensions[];
+	private Rule rule;
 	
 	public XMLLoader(){
 		dbf = DocumentBuilderFactory.newInstance();
@@ -43,18 +50,19 @@ public class XMLLoader extends nodeTraverser{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.addRulesToMap();
+	}
+	
+	private void addRulesToMap(){
+		ruleMap.put("segregation", new SegregationDataParser());
+		ruleMap.put("fire", new FireDataParser());
+		ruleMap.put("waTor", new WaTorDataParser());
+		ruleMap.put("gameOfLife", new GameOfLifeDataParser());
 	}
 	
 	public void setHub(Hub h) {
 		hub = h;
 	}
-	
-	public Object[] getData() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
 	
 	public void setFileName(String name){
 		fileName = name;
@@ -81,25 +89,25 @@ public class XMLLoader extends nodeTraverser{
 		root = getNode("Data", rootList);
 	}
 	
-	public String getRule(){
+	public String getRuleName(){
 		simulationType = getNodeValue("Simulation", root.getChildNodes());
+		
 		return simulationType;
 	}
 	
-	public int[] getDimensions(){
-		Node dimension = getNode("Dimension", root.getChildNodes());
-		dimensions[0] = Integer.parseInt(getNodeValue("X", dimension.getChildNodes()));
-		dimensions[1] = Integer.parseInt(getNodeValue("y", dimension.getChildNodes()));
-		return dimensions;
-	}
-
-	public void parseDataSpecific(int index){
-		parserList[index].parseData(root, doc);
-		cells = parserList[index].getCellMap();
+	public void parseDataSpecific(String index){
+		ruleMap.get(index).parseData(root, doc);
 	}
 	
-	public Map<Integer, Map<String, String>> getCellMap(){
-		return cells;
+	public DataParser getParser(String index){
+		return ruleMap.get(index);
 	}
-
+	
+	
+	//JUST ADDING THIS SO MY CODE WILL COMPILE :(
+	public Object[] getData(){
+		Object[] o = new Object[2];
+		return o;
+	}
 }
+
