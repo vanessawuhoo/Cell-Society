@@ -30,8 +30,9 @@ public class FireDataParser extends FourNeighborDataParser {
 	
 	@Override
 	protected void setParameters() {
-		// TODO Auto-generated method stub
-		
+		parameters = new HashMap<String, Double>();
+		Node dimension = getNode("Parameters", root.getChildNodes());
+		parameters.put("ProbCatch", Double.parseDouble(getNodeValue("ProbCatch", dimension.getChildNodes())));
 	}
 
 }

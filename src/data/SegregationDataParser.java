@@ -49,7 +49,7 @@ public class SegregationDataParser extends EightNeighborDataParser {
 	
 	@Override
 	protected void setParameters() {
-		
+		parameters = new HashMap<String, Double>();
 	}
 	
 }

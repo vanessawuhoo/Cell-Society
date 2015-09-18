@@ -33,6 +33,7 @@ public abstract class NeighborDataParser extends DataParser{
 		doc = document;
 		this.setCellToMap();
 		this.setDimensions();
+		this.setParameters();
 		this.setRule();		
 		this.setCelltoGraph();
 		this.setColor();

@@ -30,8 +30,7 @@ public class GameOfLifeDataParser extends EightNeighborDataParser {
 	
 	@Override
 	protected void setParameters() {
-		// TODO Auto-generated method stub
-		
+		parameters = new HashMap<String, Double>();
 	}
 	
 }

@@ -8,6 +8,7 @@
 	<Color state="1">#198c19</Color>
 	<Color state="2">#fa8072</Color>
 	<Parameters>
+	<ProbCatch>0.5</ProbCatch>
 	</Parameters>
 	<Cell>
 		<ID>1</ID>
