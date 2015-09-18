@@ -31,14 +31,14 @@ public class SegregationRule extends Rule {
 			Map<Integer, Map<String, Double>> next_states) {
 		if (next_states.containsKey(id))
 			return;
-		double state = cell_state.get("state");
+		double state = cell_state.get("State");
 		if (state == 0)
 			return;
 		int total_states = 0;
 		int opposite_states = 0;
 		for (int neighbor_state_id: neighboring_states.keySet()) {
 			Map<String, Double> neighbor_state = neighboring_states.get(neighbor_state_id);
-			double n_state = neighbor_state.get("state");
+			double n_state = neighbor_state.get("State");
 			if (n_state != 0) {
 				total_states++;
 				if (state != n_state)
@@ -49,14 +49,14 @@ public class SegregationRule extends Rule {
 		if (opposite_ratio > 0.5) {
 			for (int id_curr: current_states.keySet()) {
 				if (next_states.containsKey(id_curr)) {
-					double next_state = next_states.get(id_curr).get("state");
+					double next_state = next_states.get(id_curr).get("State");
 					if (next_state == 0) {
 						next_states.put(id_curr, makeNewState(state));
 						next_states.put(id, makeNewState(0));
 						break;
 					}
 				} else {
-					double curr_state = current_states.get(id_curr).get("state");
+					double curr_state = current_states.get(id_curr).get("State");
 					if (curr_state == 0) {
 						next_states.put(id_curr, makeNewState(state));
 						next_states.put(id, makeNewState(0));
@@ -70,7 +70,7 @@ public class SegregationRule extends Rule {
 	}
 	private Map<String, Double> makeNewState(double s) {
 		Map<String, Double> new_state = new HashMap<String, Double>();
-		new_state.put("state", s);
+		new_state.put("State", s);
 		return new_state;
 	}
 	
@@ -79,7 +79,7 @@ public class SegregationRule extends Rule {
 		for (int id: ids) {
 			if (!next_states.containsKey(id)) {
 				Map<String, Double> zero = new HashMap<String, Double>();
-				zero.put("state", (double) 0);
+				zero.put("State", (double) 0);
 				next_states.put(id, zero);
 			}
 		}

@@ -2,6 +2,7 @@ package main;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Queue;
 
 public class TestInterface {
 
@@ -18,16 +19,15 @@ public class TestInterface {
 		printStates(sv.states);
 		while(true) {
 			System.in.read();
-			Map<Integer, Map<String, Double>> states = test_hub.testStep();
+			Queue<Double> states = test_hub.testStep();
 			printStates(states);
 		}
 	}
 	
-	private void printStates(Map<Integer, Map<String, Double>> states) {
+	private void printStates(Queue<Double> states) {
 		for (int i = 1; i <= m; i++) {
 			for (int j = 1; j <= n; j++) {
-				int index = m*(i - 1) + j;
-				double s = states.get(index).get("state");
+				double s = states.poll();
 				System.out.print(s + "  ");
 			}
 			System.out.println();
