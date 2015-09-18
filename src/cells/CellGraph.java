@@ -41,10 +41,10 @@ public class CellGraph {
 		for (int id: all_cells.keySet()) {
 			Cell c = all_cells.get(id);
 			List<Cell> connections = c.getConnections();
-			List<Map<String, Double>> neighboring_states = 
-					new ArrayList<Map<String, Double>>();
+			Map<Integer, Map<String, Double>> neighboring_states = 
+					new HashMap<Integer, Map<String, Double>>();
 			for (Cell connection: connections) {
-				neighboring_states.add(connection.getState());
+				neighboring_states.put(connection.getId(), connection.getState());
 			}
 			r.updateCell(id, c.getState(), neighboring_states,
 					current_states, next_states);

@@ -24,7 +24,7 @@ public class SegregationRule extends Rule {
 	 */
 	@Override
 	public void updateCell(int id, Map<String, Double> cell_state, 
-			List<Map<String, Double>> neighboring_states,
+			Map<Integer, Map<String, Double>> neighboring_states,
 			Map<Integer, Map<String, Double>> current_states, 
 			Map<Integer, Map<String, Double>> next_states) {
 		if (next_states.containsKey(id))
@@ -34,7 +34,8 @@ public class SegregationRule extends Rule {
 			return;
 		int total_states = 0;
 		int opposite_states = 0;
-		for (Map<String, Double> neighbor_state: neighboring_states) {
+		for (int neighbor_state_id: neighboring_states.keySet()) {
+			Map<String, Double> neighbor_state = neighboring_states.get(neighbor_state_id);
 			total_states++;
 			double n_state = neighbor_state.get("state");
 			if (n_state != 0) {
