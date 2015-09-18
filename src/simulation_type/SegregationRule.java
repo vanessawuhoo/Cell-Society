@@ -44,13 +44,22 @@ public class SegregationRule extends Rule {
 					opposite_states++;
 			}
 		}
-		double opposite_ratio = opposite_states/total_states;
+		double opposite_ratio = (double) opposite_states/ (double) total_states;
 		if (opposite_ratio >= 0.5) {
 			for (int id_curr: current_states.keySet()) {
-				double curr_state = current_states.get(id_curr).get("state");
-				if (curr_state == 0) {
-					if (!next_states.containsKey(id_curr)) {
-						next_states.put(id_curr, makeNewState(curr_state));
+				if (next_states.containsKey(id_curr)) {
+					double next_state = next_states.get(id_curr).get("state");
+					if (next_state == 0) {
+						next_states.put(id_curr, makeNewState(state));
+						next_states.put(id, makeNewState(0));
+						break;
+					}
+				} else {
+					double curr_state = current_states.get(id_curr).get("state");
+					if (curr_state == 0) {
+						next_states.put(id_curr, makeNewState(state));
+						next_states.put(id, makeNewState(0));
+						break;
 					}
 				}
 			}
@@ -58,8 +67,7 @@ public class SegregationRule extends Rule {
 			next_states.put(id, makeNewState(state));
 		}
 	}
-	
-	private Map<String, Double> makeNewState(double s){
+	private Map<String, Double> makeNewState(double s) {
 		Map<String, Double> new_state = new HashMap<String, Double>();
 		new_state.put("state", s);
 		return new_state;
@@ -70,7 +78,7 @@ public class SegregationRule extends Rule {
 		for (int id: ids) {
 			if (!next_states.containsKey(id)) {
 				Map<String, Double> zero = new HashMap<String, Double>();
-				zero.put("state", 0.0);
+				zero.put("state", (double) 0);
 				next_states.put(id, zero);
 			}
 		}
