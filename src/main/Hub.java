@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import cells.Cell;
 import cells.CellGraph;
@@ -127,22 +128,22 @@ public class Hub {
 		if (!simulation_loaded | simulation_running) {
 			//display.updateStep(new StepVars(false, null));
 		}
-		Map<Integer, Map<String, Double>> states = step();
+		Queue<Double> states = step();
 		//display.updateStep(new StepVars(true, states));
 	}
 	
-	public Map<Integer, Map<String, Double>> testStep() {
+	public Queue<Double> testStep() {
 		return step();
 	}
 	
 	private void animationStep() {
-		Map<Integer, Map<String, Double>> states = step();
+		Queue<Double> states = step();
 		//display.update(states);
 	}
 	
-	private Map<Integer, Map<String, Double>> step() {
+	private Queue<Double> step() {
 		cell_graph.updateCells(rule);
-		Map<Integer, Map<String, Double>> states = cell_graph.getStates();
+		Queue<Double> states = cell_graph.getRelevantStates();
 		return states;
 	}
 	
