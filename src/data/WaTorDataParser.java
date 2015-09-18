@@ -86,7 +86,14 @@ public class WaTorDataParser extends FourNeighborDataParser {
 	
 	@Override
 	protected void setParameters() {
-		parameters = new HashMap<String, Double>();		
+		parameters = new HashMap<String, Double>();
+		Node dimension = getNode("Parameters", root.getChildNodes());
+		parameters.put("FishStep", Double.parseDouble(getNodeValue("FishStep", dimension.getChildNodes())));
+		parameters.put("SharkStep", Double.parseDouble(getNodeValue("SharkStep", dimension.getChildNodes())));
+		parameters.put("SharkMax", Double.parseDouble(getNodeValue("SharkMax", dimension.getChildNodes())));
+		parameters.put("SharkEatHealth", Double.parseDouble(getNodeValue("SharkEatHealth", dimension.getChildNodes())));
+		parameters.put("SharkEnergyLoss", Double.parseDouble(getNodeValue("SharkEnergyLoss", dimension.getChildNodes())));
+
 	}
 
 }
