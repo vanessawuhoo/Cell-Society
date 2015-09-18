@@ -10,7 +10,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -21,8 +20,10 @@ public class UserInterface {
 	private Button start, stop, step, slow, fast, load;
 	private Scene myUserInterface;
 	private ResourceBundle myResources;
+	private int[] myParameters;
 	private FlowPane flowpane;
 	private Group root;
+	private double blockLength;
 	//replace with a variable later from XML reader
 	private int GRID_DIMENSIONS = 20;
 	
@@ -32,32 +33,35 @@ public class UserInterface {
 		return TITLE;
 	}
 	
+	private double getBlockLength(double width, double height){
+		double widthLimit = width/3*2;
+		double heightLimit = height/3*2;
+		double blockWidth = widthLimit/myParameters[0];
+		double blockHeight = heightLimit/myParameters[1];
+		if (blockWidth > blockHeight) {
+			return blockHeight;
+		} else {
+			return blockWidth;
+		}
+	}
+	
 	//initialize all UI elements
-	public Scene init(Stage stage, double width, double height, String resource) {
+	public Scene init(Stage stage, double width, double height, int[] gridParameters, String resource) {
 		root = new Group();
+		myParameters = gridParameters;
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + resource);
 		myUserInterface = new Scene(root, width, height, Color.WHITE);
-		buttonInit(load, "Load", width/7, height/20);
-		buttonInit(start, "Start", width*2/7, height/20);
-		buttonInit(stop, "Stop", width*3/7, height/20);
-		buttonInit(step, "Step", width*4/7, height/20);
-		buttonInit(slow, "Slower", width*5/7, height/20);
-		buttonInit(fast, "Faster", width*6/7, height/20);
+		buttonInit(load, myResources.getString("LoadButton"), width/7, height/20);
+		buttonInit(start, myResources.getString("StartButton"), width*2/7, height/20);
+		buttonInit(stop, myResources.getString("StopButton"), width*3/7, height/20);
+		buttonInit(step, myResources.getString("StepButton"), width*4/7, height/20);
+		buttonInit(slow, myResources.getString("SlowButton"), width*5/7, height/20);
+		buttonInit(fast, myResources.getString("FastButton"), width*6/7, height/20);
+		blockLength = getBlockLength(width, height);
 		//test case
-		Map<Integer, List<Double>> states = new HashMap<Integer,List<Double>>();
-		List<Double> list1 = new ArrayList<Double>();
-		List<Double> list2 = new ArrayList<Double>();
-		list1.add(2.0);
-		list2.add(3.0);
-		for (int i = 0; i < 300; i++) {
-			if (i%2==0) {
-				states.put(i, list1);
-			} else {
-				states.put(i, list2);
-			}
-			
-		}
-		initGrid(states, width, height);
+		Map<String, Double> states = new HashMap<String, Double>();
+		states.put("Hi", 2.0);
+		states.put("Why", 3.0);
 		flowpane = initGrid(states, width, height);
 		root.getChildren().add(flowpane);
 		return myUserInterface;
@@ -73,34 +77,35 @@ public class UserInterface {
 		
 	}
 	
-	public FlowPane initGrid(Map<Integer, List<Double>>states, double width, double height){
+	public FlowPane initGrid(Map<String, Double>states, double width, double height){
 		FlowPane flowpane = new FlowPane();
-		flowpane.setPrefWrapLength(width/3*2);
+		flowpane.setPrefWrapLength(blockLength * myParameters[0]);
 		flowpane.setLayoutX((width-(width/3*2))/2);
 		flowpane.setLayoutY(height/8);
-		for (int i = 0; i < states.size(); i++) {
-			Rectangle rectangle = new Rectangle(width/3*2/GRID_DIMENSIONS,width/3*2/GRID_DIMENSIONS);
-			List<Double> hold = states.get(i);
-			if (hold.get(0) == 2.0){
-				rectangle.setFill(Color.BLACK);
-			} else{
-				rectangle.setFill(Color.WHITE);
+		//test
+		for (Map.Entry<String, Double>entry : states.entrySet()) {
+			double state = entry.getValue();
+			Rectangle rectangle = new Rectangle(blockLength, blockLength);
+			if (state == 2.0) {
+				rectangle.setFill(Color.AZURE);
+			} else {
+				rectangle.setFill(Color.TEAL);
 			}
 			flowpane.getChildren().add(rectangle);
 		}
 		return flowpane;
 	}
 	
-	public void replaceGrid(Map<Integer, List<Double>> states, double width, double height) {
+	public void replaceGrid(Map<String, Double> states, double width, double height) {
 		flowpane.getChildren().clear();
 		for (int i = 0; i < states.size(); i++) {
 			Rectangle rectangle = new Rectangle(width/3*2/GRID_DIMENSIONS,width/3*2/GRID_DIMENSIONS);
-			List<Double> hold = states.get(i);
-			if (hold.get(0) == 2.0){
-				rectangle.setFill(Color.RED);
-			} else{
-				rectangle.setFill(Color.GREEN);
-			}
+//			List<Double> hold = states.get(i);
+//			if (hold.get(0) == 2.0){
+//				rectangle.setFill(Color.RED);
+//			} else{
+//				rectangle.setFill(Color.GREEN);
+//			}
 			flowpane.getChildren().add(rectangle);
 		}
 	}

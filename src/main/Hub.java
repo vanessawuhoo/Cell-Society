@@ -127,9 +127,17 @@ public class Hub {
 	private void step() {
 		cell_graph.updateCells(rule);
 		Map<Integer, List<Double>> states = cell_graph.getStates();
-		display.update(states);
+//		display.update(states);
 	}
-
+	
+	public Rule getRule(){
+		return rule;
+	}
+	
+	public int[] getParameters(){
+		return xml_loader.getParser(xml_loader.getRuleName()).getDimensions();
+	}
+	
 	private KeyFrame getStepKeyFrame() {
 		double second_delay = 1 / FRAMES_PER_SECOND;
 		KeyFrame frame = new KeyFrame(Duration.seconds(second_delay),
