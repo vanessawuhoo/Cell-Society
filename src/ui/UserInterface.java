@@ -1,6 +1,5 @@
 package ui;
 
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.ResourceBundle;
@@ -132,9 +131,24 @@ public class UserInterface {
 		return myButton;	
 	}
 
-	public void replaceGrid(Map<String, Double> states, double width, double height) {
-		for (int i = 0; i < myArray.length; i++){
-			
+	public void replaceGrid(Map<String, Double> states) {
+		//QUEUE IMPLEMENTATION
+		q = ui.getQueueState();
+		int row = 0; int col = 0;
+		String color = "";
+		while (!q.isEmpty()){
+			double d = q.remove();
+			if (d%2==0){
+				color = "#ffff00";
+			} else {
+				color = "#c72780";
+			}
+			myArray[row][col].setColor(color);
+			col++;
+			if (col > myParameters[1]-1){
+				row++;
+				col=0;
+			}
 		}
 	}
 }

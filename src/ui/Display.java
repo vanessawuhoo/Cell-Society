@@ -40,12 +40,14 @@ public class Display extends Application {
         stage.setTitle(myUserInterface.getTitle());
         Scene myScene = myUserInterface.init(stage, getWidth(), getHeight(), gridParameters, "Data");
         stage.setScene(myScene);
+        Map<String, Double> m = new HashMap<String, Double>();
+        myUserInterface.replaceGrid(m);
         stage.show();
 	}	
 	
 
 	public void update(Map<Integer, Map<String, Double>> states){
-//		myUserInterface.replaceGrid(states, getWidth(), getHeight());
+//		myUserInterface.replaceGrid(states);
 	}
 	
 	public void startTestSim(){
