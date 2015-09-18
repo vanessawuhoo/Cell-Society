@@ -2,7 +2,6 @@ package ui;
 
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Queue;
 import java.util.ResourceBundle;
 
 import javafx.scene.Group;
@@ -12,10 +11,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import main.Hub;
+import data.XMLLoader;
 
 public class UserInterface {
 	private String TITLE = "Group 1 Cellular Automata Simulator";
 	private int[] myParameters;
+	private Map<Double,String> colors;
 	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	private double screenWidth, screenHeight,blockLength,offsetX,offsetY;
 	private Button start, stop, step, slow, fast, load;
@@ -36,15 +37,21 @@ public class UserInterface {
 		hub = h;
 	}
 	
+	public void getColors(){
+		XMLLoader loader = hub.getLoader();
+		colors = loader.getParser(loader.getRuleName()).getColor();
+	}
+	
 	//initialize all UI elements
 	public Scene init(Stage stage, double width, double height, int[] gridParameters, String resource) {
 		root = new Group();
-		ui = new UITester();
+//		ui = new UITester();
+		getColors();
+		calcSideLength();
+		calcOffset();
 		screenWidth = width;
 		screenHeight = height;
 		myParameters = gridParameters;
-		calcSideLength();
-		calcOffset();
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + resource);
 		myUserInterface = new Scene(root, width, height, Color.WHITE);
 		load = buttonInit(myResources.getString("LoadButton"), width/7, height/20);
@@ -84,15 +91,10 @@ public class UserInterface {
 		myArray = new Shape[myParameters[0]][myParameters[1]];
 		int row = 0;
 		int col = 0;
-		for (Entry<Integer, Map<String, Double>> entry : states.entrySet()) {
+		for (int i = 0; i < states.size(); i++) {
 			//wrong implementation for now, FIX LATER loader.getParser(loader.getRuleName()).getColor().get("INSERT STATE DOUBLE")
-			
-			String color ="";
-			if (entry.getValue().get("state")==1.0){
-				color = "#ff0000";
-			} else {
-				color = "#008080";
-			}
+			double currState = states.get(i).get("state");
+			String color = colors.get(currState);
 			//end of wrong implementation
 			SquareShape squareShape = new SquareShape(blockLength, color, myParameters);
 			myArray[row][col] = squareShape;
@@ -133,8 +135,21 @@ public class UserInterface {
 	}
 	
 	//method to run updates on the grid square states
-	public void replaceGrid(Map<String, Double> states) {
-		//QUEUE IMPLEMENTATION
-	
+	public void replaceGrid(Map<Integer,Map<String,Double>> newStates) {
+		int row = 0;
+		int col = 0;
+		for (int i = 0; i < newStates.size(); i++) {
+			//wrong implementation for now, FIX LATER loader.getParser(loader.getRuleName()).getColor().get("INSERT STATE DOUBLE")
+			double currState = newStates.get(i).get("state");
+			String color = colors.get(currState);
+			//end of wrong implementation
+			Shape square = myArray[row][col];
+			square.setColor(color);
+			col++;
+			if (col > myParameters[0]-1){
+				row++;
+				col=0;
+			}
+		}
 	}
 }

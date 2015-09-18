@@ -35,8 +35,9 @@ public class Display extends Application {
 	//initialize the UI and set the title
 	public void start(Stage stage) {
         myUserInterface = new UserInterface();
-        UITester ui = new UITester();
-        gridParameters = ui.getParameters();
+//        UITester ui = new UITester();
+//        gridParameters = ui.getParameters();
+        gridParameters = hub.getParameters();
         stage.setTitle(myUserInterface.getTitle());
         Scene myScene = myUserInterface.init(stage, getWidth(), getHeight(), gridParameters, "Data");
         stage.setScene(myScene);
