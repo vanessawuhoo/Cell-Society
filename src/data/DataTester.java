@@ -13,5 +13,10 @@ public class DataTester {
 				System.out.println("("+ s + ", " + loader.getParser(loader.getRuleName()).getCellMap().get(i).get(s) + ")");
 			}
 		}
+		System.out.println("color");
+		for(double i: loader.getParser(loader.getRuleName()).getColor().keySet()){
+			System.out.println(i);
+			System.out.println(loader.getParser(loader.getRuleName()).getColor().get(i));
+		}
 	}
 }

@@ -4,15 +4,9 @@
 		<X>3</X>
 		<Y>3</Y>
 	</Dimension>
-	<Color state="0">
-	#000000
-	</Color>
-	<Color state="1">
-	#0097ff
-	</Color>
-	<Color state="2">
-	#f6546a
-	</Color>
+	<Color state="0">#000000</Color>
+	<Color state="1">#0097ff</Color>
+	<Color state="2">#f6546a</Color>
 	<Parameters>
 	</Parameters>
 	<Cell>

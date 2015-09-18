@@ -55,6 +55,7 @@ public class SegregationDataParser extends DataParser {
 		this.setDimensions();
 		this.setRule();		
 		this.setCelltoGraph();
+		this.setColor();
 	}
 	
 	private void setCellToMap(){
@@ -73,8 +74,9 @@ public class SegregationDataParser extends DataParser {
 		NodeList colorNodeList = doc.getElementsByTagName("Color");
 		for(int i = 0; i<colorNodeList.getLength(); i++){
 			Node tempNode = colorNodeList.item(i);
-			double state = Double.parseDouble(this.getNodeValue(tempNode));
-			String color = this.getNodeAttr(Double.toString(state), tempNode);
+			String color = this.getNodeValue(tempNode);
+			System.out.println(this.getNodeAttr("state", tempNode));
+			double state = Double.parseDouble(this.getNodeAttr("state", tempNode));
 			colorMap.put(state, color);
 		}
 	}
