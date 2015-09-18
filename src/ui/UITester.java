@@ -10,7 +10,7 @@ public class UITester {
 	
 	//tester grid parameters
 	public int[] getParameters(){
-		int[] p = {20,30};
+		int[] p = {100,100};
 		return p;
 	}
 	
