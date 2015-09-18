@@ -38,15 +38,15 @@ public class SegregationRule extends Rule {
 		int opposite_states = 0;
 		for (int neighbor_state_id: neighboring_states.keySet()) {
 			Map<String, Double> neighbor_state = neighboring_states.get(neighbor_state_id);
-			total_states++;
 			double n_state = neighbor_state.get("state");
 			if (n_state != 0) {
+				total_states++;
 				if (state != n_state)
 					opposite_states++;
 			}
 		}
 		double opposite_ratio = (double) opposite_states/ (double) total_states;
-		if (opposite_ratio >= 0.5) {
+		if (opposite_ratio > 0.5) {
 			for (int id_curr: current_states.keySet()) {
 				if (next_states.containsKey(id_curr)) {
 					double next_state = next_states.get(id_curr).get("state");
