@@ -29,7 +29,7 @@ public abstract class Rule {
 	 * Update cell states
 	 */
 	public abstract void updateCell(int id, Map<String, Double> cell_state,
-			List<Map<String, Double>> neighboring_states, 
+			Map<Integer, Map<String, Double>> neighboring_states, 
 			Map<Integer, Map<String, Double>> current_states,
 			Map<Integer, Map<String, Double>> next_states);
 	
