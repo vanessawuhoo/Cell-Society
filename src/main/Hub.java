@@ -8,6 +8,7 @@ import java.util.Map;
 
 import cells.Cell;
 import cells.CellGraph;
+import data.AllData;
 import data.XMLLoader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -62,23 +63,17 @@ public class Hub {
 		if (!simulation_running) {
 			xml_loader.setFileName(xml_file_name);
 			xml_loader.load();
-			Object[] cell_graph_and_rule = xml_loader.getData();
-			//xml_loader calls graph, rule, 
-			if ((Boolean) cell_graph_and_rule[0]) {
-				Map<Integer, Cell> cell_graph_init_map =
-						(Map<Integer, Cell>) cell_graph_and_rule[1];
-				cell_graph = new CellGraph(cell_graph_init_map);
-				rule = (Rule) cell_graph_and_rule[2];
-				simulation_loaded = true;
-				Map<Integer, Map<String, Double>> states = cell_graph.getStates();
-				return new SimVars(true, rule, states, "", frames_per_second);
-			} else {
-				// Note, errors should be stored in resource file
-				return new SimVars(false, null, null, 
-						"XML file parsing failed", frames_per_second);
-			}	
+			xml_loader.parseDataSpecific(xml_loader.getRuleName());
+			AllData data = xml_loader.getParser(xml_loader.getRuleName()).getAllData();
+			Map<Double, String> color_map = xml_loader.getParser(xml_loader.getRuleName()).getColor();
+			
+			cell_graph = data.cellGraph;
+			rule = data.rule;
+			simulation_loaded = true;
+			Map<Integer, Map<String, Double>> states = cell_graph.getStates();
+			return new SimVars(true, rule, states, color_map, "", frames_per_second);
 		}
-		return new SimVars(false, null, null, "Simulation running",
+		return new SimVars(false, null, null, null, "Simulation running",
 				frames_per_second);
 	}
 	
@@ -87,14 +82,10 @@ public class Hub {
 	 */
 	public SimVars loadTestSim() {
 		Map<Integer, Cell> cell_graph_init_map = new HashMap<Integer, Cell>();
-		Cell c1 = getTestCell(1, 0);
-		Cell c2 = getTestCell(2, 1);
-		Cell c3 = getTestCell(3, 1);
-		Cell c4 = getTestCell(4, 2);
-		addConnections(c1, new Cell[] {c2,c3});
-		addConnections(c2, new Cell[] {c1,c4});
-		addConnections(c3, new Cell[] {c1,c4});
-		addConnections(c4, new Cell[] {c2,c3});
+		Cell c1 = getTestCell(1, 0); Cell c2 = getTestCell(2, 1); Cell c3 = getTestCell(3, 1);
+		Cell c4 = getTestCell(4, 2); 
+		addConnections(c1, new Cell[] {c2,c3}); addConnections(c2, new Cell[] {c1,c4});
+		addConnections(c3, new Cell[] {c1,c4}); addConnections(c4, new Cell[] {c2,c3});
 		cell_graph_init_map.put(1, c1);
 		cell_graph_init_map.put(2, c2);
 		cell_graph_init_map.put(3, c3);
@@ -103,7 +94,7 @@ public class Hub {
 		rule = new SegregationRule(2,2);
 		simulation_loaded = true;
 		Map<Integer, Map<String, Double>> states = cell_graph.getStates();
-		return new SimVars(true, rule, states, "", frames_per_second);
+		return new SimVars(true, rule, states, null, "", frames_per_second);
 	}
 	private Cell getTestCell(int id, int segregation_state) {
 		Map<String, Double> s = new HashMap<String, Double>();

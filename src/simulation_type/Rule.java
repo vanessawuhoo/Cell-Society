@@ -8,6 +8,7 @@ public abstract class Rule {
 	
 	private String grid_type;
 	private int[] grid_parameters;
+	private Map<Double, String> ui_state_map;
 	
 	public String getGrid_type() {
 		return grid_type;
