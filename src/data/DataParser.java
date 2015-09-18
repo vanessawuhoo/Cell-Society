@@ -12,11 +12,11 @@ public abstract class DataParser extends nodeTraverser {
 
 	public abstract void parseData(Node head, Document document);
 	
-	public abstract Map<Integer, Map<String, String>> getCellMap();
+	public abstract Map<Integer, Map<String, Double>> getCellMap();
 
 	public abstract int[] getDimensions();
 
 	public abstract Rule getRule();
 	
-	public abstract Map<String, String> getParameter();
+	public abstract Map<String, Double> getParameter();
 }

@@ -2,22 +2,23 @@ package cells;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Cell {
 
 	// the state list may also hold cell type for the information
 	private int id;
-	private List<Double> state;
+	private Map<String, Double> state;
 	private List<Cell> connections;
 	
 	public int getId() {
 		return id;
 	}
-	public List<Double> getState() {
+	public Map<String, Double> getState() {
 		return state;
 	}
 
-	public void setState(List<Double> state) {
+	public void setState(Map<String, Double> state) {
 		this.state = state;
 	}
 
@@ -29,7 +30,7 @@ public class Cell {
 		this.connections = connections;
 	}
 	
-	public Cell(int id, List<Double> s) {
+	public Cell(int id, Map<String, Double> s) {
 		this.id = id;
 		state = s;
 		connections = new ArrayList<Cell>();

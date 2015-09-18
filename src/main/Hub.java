@@ -11,6 +11,7 @@ import cells.CellGraph;
 import data.XMLLoader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.util.Duration;
 import simulation_type.Rule;
 import simulation_type.SegregationRule;
@@ -22,7 +23,8 @@ public class Hub {
 	private Display display;
 	
 	private Timeline animation;
-	private int FRAMES_PER_SECOND = 2;
+	private double frames_per_second = 2;
+	private final double DELTA_FPS = .3;
 	
 	private CellGraph cell_graph;
 	private Rule rule;
@@ -37,7 +39,8 @@ public class Hub {
 		simulation_loaded = false;
 		animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
-		display.startTestSim();
+		animation.getKeyFrames().add(getStepKeyFrame());
+		//display.startTestSim();
 	}
 	
 	/* Initialize cell_graph and rule
@@ -56,14 +59,16 @@ public class Hub {
 				cell_graph = new CellGraph(cell_graph_init_map);
 				rule = (Rule) cell_graph_and_rule[2];
 				simulation_loaded = true;
-				Map<Integer, List<Double>> states = cell_graph.getStates();
-				return new SimVars(true, rule, states, "");
+				Map<Integer, Map<String, Double>> states = cell_graph.getStates();
+				return new SimVars(true, rule, states, "", frames_per_second);
 			} else {
 				// Note, errors should be stored in resource file
-				return new SimVars(false, null, null, "XML file parsing failed");
+				return new SimVars(false, null, null, 
+						"XML file parsing failed", frames_per_second);
 			}	
 		}
-		return new SimVars(false, null, null, "Simulation running");
+		return new SimVars(false, null, null, "Simulation running",
+				frames_per_second);
 	}
 	
 	/* Test simulation
@@ -86,8 +91,8 @@ public class Hub {
 		cell_graph = new CellGraph(cell_graph_init_map);
 		rule = new SegregationRule(2,2);
 		simulation_loaded = true;
-		Map<Integer, List<Double>> states = cell_graph.getStates();
-		return new SimVars(true, rule, states, "");
+		Map<Integer, Map<String, Double>> states = cell_graph.getStates();
+		return new SimVars(true, rule, states, "", frames_per_second);
 	}
 	private Cell getTestCell(int id, int segregation_state) {
 		List<Double> s = new ArrayList<Double>();
@@ -103,7 +108,6 @@ public class Hub {
 	public boolean playSimulation() {
 		if (!simulation_loaded | simulation_running)
 			return false;
-		animation.getKeyFrames().add(getStepKeyFrame());
 		animation.play();
 		simulation_running = true;
 		return true;
@@ -126,8 +130,8 @@ public class Hub {
 	
 	private void step() {
 		cell_graph.updateCells(rule);
-		Map<Integer, List<Double>> states = cell_graph.getStates();
-//		display.update(states);
+		Map<Integer, Map<String, Double>> states = cell_graph.getStates();
+		display.update(states);
 	}
 	
 	public Rule getRule(){
@@ -139,11 +143,32 @@ public class Hub {
 	}
 	
 	private KeyFrame getStepKeyFrame() {
-		double second_delay = 1 / FRAMES_PER_SECOND;
+		double second_delay = 1 / frames_per_second;
 		KeyFrame frame = new KeyFrame(Duration.seconds(second_delay),
 				e -> step());
 		return frame;
 	}
 	
-
+	public double increaseRate() {
+		frames_per_second += DELTA_FPS;
+		updateKeyFrame();
+		return frames_per_second;
+	}
+	
+	public double decreaseRate() {
+		double temp_fps = frames_per_second - DELTA_FPS;
+		if (temp_fps > 0) {
+			frames_per_second = temp_fps;
+			updateKeyFrame();
+		}
+		return frames_per_second;
+	}
+	
+	private void updateKeyFrame() {
+		ObservableList<KeyFrame> keyFrames = animation.getKeyFrames();
+		if (!keyFrames.isEmpty()) {
+			keyFrames.removeAll();
+		}
+		keyFrames.add(getStepKeyFrame());
+	}
 }

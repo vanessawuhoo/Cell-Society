@@ -10,6 +10,7 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.*;
 
 import cells.Cell;
+import cells.CellGraph;
 import simulation_type.Rule;
 import simulation_type.SegregationRule;
 
@@ -17,7 +18,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Document;
@@ -29,9 +32,10 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
 
 public class SegregationDataParser extends DataParser {
-	private Map<Integer, Map<String, String>> cellMap = new HashMap<Integer, Map<String, String>>();
-	private Map<Integer, Cell> cellGraph = new HashMap<Integer, Cell>();
-	private Map<String, String> parameters;
+	private Map<Integer, Map<String, Double>> cellMap = new HashMap<Integer, Map<String, Double>>();
+	private Map<Integer, Cell> cellMapGraph = new HashMap<Integer, Cell>();
+	private CellGraph cellGraph;
+	private Map<String, Double> parameters;
 	private Node root;
 	private Document doc;
 	private SegregationRule sr;
@@ -57,15 +61,67 @@ public class SegregationDataParser extends DataParser {
 			Node tempNode = cellNodeList.item(i);
 			int id = Integer.parseInt(this.getNodeValue("ID", tempNode.getChildNodes()));
 			String stateValue = this.getNodeValue("State", tempNode.getChildNodes());
-			Map<String, String> parameterMap = new HashMap<String, String>();
-			parameterMap.put("State", stateValue);
+			Map<String, Double> parameterMap = new HashMap<String, Double>();
+			parameterMap.put("State", Double.parseDouble(stateValue));
 			cellMap.put(id, parameterMap);
 		}
 	}
 	
 	private void setCelltoGraph(){
 		for(int i: cellMap.keySet()){
-	//		Cell tempCell = new Cell(i, cellMap.get(i));
+			Cell tempCell = new Cell(i, cellMap.get(i));
+			cellMapGraph.put(i, tempCell);
+		}
+		cellGraph = new CellGraph(cellMapGraph);
+		
+		//set neighbors
+		for (int i = 1; i <= dimensions[0]; i++) {
+			for (int j = 1; j <= dimensions[1]; j++) {
+				int curr_index = dimensions[1]*(i-1) + j;
+				List<Cell> neighbors = new ArrayList<Cell>();
+				Cell c = cellMapGraph.get(curr_index);
+				// handle up
+				int up_index = curr_index - dimensions[1];
+				if (up_index > 0) {
+					neighbors.add(cellMapGraph.get(up_index));
+				}
+				// handle upright
+				int upright_index = curr_index - dimensions[1] + 1;
+				if (upright_index > 0 && upright_index % dimensions[1] != 1) {
+					neighbors.add(cellMapGraph.get(upright_index));
+				}
+				// handle right
+				int right_index = curr_index + 1;
+				if (right_index % dimensions[1] != 1) {
+					neighbors.add(cellMapGraph.get(right_index));
+				}
+				// handle rightdown
+				int rightdown_index = curr_index + dimensions[1] + 1; 
+				if (rightdown_index <= dimensions[0]*dimensions[1] && rightdown_index % dimensions[1] != 1) {
+					neighbors.add(cellMapGraph.get(rightdown_index));
+				}
+				// handle down
+				int down_index = curr_index + dimensions[1];
+				if (down_index <= dimensions[0]*dimensions[1]) {
+					neighbors.add(cellMapGraph.get(down_index));
+				}
+				// handle downleft
+				int downleft_index = curr_index + dimensions[1] - 1;
+				if (downleft_index <= dimensions[0]*dimensions[1] && downleft_index % dimensions[1] != 0) {
+					neighbors.add(cellMapGraph.get(downleft_index));
+				}
+				//handle left
+				int left_index = curr_index - 1;
+				if (left_index % dimensions[1] != 0) {
+					neighbors.add(cellMapGraph.get(left_index));
+				}
+				// handle upleft
+				int upleft_index = curr_index - dimensions[1] - 1;
+				if (upleft_index > 0 && upleft_index % dimensions[1] != 0) {
+					neighbors.add(cellMapGraph.get(upleft_index));
+				}
+				c.setConnections(neighbors);
+			}
 		}
 	}
 	
@@ -95,12 +151,12 @@ public class SegregationDataParser extends DataParser {
 	}
 	
 	@Override
-	public Map<Integer, Map<String, String>> getCellMap(){
+	public Map<Integer, Map<String, Double>> getCellMap(){
 		return cellMap;
 	}
 
 	@Override
-	public Map<String, String> getParameter() {
+	public Map<String, Double> getParameter() {
 		return parameters;
 	}
 	
