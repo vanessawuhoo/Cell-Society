@@ -1,30 +1,32 @@
 package ui;
 
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.Queue;
 import java.util.ResourceBundle;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import main.Hub;
-import data.XMLLoader;
+import main.SimVars;
 
 public class UserInterface {
-	private String TITLE = "Group 1 Cellular Automata Simulator";
+	private String TITLE = "Group 1 Cellular Automata Simulator"; 
+	private String xmlTitle;
+	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+	private ResourceBundle myResources;
+	private Shape[][] myArray;
 	private int[] myParameters;
 	private Map<Double,String> colors;
-	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	private double screenWidth, screenHeight,blockLength,offsetX,offsetY;
 	private Button start, stop, step, slow, fast, load;
 	private Scene myUserInterface;
-	private ResourceBundle myResources;
-	private Shape[][] myArray;
 	private Group root;
-	private UITester ui;
 	private Hub hub;
 
 	//give the display the title
@@ -37,18 +39,9 @@ public class UserInterface {
 		hub = h;
 	}
 	
-	public void getColors(){
-		XMLLoader loader = hub.getLoader();
-		colors = loader.getParser(loader.getRuleName()).getColor();
-	}
-	
 	//initialize all UI elements
 	public Scene init(Stage stage, double width, double height, int[] gridParameters, String resource) {
 		root = new Group();
-//		ui = new UITester();
-		getColors();
-		calcSideLength();
-		calcOffset();
 		screenWidth = width;
 		screenHeight = height;
 		myParameters = gridParameters;
@@ -61,10 +54,67 @@ public class UserInterface {
 		slow = buttonInit(myResources.getString("SlowButton"), width*5/7, height/20);
 		fast = buttonInit(myResources.getString("FastButton"), width*6/7, height/20);
 		initButtonEvents();
-		//test case
-		Map<Integer, Map<String, Double>> states = ui.getState();
-		initGrid(states);
 		return myUserInterface;
+	}
+	
+
+	private void load(){
+		SimVars variables = hub.loadSimulation(getFile());
+		colors = variables.color_map;
+		myParameters = variables.rule.getGrid_parameters();
+		calcSideLength();
+		calcOffset();
+		initGrid(variables.states);
+	}
+	
+	private String getFile(){
+		TextInputDialog input = new TextInputDialog("");
+		input.setTitle(myResources.getString("FilePromptTitle"));
+        input.setContentText(myResources.getString("FilePrompt"));
+        Optional<String> response = input.showAndWait();
+        if (response.isPresent()) {
+            return response.toString();
+        }
+        //error
+        return "";
+	}
+	
+	//initializes the grid upon loading an XML
+	private void initGrid(Queue<Double> states){
+		myArray = new Shape[myParameters[0]][myParameters[1]];
+		int row = 0;
+		int col = 0;
+		while (!states.isEmpty()) {
+			double currState = states.remove();
+			String color = colors.get(currState);
+			SquareShape squareShape = new SquareShape(blockLength, color, myParameters);
+			myArray[row][col] = squareShape;
+			root.getChildren().add(squareShape.getObject());
+			setLocation(squareShape.getObject(), row, col);
+			col++;
+			if (col > myParameters[0]-1){
+				row++;
+				col=0;
+			}
+		}
+	}
+
+	//method to run updates on the grid square states
+	public void updateStep(Queue<Double> newStates) {
+		int row = 0;
+		int col = 0;
+		while (!newStates.isEmpty()) {
+			//wrong implementation for now, FIX LATER loader.getParser(loader.getRuleName()).getColor().get("INSERT STATE DOUBLE")
+			double currState = newStates.remove();
+			String color = colors.get(currState);
+			Shape square = myArray[row][col];
+			square.setColor(color);
+			col++;
+			if (col > myParameters[0]-1){
+				row++;
+				col=0;
+			}
+		}
 	}
 	
 	//helper method to initialize buttons with proper x and y placement 
@@ -83,36 +133,13 @@ public class UserInterface {
 		stop.setOnMouseClicked(e->hub.pauseSimulation());
 		start.setOnMouseClicked(e->hub.playSimulation());
 		step.setOnMouseClicked(e->hub.simulationStep());
-		load.setOnMouseClicked(e->hub.loadTestSim());
+		load.setOnMouseClicked(e->load());
 	}
 	
-	//initializes the grid upon loading an XML
-	private void initGrid(Map<Integer, Map<String,Double>> states){
-		myArray = new Shape[myParameters[0]][myParameters[1]];
-		int row = 0;
-		int col = 0;
-		for (int i = 0; i < states.size(); i++) {
-			//wrong implementation for now, FIX LATER loader.getParser(loader.getRuleName()).getColor().get("INSERT STATE DOUBLE")
-			double currState = states.get(i).get("state");
-			String color = colors.get(currState);
-			//end of wrong implementation
-			SquareShape squareShape = new SquareShape(blockLength, color, myParameters);
-			myArray[row][col] = squareShape;
-			//setlocation- function?
-			root.getChildren().add(squareShape.getObject());
-			setLocation(squareShape.getObject(), row, col);
-			col++;
-			if (col > myParameters[0]-1){
-				row++;
-				col=0;
-			}
-		}
-	}
-	
-	//calculates the placement of the grid depending on the size of the blocks
-	private void calcOffset(){
-		offsetX= (screenWidth - myParameters[0] * blockLength)/2;
-		offsetY =(screenHeight - myParameters[1] * blockLength)/2;
+	//helper method to set locations of squares in the grid
+	private void setLocation(Rectangle square, int row, int col){
+		square.setLayoutX(offsetX + row*blockLength);
+		square.setLayoutY(offsetY + col*blockLength);
 	}
 	
 	//calculates the optimal side length based on scaling vertically or horizontally
@@ -128,28 +155,13 @@ public class UserInterface {
 		}
 	}
 	
-	//helper method to set locations of squares in the grid
-	private void setLocation(Rectangle square, int row, int col){
-		square.setLayoutX(offsetX + row*blockLength);
-		square.setLayoutY(offsetY + col*blockLength);
+
+	//calculates the placement of the grid depending on the size of the blocks
+	private void calcOffset(){
+		offsetX= (screenWidth - myParameters[0] * blockLength)/2;
+		offsetY =(screenHeight - myParameters[1] * blockLength)/2;
 	}
+
 	
-	//method to run updates on the grid square states
-	public void replaceGrid(Map<Integer,Map<String,Double>> newStates) {
-		int row = 0;
-		int col = 0;
-		for (int i = 0; i < newStates.size(); i++) {
-			//wrong implementation for now, FIX LATER loader.getParser(loader.getRuleName()).getColor().get("INSERT STATE DOUBLE")
-			double currState = newStates.get(i).get("state");
-			String color = colors.get(currState);
-			//end of wrong implementation
-			Shape square = myArray[row][col];
-			square.setColor(color);
-			col++;
-			if (col > myParameters[0]-1){
-				row++;
-				col=0;
-			}
-		}
-	}
 }
+
