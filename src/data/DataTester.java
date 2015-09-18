@@ -18,5 +18,21 @@ public class DataTester {
 			System.out.println(i);
 			System.out.println(loader.getParser(loader.getRuleName()).getColor().get(i));
 		}
+		
+		loader.setFileName("Data/Segregation2.xml");
+		loader.load();
+		loader.parseDataSpecific(loader.getRuleName());
+		System.out.println(loader.getRuleName());
+		for(int i: loader.getParser(loader.getRuleName()).getCellMap().keySet()){
+			System.out.println(i);
+			for(String s: loader.getParser(loader.getRuleName()).getCellMap().get(i).keySet()){
+				System.out.println("("+ s + ", " + loader.getParser(loader.getRuleName()).getCellMap().get(i).get(s) + ")");
+			}
+		}
+		System.out.println("color");
+		for(double i: loader.getParser(loader.getRuleName()).getColor().keySet()){
+			System.out.println(i);
+			System.out.println(loader.getParser(loader.getRuleName()).getColor().get(i));
+		}
 	}
 }

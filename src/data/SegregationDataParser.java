@@ -32,15 +32,15 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
 
 public class SegregationDataParser extends DataParser {
-	private Map<Integer, Map<String, Double>> cellMap = new HashMap<Integer, Map<String, Double>>();
-	private Map<Integer, Cell> cellMapGraph = new HashMap<Integer, Cell>();
+	private Map<Integer, Map<String, Double>> cellMap;
+	private Map<Integer, Cell> cellMapGraph;
 	private CellGraph cellGraph;
 	private Map<String, Double> parameters;
-	private Map<Double, String> colorMap = new HashMap<Double, String>();
+	private Map<Double, String> colorMap;
 	private Node root;
 	private Document doc;
 	private SegregationRule sr;
-	private int dimensions[] = new int[2];
+	private int dimensions[];
 
 	
 	public SegregationDataParser(){
@@ -49,6 +49,7 @@ public class SegregationDataParser extends DataParser {
 	
 	@Override
 	public void parseData(Node head, Document document) {
+		this.reset();
 		root = head;
 		doc = document;
 		this.setCellToMap();
@@ -59,6 +60,7 @@ public class SegregationDataParser extends DataParser {
 	}
 	
 	private void setCellToMap(){
+		cellMap = new HashMap<Integer, Map<String, Double>>();
 		NodeList cellNodeList = doc.getElementsByTagName("Cell");
 		for(int i = 0; i<cellNodeList.getLength(); i++){
 			Node tempNode = cellNodeList.item(i);
@@ -71,17 +73,18 @@ public class SegregationDataParser extends DataParser {
 	}
 	
 	private void setColor(){
+		colorMap = new HashMap<Double, String>();
 		NodeList colorNodeList = doc.getElementsByTagName("Color");
 		for(int i = 0; i<colorNodeList.getLength(); i++){
 			Node tempNode = colorNodeList.item(i);
 			String color = this.getNodeValue(tempNode);
-			System.out.println(this.getNodeAttr("state", tempNode));
 			double state = Double.parseDouble(this.getNodeAttr("state", tempNode));
 			colorMap.put(state, color);
 		}
 	}
 	
 	private void setCelltoGraph(){
+		cellMapGraph = new HashMap<Integer, Cell>();
 		for(int i: cellMap.keySet()){
 			Cell tempCell = new Cell(i, cellMap.get(i));
 			cellMapGraph.put(i, tempCell);
@@ -145,6 +148,7 @@ public class SegregationDataParser extends DataParser {
 	}
 	
 	public void setDimensions(){
+		dimensions = new int[2];
 		Node dimension = getNode("Dimension", root.getChildNodes());
 		dimensions[0] = Integer.parseInt(getNodeValue("X", dimension.getChildNodes()));
 		dimensions[1] = Integer.parseInt(getNodeValue("y", dimension.getChildNodes()));
@@ -177,6 +181,17 @@ public class SegregationDataParser extends DataParser {
 	@Override
 	public Map<Double, String> getColor() {
 		return colorMap;
+	}
+
+	@Override
+	public void reset() {
+		dimensions = null;
+		parameters = null;
+		colorMap = null;
+		cellMap = null;
+		cellGraph = null;
+		cellMapGraph = null;
+		
 	}
 	
 

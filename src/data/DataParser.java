@@ -21,4 +21,8 @@ public abstract class DataParser extends nodeTraverser {
 	public abstract Map<String, Double> getParameter();
 	
 	public abstract Map<Double, String> getColor();
+	
+	public abstract allData getAllData();
+	
+	public abstract void reset();
 }

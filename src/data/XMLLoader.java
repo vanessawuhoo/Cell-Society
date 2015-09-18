@@ -61,13 +61,6 @@ public class XMLLoader extends nodeTraverser{
 		hub = h;
 	}
 	
-	public Object[] getData() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-	
 	public void setFileName(String name){
 		fileName = name;
 		System.out.println(fileName);
