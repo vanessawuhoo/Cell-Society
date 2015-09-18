@@ -9,9 +9,11 @@ public class SquareShape extends Shape {
 	private double sideLength;
 	
 	//constructor
-	SquareShape(double width, double height, int[] myParameters){
-		sideLength = calcSideLength(width, height, myParameters);
-		square = new Rectangle(sideLength, sideLength);	
+	SquareShape(double blockLength, String color, int[] myParameters){
+		hex = color;
+		sideLength = blockLength;
+		square = new Rectangle(sideLength, sideLength);
+		square.setFill(Color.web(hex));
 	}
 	
 	public void setColor(String newColor){
@@ -30,16 +32,10 @@ public class SquareShape extends Shape {
 	}
 	
 	
-	private double calcSideLength(double width, double height, int[]myParameters){
-		double widthLimit = width/3*2;
-		double heightLimit = height/3*2;
-		double blockWidth = widthLimit/myParameters[0];
-		double blockHeight = heightLimit/myParameters[1];
-		if (blockWidth > blockHeight) {
-			return blockHeight;
-		} else {
-			return blockWidth;
-		}
+
+	
+	private double getBlockLength(){
+		return sideLength;
 	}
 	
 }

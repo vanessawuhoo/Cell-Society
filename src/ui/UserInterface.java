@@ -1,32 +1,28 @@
 package ui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.ResourceBundle;
 
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import ui.UITester;
 
 public class UserInterface {
 	private String TITLE = "Group 1 Cellular Automata Simulator";
+	private int[] myParameters;
+	Queue<Double> q;
 	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
-	private double screenWidth, screenHeight, maxGridWidth, maxGridHeight;
+	private double screenWidth, screenHeight,blockLength,offsetX,offsetY;
 	private Button start, stop, step, slow, fast, load;
 	private Scene myUserInterface;
 	private ResourceBundle myResources;
-	private int[] myParameters;
-	private FlowPane flowpane;
+	private Shape[][] myArray;
 	private Group root;
-	private double blockLength;
 	private UITester ui;
 
 	//give the display the title
@@ -37,13 +33,13 @@ public class UserInterface {
 	//initialize all UI elements
 	public Scene init(Stage stage, double width, double height, int[] gridParameters, String resource) {
 		root = new Group();
-//		myParameters = gridParameters;
 		ui = new UITester();
+		ui.getQueueState();
 		screenWidth = width;
 		screenHeight = height;
-		maxGridWidth = (screenWidth*2/3);
-		maxGridHeight = (screenHeight*2/3);
 		myParameters = gridParameters;
+		calcSideLength();
+		calcOffset();
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + resource);
 		myUserInterface = new Scene(root, width, height, Color.WHITE);
 		buttonInit(load, myResources.getString("LoadButton"), width/7, height/20);
@@ -55,47 +51,90 @@ public class UserInterface {
 		
 		//test case
 		Map<String, Double> states = ui.getState();
+		q = ui.getQueueState();
+		initGrid(states);
 		return myUserInterface;
 	}
-
 	
-//	public FlowPane initGrid(Map<String, Double>states, double width, double height){
-//		FlowPane flowpane = new FlowPane();
-//		flowpane.setPrefWrapLength(blockLength* ((double)myParameters[0]+1));
-//		System.out.println(blockLength * myParameters[0]);
-//		flowpane.setLayoutX((width-(width/3*2))/2);
-//		flowpane.setLayoutY(height/8);
-//		//test
-//		for (Map.Entry<String, Double>entry : states.entrySet()) {
-//			double state = entry.getValue();
-//			Rectangle rectangle = new Rectangle(blockLength, blockLength);
-//			if (state == 2.0) {
-//				rectangle.setFill(Color.GREEN);
+	private void initGrid(Map<String, Double> states){
+		myArray = new Shape[myParameters[0]][myParameters[1]];
+		int row = 0;
+		int col = 0;
+		while (!q.isEmpty()){
+			double d = q.remove();
+			String color = "";
+			if (d%2==0){
+				color = "#ff0000";
+			} else {
+				color = "#008080";
+			}
+			SquareShape squareShape = new SquareShape(blockLength, color, myParameters);
+			myArray[row][col] = squareShape;
+			//setlocation- function?
+			root.getChildren().add(squareShape.getObject());
+			setLocation(squareShape.getObject(), row, col);
+			col++;
+			if (col > myParameters[1]-1){
+				row++;
+				col=0;
+			}
+		}
+//		for (Entry<String, Double> entry : states.entrySet()) {
+//			//wrong implementation for now, FIX LATER loader.getParser(loader.getRuleName()).getColor().get("INSERT STATE DOUBLE")
+//			String color ="";
+//			if (entry.getValue()==1.0){
+//				color = "#ff0000";
 //			} else {
-//				rectangle.setFill(Color.PURPLE);
+//				color = "#008080";
 //			}
-//			flowpane.getChildren().add(rectangle);
+//			//end of wrong implementation
+//			SquareShape squareShape = new SquareShape(blockLength, color, myParameters);
+//			myArray[row][col] = squareShape;
+//			//setlocation- function?
+//			root.getChildren().add(squareShape.getObject());
+//			setLocation(squareShape.getObject(), row, col);
+//			col++;
+//			if (col > myParameters[0]-1){
+//				row++;
+//				col=0;
+//			}
 //		}
-//		return flowpane;
-//	}
+	}
+	
+	private void calcOffset(){
+		offsetX= (screenWidth - myParameters[0] * blockLength)/2;
+		offsetY =(screenHeight - myParameters[1] * blockLength)/2;
+	}
+	
+	private void calcSideLength(){
+		double maxGridWidth = screenWidth *2/3;
+		double maxGridHeight = screenHeight*2/3;
+		double blockWidth = maxGridWidth/myParameters[0];
+		double blockHeight = maxGridHeight/myParameters[1];
+		if (blockWidth > blockHeight) {
+			blockLength = blockHeight;
+		} else {
+			blockLength = blockWidth;
+		}
+	}
+	
+	private void setLocation(Rectangle square, int row, int col){
+		square.setLayoutX(offsetX + row*blockLength);
+		square.setLayoutY(offsetY + col*blockLength);
+	}
 	
 	//helper method to clean up initializing and placing buttons
-	public Button buttonInit(Button myButton, String text, double x, double y){
+	private Button buttonInit(Button myButton, String text, double x, double y){
 		myButton = new Button(text);
 		myButton.setLayoutX(x);
 		myButton.setLayoutY(y);
 		root.getChildren().add(myButton);
-		return myButton;
-		
+		return myButton;	
 	}
 
-	
-
 	public void replaceGrid(Map<String, Double> states, double width, double height) {
-		flowpane.getChildren().clear();
-		for (int i = 0; i < states.size(); i++) {
-			Rectangle rectangle = new Rectangle(blockLength, blockLength);
-			flowpane.getChildren().add(rectangle);
+		for (int i = 0; i < myArray.length; i++){
+			
 		}
 	}
 }
