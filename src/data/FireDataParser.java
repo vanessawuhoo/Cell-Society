@@ -34,5 +34,10 @@ public class FireDataParser extends FourNeighborDataParser {
 		Node dimension = getNode("Parameters", root.getChildNodes());
 		parameters.put("ProbCatch", Double.parseDouble(getNodeValue("ProbCatch", dimension.getChildNodes())));
 	}
+	
+	@Override
+	protected void setRule(){
+		rule = new SegregationRule(dimensions[0], dimensions[1]);
+	}
 
 }

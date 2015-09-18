@@ -15,6 +15,7 @@ import simulation_type.Rule;
 import simulation_type.SegregationRule;
 
 public abstract class NeighborDataParser extends DataParser{
+	protected Rule rule;
 	protected Map<Integer, Map<String, Double>> cellMap;
 	protected Map<Integer, Cell> cellMapGraph;
 	protected CellGraph cellGraph;
@@ -22,7 +23,6 @@ public abstract class NeighborDataParser extends DataParser{
 	protected Map<Double, String> colorMap;
 	protected Node root;
 	protected Document doc;
-	protected SegregationRule sr;
 	protected int dimensions[];
 	protected AllData allData;
 
@@ -51,12 +51,7 @@ public abstract class NeighborDataParser extends DataParser{
 			colorMap.put(state, color);
 		}
 	}
-	
-	@Override
-	protected void setAllData() {
-		allData = new AllData(sr, cellGraph, parameters);		
-	}
-	
+		
 	@Override
 	protected void setDimensions(){
 		dimensions = new int[2];
@@ -64,22 +59,12 @@ public abstract class NeighborDataParser extends DataParser{
 		dimensions[0] = Integer.parseInt(getNodeValue("X", dimension.getChildNodes()));
 		dimensions[1] = Integer.parseInt(getNodeValue("y", dimension.getChildNodes()));
 	}
-	
-	@Override
-	protected void setRule(){
-		sr = new SegregationRule(dimensions[0], dimensions[1]);
-	}
-	
+		
 	@Override
 	public int[] getDimensions(){
 		return dimensions;
 	}
-	
-	@Override
-	public Rule getRule(){
-		return sr;
-	}
-	
+		
 	@Override
 	public Map<Integer, Map<String, Double>> getCellMap(){
 		return cellMap;
@@ -106,7 +91,16 @@ public abstract class NeighborDataParser extends DataParser{
 		
 	}
 
-
+	@Override
+	public Rule getRule(){
+		return rule;
+	}
+	
+	@Override
+	protected void setAllData() {
+		allData = new AllData(rule, cellGraph, parameters);		
+	}
+	
 	@Override
 	public AllData getAllData() {
 		return allData;
