@@ -1,21 +1,21 @@
 <Data>
-	<Simulation>segregation</Simulation>
+	<Simulation>waTor</Simulation>
 	<Dimension>
 		<X>4</X>
 		<Y>4</Y>
 	</Dimension>
-	<Color state="0">#ffffff</Color>
-	<Color state="1">#0097ff</Color>
-	<Color state="2">#f6546a</Color>
+	<Color state="0">#198c19</Color>
+	<Color state="1">#ffff32</Color>
+	<Color state="2">#00cbff</Color>
 	<Parameters>
 	</Parameters>
 	<Cell>
 		<ID>1</ID>
-		<State>1</State>
+		<State>2</State>
 	</Cell>
 	<Cell>
 		<ID>2</ID>
-		<State>2</State>
+		<State>1</State>
 	</Cell>
 	<Cell>
 		<ID>3</ID>
@@ -23,19 +23,19 @@
 	</Cell>
 	<Cell>
 		<ID>4</ID>
-		<State>0</State>
+		<State>1</State>
 	</Cell>
 		<Cell>
 		<ID>5</ID>
-		<State>1</State>
+		<State>0</State>
 	</Cell>
 	<Cell>
 		<ID>6</ID>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 	<Cell>
 		<ID>7</ID>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 		<Cell>
 		<ID>8</ID>
@@ -47,7 +47,7 @@
 	</Cell>
 	<Cell>
 		<ID>10</ID>
-		<State>2</State>
+		<State>1</State>
 	</Cell>
 	<Cell>
 		<ID>11</ID>

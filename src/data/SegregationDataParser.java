@@ -61,7 +61,8 @@ public class SegregationDataParser extends DataParser {
 		this.setAllData();
 	}
 	
-	private void setCellToMap(){
+	@Override
+	protected void setCellToMap(){
 		cellMap = new HashMap<Integer, Map<String, Double>>();
 		NodeList cellNodeList = doc.getElementsByTagName("Cell");
 		for(int i = 0; i<cellNodeList.getLength(); i++){
@@ -74,7 +75,8 @@ public class SegregationDataParser extends DataParser {
 		}
 	}
 	
-	private void setColor(){
+	@Override
+	protected void setColor(){
 		colorMap = new HashMap<Double, String>();
 		NodeList colorNodeList = doc.getElementsByTagName("Color");
 		for(int i = 0; i<colorNodeList.getLength(); i++){
@@ -85,7 +87,8 @@ public class SegregationDataParser extends DataParser {
 		}
 	}
 	
-	private void setCelltoGraph(){
+	@Override
+	protected void setCelltoGraph(){
 		cellMapGraph = new HashMap<Integer, Cell>();
 		for(int i: cellMap.keySet()){
 			Cell tempCell = new Cell(i, cellMap.get(i));
@@ -145,23 +148,26 @@ public class SegregationDataParser extends DataParser {
 	}
 	
 	@Override
-	public void setAllData() {
+	protected void setAllData() {
 		allData = new AllData(sr, cellGraph);		
 	}
 	
 	//Segregation has no parameters
-	private void setParameters(){
+	@Override
+	protected void setParameters(){
 		NodeList parameterNodeList = doc.getElementsByTagName("Parameters");
 	}
 	
-	public void setDimensions(){
+	@Override
+	protected void setDimensions(){
 		dimensions = new int[2];
 		Node dimension = getNode("Dimension", root.getChildNodes());
 		dimensions[0] = Integer.parseInt(getNodeValue("X", dimension.getChildNodes()));
 		dimensions[1] = Integer.parseInt(getNodeValue("y", dimension.getChildNodes()));
 	}
 	
-	private void setRule(){
+	@Override
+	protected void setRule(){
 		sr = new SegregationRule(dimensions[0], dimensions[1]);
 	}
 	

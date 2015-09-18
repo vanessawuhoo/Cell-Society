@@ -54,7 +54,10 @@ public class XMLLoader extends nodeTraverser{
 	}
 	
 	private void addRulesToMap(){
-		ruleMap.put("Segregation", new SegregationDataParser());
+		ruleMap.put("segregation", new SegregationDataParser());
+		ruleMap.put("fire", new FireDataParser());
+		ruleMap.put("waTor", new WaTorDataParser());
+		ruleMap.put("gameOfLife", new GameOfLifeDataParser());
 	}
 	
 	public void setHub(Hub h) {
@@ -88,6 +91,7 @@ public class XMLLoader extends nodeTraverser{
 	
 	public String getRuleName(){
 		simulationType = getNodeValue("Simulation", root.getChildNodes());
+		
 		return simulationType;
 	}
 	

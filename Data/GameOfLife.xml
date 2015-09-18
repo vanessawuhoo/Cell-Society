@@ -1,12 +1,11 @@
 <Data>
-	<Simulation>segregation</Simulation>
+	<Simulation>gameOfLife</Simulation>
 	<Dimension>
 		<X>4</X>
 		<Y>4</Y>
 	</Dimension>
 	<Color state="0">#ffffff</Color>
-	<Color state="1">#0097ff</Color>
-	<Color state="2">#f6546a</Color>
+	<Color state="1">#000000</Color>
 	<Parameters>
 	</Parameters>
 	<Cell>
@@ -15,11 +14,11 @@
 	</Cell>
 	<Cell>
 		<ID>2</ID>
-		<State>2</State>
+		<State>1</State>
 	</Cell>
 	<Cell>
 		<ID>3</ID>
-		<State>2</State>
+		<State>1</State>
 	</Cell>
 	<Cell>
 		<ID>4</ID>
@@ -35,7 +34,7 @@
 	</Cell>
 	<Cell>
 		<ID>7</ID>
-		<State>2</State>
+		<State>1</State>
 	</Cell>
 		<Cell>
 		<ID>8</ID>
@@ -43,15 +42,15 @@
 	</Cell>
 		<Cell>
 		<ID>9</ID>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 	<Cell>
 		<ID>10</ID>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 	<Cell>
 		<ID>11</ID>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 		<Cell>
 		<ID>12</ID>
@@ -59,18 +58,18 @@
 	</Cell>
 	<Cell>
 		<ID>13</ID>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 		<Cell>
 		<ID>14</ID>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 		<Cell>
 		<ID>15</ID>
-		<State>2</State>
+		<State>1</State>
 	</Cell>
 		<Cell>
 		<ID>16</ID>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 </Data>
