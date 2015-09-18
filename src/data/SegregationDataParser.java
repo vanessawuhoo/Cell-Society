@@ -36,6 +36,7 @@ public class SegregationDataParser extends DataParser {
 	private Map<Integer, Cell> cellMapGraph = new HashMap<Integer, Cell>();
 	private CellGraph cellGraph;
 	private Map<String, Double> parameters;
+	private Map<Double, String> colorMap = new HashMap<Double, String>();
 	private Node root;
 	private Document doc;
 	private SegregationRule sr;
@@ -53,6 +54,7 @@ public class SegregationDataParser extends DataParser {
 		this.setCellToMap();
 		this.setDimensions();
 		this.setRule();		
+		this.setCelltoGraph();
 	}
 	
 	private void setCellToMap(){
@@ -64,6 +66,16 @@ public class SegregationDataParser extends DataParser {
 			Map<String, Double> parameterMap = new HashMap<String, Double>();
 			parameterMap.put("State", Double.parseDouble(stateValue));
 			cellMap.put(id, parameterMap);
+		}
+	}
+	
+	private void setColor(){
+		NodeList colorNodeList = doc.getElementsByTagName("Color");
+		for(int i = 0; i<colorNodeList.getLength(); i++){
+			Node tempNode = colorNodeList.item(i);
+			double state = Double.parseDouble(this.getNodeValue(tempNode));
+			String color = this.getNodeAttr(Double.toString(state), tempNode);
+			colorMap.put(state, color);
 		}
 	}
 	
@@ -158,6 +170,11 @@ public class SegregationDataParser extends DataParser {
 	@Override
 	public Map<String, Double> getParameter() {
 		return parameters;
+	}
+
+	@Override
+	public Map<Double, String> getColor() {
+		return colorMap;
 	}
 	
 

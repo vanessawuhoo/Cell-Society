@@ -19,4 +19,6 @@ public abstract class DataParser extends nodeTraverser {
 	public abstract Rule getRule();
 	
 	public abstract Map<String, Double> getParameter();
+	
+	public abstract Map<Double, String> getColor();
 }
