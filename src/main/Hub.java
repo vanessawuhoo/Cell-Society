@@ -29,10 +29,17 @@ public class Hub {
 	private CellGraph cell_graph;
 	private Rule rule;
 	
+	private boolean testing;
 	private boolean simulation_running;
 	private boolean simulation_loaded;
 	
+	public Hub() {
+		loadTestSim();
+		testing = true;
+	}
+	
 	public Hub(XMLLoader xml_loader, Display display) {
+		testing = false;
 		this.xml_loader = xml_loader;
 		this.display = display;
 		simulation_running = false;
