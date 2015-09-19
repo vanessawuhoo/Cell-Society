@@ -71,5 +71,4 @@ public class FireRule extends Rule {
 		// TODO Auto-generated method stub
 		
 	}
-
 }

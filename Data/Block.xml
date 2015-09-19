@@ -2,7 +2,7 @@
 	<Simulation>gameOfLife</Simulation>
 	<Dimension>
 		<X>4</X>
-		<Y>4</Y>
+		<Y>3</Y>
 	</Dimension>
 	<Color state="0">#ffffff</Color>
 	<Color state="1">#000000</Color>
@@ -54,22 +54,6 @@
 	</Cell>
 	<Cell>
 		<ID>12</ID>
-		<State>0</State>
-	</Cell>
-	<Cell>
-	<ID>13</ID>
-		<State>0</State>
-	</Cell>
-	<Cell>
-		<ID>14</ID>
-		<State>0</State>
-	</Cell>
-	<Cell>
-		<ID>15</ID>
-		<State>0</State>
-	</Cell>
-	<Cell>
-		<ID>16</ID>
 		<State>0</State>
 	</Cell>
 </Data>

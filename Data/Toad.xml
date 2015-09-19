@@ -2,7 +2,7 @@
 	<Simulation>gameOfLife</Simulation>
 	<Dimension>
 		<X>6</X>
-		<Y>5</Y>
+		<Y>6</Y>
 	</Dimension>
 	<Color state="0">#ffffff</Color>
 	<Color state="1">#000000</Color>
@@ -33,12 +33,6 @@
 		<State>0</State>
 	</Cell>
 	<Cell>
-		<State>1</State>
-	</Cell>
-	<Cell>
-		<State>1</State>
-	</Cell>
-	<Cell>
 		<State>0</State>
 	</Cell>
 	<Cell>
@@ -46,18 +40,6 @@
 	</Cell>
 	<Cell>
 		<State>0</State>
-	</Cell>
-	<Cell>
-		<State>1</State>
-	</Cell>
-	<Cell>
-		<State>0</State>
-	</Cell>
-	<Cell>
-		<State>0</State>
-	</Cell>
-	<Cell>
-		<State>1</State>
 	</Cell>
 	<Cell>
 		<State>0</State>
@@ -73,6 +55,42 @@
 	</Cell>
 	<Cell>
 		<State>1</State>
+	</Cell>
+	<Cell>
+		<State>1</State>
+	</Cell>
+	<Cell>
+		<State>0</State>
+	</Cell>
+	<Cell>
+		<State>0</State>
+	</Cell>
+	<Cell>
+		<State>1</State>
+	</Cell>
+	<Cell>
+		<State>1</State>
+	</Cell>
+	<Cell>
+		<State>1</State>
+	</Cell>
+	<Cell>
+		<State>0</State>
+	</Cell>
+	<Cell>
+		<State>0</State>
+	</Cell>
+	<Cell>
+		<State>0</State>
+	</Cell>
+	<Cell>
+		<State>0</State>
+	</Cell>
+	<Cell>
+		<State>0</State>
+	</Cell>
+	<Cell>
+		<State>0</State>
 	</Cell>
 	<Cell>
 		<State>0</State>

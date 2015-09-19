@@ -1,7 +1,7 @@
 <Data>
 	<Simulation>gameOfLife</Simulation>
 	<Dimension>
-		<X>6</X>
+		<X>5</X>
 		<Y>5</Y>
 	</Dimension>
 	<Color state="0">#ffffff</Color>
@@ -9,93 +9,103 @@
 	<Parameters>
 	</Parameters>
 	<Cell>
+		<ID>1</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
+		<ID>2</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
+		<ID>3</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
+		<ID>4</ID>
+		<State>0</State>
+	</Cell>
+		<Cell>
+		<ID>5</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
+		<ID>6</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
+		<ID>7</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
+		<ID>8</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
+		<ID>9</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
+	<ID>10</ID>
+		<State>0</State>
+	</Cell>
+	<Cell>
+	<ID>11</ID>
+		<State>0</State>
+	</Cell>
+	<Cell>
+		<ID>12</ID>
 		<State>1</State>
 	</Cell>
 	<Cell>
+	<ID>13</ID>
 		<State>1</State>
 	</Cell>
 	<Cell>
-		<State>0</State>
-	</Cell>
-	<Cell>
-		<State>0</State>
-	</Cell>
-	<Cell>
-		<State>0</State>
-	</Cell>
-	<Cell>
+		<ID>14</ID>
 		<State>1</State>
 	</Cell>
 	<Cell>
+		<ID>15</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
+		<ID>16</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
-		<State>1</State>
-	</Cell>
-	<Cell>
+		<ID>1</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
+		<ID>2</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
+		<ID>3</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
-		<State>1</State>
+		<ID>4</ID>
+		<State>0</State>
 	</Cell>
-	<Cell>
-		<State>1</State>
-	</Cell>
-	<Cell>
+		<Cell>
+		<ID>5</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
+		<ID>6</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
+		<ID>7</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
+		<ID>8</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
-		<State>0</State>
-	</Cell>
-	<Cell>
-		<State>0</State>
-	</Cell>
-	<Cell>
-		<State>0</State>
-	</Cell>
-	<Cell>
+		<ID>9</ID>
 		<State>0</State>
 	</Cell>
 </Data>
