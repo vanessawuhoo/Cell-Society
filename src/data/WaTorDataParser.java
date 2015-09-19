@@ -98,7 +98,10 @@ public class WaTorDataParser extends FourNeighborDataParser {
 	
 	@Override
 	protected void setRule(){
-		rule = new WaTorRule(dimensions[0], dimensions[1], parameters.get("FishStep").intValue(), (int) parameters.get("SharkStep").intValue(), (int) parameters.get("SharkMax").intValue());
+		rule = new WaTorRule(dimensions[0], dimensions[1],
+				parameters.get("FishStep").intValue(), (int) parameters.get("SharkStep").intValue(),
+				parameters.get("SharkMax").intValue(), parameters.get("SharkEatHealth"),
+				parameters.get("SharkEnergyLoss"));
 	}
 
 }
