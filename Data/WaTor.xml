@@ -1,5 +1,7 @@
 <Data>
 	<Simulation>waTor</Simulation>
+	<Title>WaTor</Title>
+	<Author>Team 1</Author>
 	<Dimension>
 		<X>4</X>
 		<Y>4</Y>
@@ -9,8 +11,8 @@
 	<Color state="2">#198c19</Color>
 	<Parameters>
 	<FishStep>4</FishStep>
-	<SharkStep>4</SharkStep>
-	<SharkMax>10</SharkMax>
+	<SharkStep>10</SharkStep>
+	<SharkMax>9</SharkMax>
 	<SharkEatHealth>1</SharkEatHealth>
 	<SharkEnergyLoss>1</SharkEnergyLoss>
 	</Parameters>

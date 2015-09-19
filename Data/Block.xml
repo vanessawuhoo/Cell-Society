@@ -1,5 +1,7 @@
 <Data>
 	<Simulation>gameOfLife</Simulation>
+	<Title>Block</Title>
+	<Author>Team 1</Author>
 	<Dimension>
 		<X>4</X>
 		<Y>3</Y>

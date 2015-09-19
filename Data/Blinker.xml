@@ -1,5 +1,7 @@
 <Data>
 	<Simulation>gameOfLife</Simulation>
+	<Title>Blinker</Title>
+	<Author>Team 1</Author>
 	<Dimension>
 		<X>5</X>
 		<Y>5</Y>

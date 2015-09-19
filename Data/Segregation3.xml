@@ -1,5 +1,7 @@
 <Data>
 	<Simulation>segregation</Simulation>
+	<Title>Segregation3</Title>
+	<Author>Team 1</Author>
 	<Dimension>
 		<X>10</X>
 		<Y>10</Y>

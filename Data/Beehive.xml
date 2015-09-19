@@ -1,5 +1,7 @@
 <Data>
 	<Simulation>gameOfLife</Simulation>
+	<Title>Beehive</Title>
+	<Author>Team 1</Author>
 	<Dimension>
 		<X>6</X>
 		<Y>5</Y>
