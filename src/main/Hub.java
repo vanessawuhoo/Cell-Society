@@ -158,7 +158,7 @@ public class Hub {
 	private KeyFrame getStepKeyFrame() {
 		double second_delay = 1 / frames_per_second;
 		KeyFrame frame = new KeyFrame(Duration.seconds(second_delay),
-				e -> step());
+				e -> animationStep());
 		return frame;
 	}
 	
