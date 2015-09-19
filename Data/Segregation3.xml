@@ -13,10 +13,10 @@
 		<State>1</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
+		<State>1</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
+		<State>1</State>
 	</Cell>
 	<Cell>
 		<State>0</State>
@@ -37,52 +37,13 @@
 		<State>2</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
-	</Cell>
-	<Cell>
 		<State>1</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
-	</Cell>
-		<Cell>
-		<State>2</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
-	</Cell>
-	<Cell>
-		<State>1</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
 	</Cell>
 	<Cell>
 		<State>0</State>
 	</Cell>
 	<Cell>
-		<State>1</State>
+		<State>0</State>
 	</Cell>
 	<Cell>
 		<State>2</State>
@@ -92,36 +53,15 @@
 	</Cell>
 	<Cell>
 		<State>1</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
-	</Cell>
-	<Cell>
-		<State>1</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
 	</Cell>
 	<Cell>
 		<State>2</State>
 	</Cell>
 		<Cell>
-		<State>2</State>
+		<State>1</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
+		<State>1</State>
 	</Cell>
 	<Cell>
 		<State>2</State>
@@ -160,7 +100,7 @@
 		<State>2</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 	<Cell>
 		<State>1</State>
@@ -169,7 +109,7 @@
 		<State>2</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 	<Cell>
 		<State>2</State>
@@ -178,13 +118,13 @@
 		<State>2</State>
 	</Cell>
 		<Cell>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
+		<State>1</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 	<Cell>
 		<State>2</State>
@@ -226,13 +166,13 @@
 		<State>1</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
+		<State>1</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 	<Cell>
 		<State>2</State>
@@ -244,7 +184,67 @@
 		<State>2</State>
 	</Cell>
 	<Cell>
+		<State>0</State>
+	</Cell>
+	<Cell>
 		<State>2</State>
+	</Cell>
+	<Cell>
+		<State>1</State>
+	</Cell>
+	<Cell>
+		<State>2</State>
+	</Cell>
+	<Cell>
+		<State>2</State>
+	</Cell>
+	<Cell>
+		<State>0</State>
+	</Cell>
+	<Cell>
+		<State>1</State>
+	</Cell>
+	<Cell>
+		<State>1</State>
+	</Cell>
+	<Cell>
+		<State>1</State>
+	</Cell>
+	<Cell>
+		<State>1</State>
+	</Cell>
+	<Cell>
+		<State>2</State>
+	</Cell>
+	<Cell>
+		<State>1</State>
+	</Cell>
+	<Cell>
+		<State>2</State>
+	</Cell>
+	<Cell>
+		<State>1</State>
+	</Cell>
+	<Cell>
+		<State>2</State>
+	</Cell>
+	<Cell>
+		<State>1</State>
+	</Cell>
+	<Cell>
+		<State>1</State>
+	</Cell>
+	<Cell>
+		<State>2</State>
+	</Cell>
+		<Cell>
+		<State>2</State>
+	</Cell>
+	<Cell>
+		<State>1</State>
+	</Cell>
+	<Cell>
+		<State>1</State>
 	</Cell>
 	<Cell>
 		<State>2</State>
@@ -274,10 +274,10 @@
 		<State>1</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 	<Cell>
 		<State>2</State>
@@ -286,25 +286,25 @@
 		<State>1</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
+		<State>0</State>
+	</Cell>
+	<Cell>
+		<State>0</State>
 	</Cell>
 	<Cell>
 		<State>2</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
-	</Cell>
-	<Cell>
-		<State>2</State>
+		<State>1</State>
 	</Cell>
 		<Cell>
 		<State>2</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 	<Cell>
-		<State>2</State>
+		<State>0</State>
 	</Cell>
 	<Cell>
 		<State>2</State>
