@@ -39,44 +39,47 @@ public class WaTorDataParser extends FourNeighborDataParser {
 		}
 		cellGraph = new CellGraph(cellMapGraph);
 		
+		int m = dimensions[0];
+		int n = dimensions[1];
+		
 		//set tourus neighbors
-		for (int i = 1; i <= dimensions[0]; i++) {
-			for (int j = 1; j <= dimensions[1]; j++) {
-				int curr_index = dimensions[1]*(i-1) + j;
+		for (int i = 1; i <= m; i++) {
+			for (int j = 1; j <= n; j++) {
+				int curr_index = n*(i-1) + j;
 				List<Cell> neighbors = new ArrayList<Cell>();
 				Cell c = cellMapGraph.get(curr_index);
 				// handle up
-				int up_index = curr_index - dimensions[1];
+				int up_index = curr_index - n;
 				if (up_index > 0) {
 					
 				} else{
-					up_index = curr_index + (dimensions[0]*(dimensions[1]-1));
+					up_index = curr_index + (m*(n-1));
 				}
 				neighbors.add(cellMapGraph.get(up_index));
 
 				// handle right
 				int right_index = curr_index + 1;
-				if (right_index % dimensions[1] != 1) {
+				if (right_index % n != 1) {
 					
 				} else{
-					right_index = curr_index + 1 - dimensions[0];
+					right_index = curr_index + 1 - m;
 				}
 				neighbors.add(cellMapGraph.get(right_index));
 				// handle down
-				int down_index = curr_index + dimensions[1];
-				if (down_index <= dimensions[0]*dimensions[1]) {
+				int down_index = curr_index + n;
+				if (down_index <= m*n) {
 					
 				} else{
-					down_index = curr_index - (dimensions[0]*(dimensions[1]-1));
+					down_index = curr_index - (m*(n-1));
 				}
 				neighbors.add(cellMapGraph.get(down_index));
 
 				//handle left
 				int left_index = curr_index - 1;
-				if (left_index % dimensions[1] != 0) {
+				if (left_index % n != 0) {
 					
 				} else{
-					left_index = curr_index - 1 + dimensions[0];
+					left_index = curr_index - 1 + m;
 				}
 				neighbors.add(cellMapGraph.get(left_index));
 				c.setConnections(neighbors);
