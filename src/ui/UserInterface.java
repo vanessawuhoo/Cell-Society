@@ -80,12 +80,11 @@ public class UserInterface {
 	
 	//initializes the grid upon loading an XML
 	private void initGrid(Queue<Double> states){
-		myArray = new Shape[myParameters[0]][myParameters[1]];
+		myArray = new Shape[myParameters[1]][myParameters[0]];
 		int row = 0;
 		int col = 0;
 		while (!states.isEmpty()) {
 			double currState = states.remove();
-			System.out.println("state: " + currState);
 			String color = colors.get(currState);
 			SquareShape squareShape = new SquareShape(blockLength, color, myParameters);
 			myArray[row][col] = squareShape;
@@ -98,7 +97,7 @@ public class UserInterface {
 			}
 		}
 	}
-
+	
 	//method to run updates on the grid square states
 	public void updateStep(Queue<Double> newStates) {
 		int row = 0;
