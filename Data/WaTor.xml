@@ -4,9 +4,9 @@
 		<X>4</X>
 		<Y>4</Y>
 	</Dimension>
-	<Color state="0">#198c19</Color>
+	<Color state="0">#00cbff</Color>
 	<Color state="1">#ffff32</Color>
-	<Color state="2">#00cbff</Color>
+	<Color state="2">#198c19</Color>
 	<Parameters>
 	<FishStep>4</FishStep>
 	<SharkStep>4</SharkStep>
