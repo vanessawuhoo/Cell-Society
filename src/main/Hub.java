@@ -35,11 +35,6 @@ public class Hub {
 	private boolean simulation_running;
 	private boolean simulation_loaded;
 	
-	public Hub() {
-		loadTestSim();
-		testing = true;
-	}
-	
 	public Hub(XMLLoader xml_loader, Display display) {
 		testing = false;
 		this.xml_loader = xml_loader;
@@ -49,7 +44,6 @@ public class Hub {
 		animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(getStepKeyFrame());
-		//display.startTestSim();
 	}
 	
 	public XMLLoader getLoader(){
@@ -76,36 +70,6 @@ public class Hub {
 		}
 		return new SimVars(false, null, null, null, "Simulation running",
 				frames_per_second);
-	}
-	
-	/* Test simulation
-	 * 
-	 */
-	public SimVars loadTestSim() {
-		Map<Integer, Cell> cell_graph_init_map = new HashMap<Integer, Cell>();
-		Cell c1 = getTestCell(1, 0); Cell c2 = getTestCell(2, 1); Cell c3 = getTestCell(3, 1);
-		Cell c4 = getTestCell(4, 2); Cell c5 = getTestCell(5, 0); Cell c6 = getTestCell(6, 1);
-		addConnections(c1, new Cell[] {c2,c3}); addConnections(c2, new Cell[] {c1,c4});
-		addConnections(c3, new Cell[] {c1,c4}); addConnections(c4, new Cell[] {c2,c3});
-		cell_graph_init_map.put(1, c1);
-		cell_graph_init_map.put(2, c2);
-		cell_graph_init_map.put(3, c3);
-		cell_graph_init_map.put(4, c4);
-		cell_graph = new CellGraph(cell_graph_init_map);
-		rule = new SegregationRule(2,2);
-		simulation_loaded = true;
-		Queue<Double> states = cell_graph.getRelevantStates();
-		return new SimVars(true, rule, states, null, "", frames_per_second);
-	}
-	private Cell getTestCell(int id, int segregation_state) {
-		Map<String, Double> s = new HashMap<String, Double>();
-		s.put("state", (double) segregation_state);
-		Cell c = new Cell(id, s);
-		return c;
-	}
-	private void addConnections(Cell curr_cell, Cell[] conn_array) {
-		List<Cell> connections = new ArrayList<Cell>(Arrays.asList(conn_array));
-		curr_cell.setConnections(connections);
 	}
 
 	public boolean playSimulation() {

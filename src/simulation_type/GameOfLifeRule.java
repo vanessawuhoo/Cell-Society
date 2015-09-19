@@ -20,7 +20,7 @@ public class GameOfLifeRule extends Rule {
 	
 	/*
 	 * States: 
-	 * "State": 0=white, 1= black
+	 * "State": 0=dead, 1=alive
 	 */
 	@Override
 	public void updateCell(int id, Map<String, Double> cell_state, 
@@ -33,8 +33,7 @@ public class GameOfLifeRule extends Rule {
 		int alive = 0;
 		int dead = 0;
 		for (int neighbor_state_id: neighboring_states.keySet()) {
-			Map<String, Double> neighbor_state = neighboring_states.get(neighbor_state_id);
-			double n_state = neighbor_state.get("State");
+			double n_state = neighboring_states.get(neighbor_state_id).get("State");
 			if (n_state == 0) {
 				dead++;
 			}
@@ -44,26 +43,27 @@ public class GameOfLifeRule extends Rule {
 		}
 		if (state == 0){
 			if(alive == 3){
-				//update state to 1
+				next_states.put(id, makeNewState(1));
 			} else{
-				//keep state to 0
+				next_states.put(id, makeNewState(0));
 			}
 		}
 		if (state == 1){
 			if(alive > 3){
-				//update state to 0
+				next_states.put(id, makeNewState(0));
 			}
 			if(alive < 2){
-				//update state to 0
+				next_states.put(id, makeNewState(0));
 			}
 			else{
-				//keep state at 1
+				next_states.put(id, makeNewState(1));
 			}
 		}
-	
+		System.out.println();
 	}
 	
 	private Map<String, Double> makeNewState(double s) {
+		System.out.print(s + "  ");
 		Map<String, Double> new_state = new HashMap<String, Double>();
 		new_state.put("State", s);
 		return new_state;
