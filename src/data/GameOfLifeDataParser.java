@@ -9,6 +9,7 @@ import org.w3c.dom.NodeList;
 
 import cells.Cell;
 import cells.CellGraph;
+import simulation_type.GameOfLifeRule;
 import simulation_type.Rule;
 import simulation_type.SegregationRule;
 
@@ -34,7 +35,7 @@ public class GameOfLifeDataParser extends EightNeighborDataParser {
 	
 	@Override
 	protected void setRule(){
-		rule = new SegregationRule(dimensions[0], dimensions[1]);
+		rule = new GameOfLifeRule(dimensions[0], dimensions[1]);
 	}
 	
 }

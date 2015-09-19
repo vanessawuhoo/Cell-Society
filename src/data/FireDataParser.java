@@ -36,7 +36,7 @@ public class FireDataParser extends FourNeighborDataParser {
 	
 	@Override
 	protected void setRule(){
-		rule = new SegregationRule(dimensions[0], dimensions[1]);
+		rule = new FireRule(dimensions[0], dimensions[1]);
 	}
 
 }
