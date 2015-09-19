@@ -22,7 +22,7 @@ public class SegregationRule extends Rule {
 	
 	/*
 	 * States: 
-	 * "state": 0=empty, 1=X, 2=O
+	 * "State": 0=empty, 1=X, 2=O
 	 */
 	@Override
 	public void updateCell(int id, Map<String, Double> cell_state, 
@@ -78,9 +78,7 @@ public class SegregationRule extends Rule {
 	public void fillVoids(Set<Integer> ids, Map<Integer, Map<String, Double>> next_states) {
 		for (int id: ids) {
 			if (!next_states.containsKey(id)) {
-				Map<String, Double> zero = new HashMap<String, Double>();
-				zero.put("State", (double) 0);
-				next_states.put(id, zero);
+				next_states.put(id, makeNewState(0));
 			}
 		}
 	}

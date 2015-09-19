@@ -145,8 +145,11 @@ public class WaTorRule extends Rule {
 
 	@Override
 	public void fillVoids(Set<Integer> ids, Map<Integer, Map<String, Double>> next_states) {
-		// TODO Auto-generated method stub
-		
+		for (int id: ids) {
+			if (!next_states.containsKey(id)) {
+				next_states.put(id, createNewState(0, 0, 0));
+			}
+		}
 	}
 
 	@Override
