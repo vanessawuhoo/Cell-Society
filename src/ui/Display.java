@@ -1,15 +1,12 @@
 package ui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Queue;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import main.Hub;
-import ui.UITester;
+import main.StepVars;
 import simulation_type.Rule;
 
 public class Display extends Application {
@@ -37,9 +34,8 @@ public class Display extends Application {
         myUserInterface = new UserInterface();
 //        UITester ui = new UITester();
 //        gridParameters = ui.getParameters();
-        gridParameters = hub.getParameters();
         stage.setTitle(myUserInterface.getTitle());
-        Scene myScene = myUserInterface.init(stage, getWidth(), getHeight(), gridParameters, "Data");
+        Scene myScene = myUserInterface.init(stage, getWidth(), getHeight(), "Data");
         stage.setScene(myScene);
 //        Map<String, Double> m = new HashMap<String, Double>();
 //        myUserInterface.replaceGrid(m);
@@ -48,8 +44,14 @@ public class Display extends Application {
 	}	
 	
 	//method to update the states of squares in the grid
-	public void update(Map<Integer, Map<String, Double>> states){
-//		myUserInterface.replaceGrid(states);
+	public void update(Queue<Double> states){
+		myUserInterface.updateStep(states);
+	}
+	
+	public void updateStep(StepVars step_var) {
+		if (step_var.sim_not_running) {
+			myUserInterface.updateStep(step_var.states);
+		}
 	}
 	
 	public void startTestSim(){

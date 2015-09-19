@@ -61,13 +61,13 @@ public class Hub {
 	 * If unsuccessful, return false and reason for error
 	 */
 	public SimVars loadSimulation(String xml_file_name) {
+		System.out.println(xml_file_name);
 		if (!simulation_running) {
 			xml_loader.setFileName(xml_file_name);
 			xml_loader.load();
 			xml_loader.parseDataSpecific(xml_loader.getRuleName());
 			AllData data = xml_loader.getParser(xml_loader.getRuleName()).getAllData();
 			Map<Double, String> color_map = xml_loader.getParser(xml_loader.getRuleName()).getColor();
-			
 			cell_graph = data.cellGraph;
 			rule = data.rule;
 			simulation_loaded = true;
@@ -84,7 +84,7 @@ public class Hub {
 	public SimVars loadTestSim() {
 		Map<Integer, Cell> cell_graph_init_map = new HashMap<Integer, Cell>();
 		Cell c1 = getTestCell(1, 0); Cell c2 = getTestCell(2, 1); Cell c3 = getTestCell(3, 1);
-		Cell c4 = getTestCell(4, 2);
+		Cell c4 = getTestCell(4, 2); Cell c5 = getTestCell(5, 0); Cell c6 = getTestCell(6, 1);
 		addConnections(c1, new Cell[] {c2,c3}); addConnections(c2, new Cell[] {c1,c4});
 		addConnections(c3, new Cell[] {c1,c4}); addConnections(c4, new Cell[] {c2,c3});
 		cell_graph_init_map.put(1, c1);
@@ -126,10 +126,10 @@ public class Hub {
 	
 	public void simulationStep() {
 		if (!simulation_loaded | simulation_running) {
-			//display.updateStep(new StepVars(false, null));
+			display.updateStep(new StepVars(false, null));
 		}
 		Queue<Double> states = step();
-		//display.updateStep(new StepVars(true, states));
+		display.updateStep(new StepVars(true, states));
 	}
 	
 	public Queue<Double> testStep() {
@@ -138,7 +138,7 @@ public class Hub {
 	
 	private void animationStep() {
 		Queue<Double> states = step();
-		//display.update(states);
+		display.update(states);
 	}
 	
 	private Queue<Double> step() {
