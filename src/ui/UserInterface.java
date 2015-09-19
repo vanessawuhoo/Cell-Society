@@ -85,6 +85,7 @@ public class UserInterface {
 		int col = 0;
 		while (!states.isEmpty()) {
 			double currState = states.remove();
+			System.out.println("state: " + currState);
 			String color = colors.get(currState);
 			SquareShape squareShape = new SquareShape(blockLength, color, myParameters);
 			myArray[row][col] = squareShape;

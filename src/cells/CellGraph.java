@@ -40,6 +40,7 @@ public class CellGraph {
 	}
 
 	public void updateCells(Rule r) {
+		System.out.println("updating cells");
 		Map<Integer, Map<String, Double>> current_states = new HashMap<Integer, Map<String, Double>>();
 		for (int id : all_cells.keySet()) {
 			Cell c = all_cells.get(id);
