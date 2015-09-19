@@ -178,6 +178,7 @@ public class Hub {
 	}
 	
 	private void updateKeyFrame() {
+		System.out.println(frames_per_second);
 		ObservableList<KeyFrame> keyFrames = animation.getKeyFrames();
 		if (!keyFrames.isEmpty()) {
 			keyFrames.removeAll();
