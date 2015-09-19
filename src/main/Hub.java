@@ -161,28 +161,31 @@ public class Hub {
 				e -> animationStep());
 		return frame;
 	}
-	
+
 	public double increaseRate() {
+		animation.stop();
+		Timeline newAnimation = new Timeline();
 		frames_per_second += DELTA_FPS;
-		updateKeyFrame();
+		newAnimation.getKeyFrames().add(getStepKeyFrame());
+		newAnimation.setCycleCount(Timeline.INDEFINITE);
+		newAnimation.play();
+		animation = newAnimation;
 		return frames_per_second;
 	}
 	
 	public double decreaseRate() {
+		animation.stop();
+		Timeline newAnimation = new Timeline();
 		double temp_fps = frames_per_second - DELTA_FPS;
 		if (temp_fps > 0) {
 			frames_per_second = temp_fps;
-			updateKeyFrame();
+			newAnimation.getKeyFrames().add(getStepKeyFrame());
+			newAnimation.setCycleCount(Timeline.INDEFINITE);
+			newAnimation.play();
+			animation = newAnimation;
 		}
 		return frames_per_second;
 	}
 	
-	private void updateKeyFrame() {
-		System.out.println(frames_per_second);
-		ObservableList<KeyFrame> keyFrames = animation.getKeyFrames();
-		if (!keyFrames.isEmpty()) {
-			keyFrames.removeAll();
-		}
-		keyFrames.add(getStepKeyFrame());
-	}
+
 }
