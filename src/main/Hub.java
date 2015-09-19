@@ -1,22 +1,15 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-import cells.Cell;
 import cells.CellGraph;
 import data.AllData;
 import data.XMLLoader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.collections.ObservableList;
 import javafx.util.Duration;
 import simulation_type.Rule;
-import simulation_type.SegregationRule;
 import ui.Display;
 
 public class Hub {
@@ -30,13 +23,11 @@ public class Hub {
 	
 	private CellGraph cell_graph;
 	private Rule rule;
-	
-	private boolean testing;
+
 	private boolean simulation_running;
 	private boolean simulation_loaded;
 	
 	public Hub(XMLLoader xml_loader, Display display) {
-		testing = false;
 		this.xml_loader = xml_loader;
 		this.display = display;
 		simulation_running = false;

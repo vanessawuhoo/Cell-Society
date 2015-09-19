@@ -49,21 +49,17 @@ public class GameOfLifeRule extends Rule {
 			}
 		}
 		if (state == 1){
-			if(alive > 3){
+			if (alive > 3){
 				next_states.put(id, makeNewState(0));
-			}
-			if(alive < 2){
+			} else if (alive < 2) {
 				next_states.put(id, makeNewState(0));
-			}
-			else{
+			} else {
 				next_states.put(id, makeNewState(1));
 			}
 		}
-		System.out.println();
 	}
 	
 	private Map<String, Double> makeNewState(double s) {
-		System.out.print(s + "  ");
 		Map<String, Double> new_state = new HashMap<String, Double>();
 		new_state.put("State", s);
 		return new_state;
