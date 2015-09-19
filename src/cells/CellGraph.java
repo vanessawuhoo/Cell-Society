@@ -31,7 +31,7 @@ public class CellGraph {
 		Queue<Double> states = new LinkedList<Double>();
 		// Map<Integer, Map<String, Double>> states =
 		// new HashMap<Integer, Map<String, Double>>();
-		for (int i = 0; i < all_cells.keySet().size(); i++) {
+		for (int i = 1; i <= all_cells.keySet().size(); i++) {
 			Cell c = all_cells.get(i);
 			Double s = c.getState().get("State");
 			states.add(s);

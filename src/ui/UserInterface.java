@@ -40,11 +40,10 @@ public class UserInterface {
 	}
 	
 	//initialize all UI elements
-	public Scene init(Stage stage, double width, double height, int[] gridParameters, String resource) {
+	public Scene init(Stage stage, double width, double height, String resource) {
 		root = new Group();
 		screenWidth = width;
 		screenHeight = height;
-		myParameters = gridParameters;
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + resource);
 		myUserInterface = new Scene(root, width, height, Color.WHITE);
 		load = buttonInit(myResources.getString("LoadButton"), width/7, height/20);
@@ -73,7 +72,7 @@ public class UserInterface {
         input.setContentText(myResources.getString("FilePrompt"));
         Optional<String> response = input.showAndWait();
         if (response.isPresent()) {
-            return response.toString();
+            return response.get();
         }
         //error
         return "";
