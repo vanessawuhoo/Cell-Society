@@ -137,8 +137,8 @@ public class UserInterface {
 	
 	//helper method to set locations of squares in the grid
 	private void setLocation(Rectangle square, int row, int col){
-		square.setLayoutX(offsetX + row*blockLength);
-		square.setLayoutY(offsetY + col*blockLength);
+		square.setLayoutX(offsetX + col*blockLength);
+		square.setLayoutY(offsetY + row*blockLength);
 	}
 	
 	//calculates the optimal side length based on scaling vertically or horizontally
