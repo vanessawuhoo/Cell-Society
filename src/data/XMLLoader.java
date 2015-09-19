@@ -66,7 +66,6 @@ public class XMLLoader extends nodeTraverser{
 	
 	public void setFileName(String name){
 		fileName = name;
-		System.out.println(fileName);
 	}
 	
 	public void load(){
