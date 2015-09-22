@@ -9,6 +9,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -46,17 +47,31 @@ public class UserInterface {
 		screenHeight = height;
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + resource);
 		myUserInterface = new Scene(root, width, height, Color.WHITE);
-		load = buttonInit(myResources.getString("LoadButton"), width/7, height/20);
-		start = buttonInit(myResources.getString("StartButton"), width*2/7, height/20);
-		stop = buttonInit(myResources.getString("StopButton"), width*3/7, height/20);
-		step = buttonInit(myResources.getString("StepButton"), width*4/7, height/20);
-		slow = buttonInit(myResources.getString("SlowButton"), width*5/7, height/20);
-		fast = buttonInit(myResources.getString("FastButton"), width*6/7, height/20);
 		initButtonEvents();
 		return myUserInterface;
 	}
 	
-
+	private void loadHBox() {
+		HBox controlBar = new HBox();
+		load = new Button(myResources.getString("LoadButton"));
+		start = new Button(myResources.getString("StartButton"));
+		stop = new Button(myResources.getString("StopButton"));
+		step = new Button(myResources.getString("StepButton"));
+		slow = new Button(myResources.getString("SlowButton"));
+		fast = new Button(myResources.getString("FastButton"));
+		controlBar.getChildren().add(load);
+		controlBar.getChildren().add(start);
+		controlBar.getChildren().add(stop);
+		controlBar.getChildren().add(step);
+	}
+	//helper method to initialize buttons with proper x and y placement 
+	private Button buttonInit(String text, double x, double y){
+		Button myButton = new Button(text);
+		myButton.setLayoutX(x);
+		myButton.setLayoutY(y);
+		root.getChildren().add(myButton);
+		return myButton;
+	}
 	private void load(){
 		SimVars variables = hub.loadSimulation(getFile());
 		colors = variables.color_map;
@@ -116,14 +131,7 @@ public class UserInterface {
 		}
 	}
 	
-	//helper method to initialize buttons with proper x and y placement 
-	private Button buttonInit(String text, double x, double y){
-		Button myButton = new Button(text);
-		myButton.setLayoutX(x);
-		myButton.setLayoutY(y);
-		root.getChildren().add(myButton);
-		return myButton;
-	}
+
 
 	//button event handler method
 	private void initButtonEvents(){
