@@ -14,6 +14,15 @@ public class SquareShape extends Shape {
 		sideLength = blockLength;
 		square = new Rectangle(sideLength, sideLength);
 		square.setFill(Color.web(hex));
+		square.setStroke(Color.BLACK);
+	}
+	
+	public void setFill(boolean control) {
+		if (control) {
+			square.setStroke(Color.BLACK);
+		} else {
+			square.setStroke(Color.WHITE);
+		}
 	}
 	
 	//set object color to new Hex value passed by String
