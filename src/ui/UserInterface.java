@@ -10,13 +10,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import main.Hub;
 import main.SimVars;
@@ -29,6 +29,7 @@ public class UserInterface {
 	private ResourceBundle myResources;
 	private int[] myParameters;
 	Group root;
+	ChoiceBox<String> selectCells;
 	TextField textField;
 	private Map<Double,String> colors;
 	private double screenWidth, screenHeight;
@@ -37,7 +38,7 @@ public class UserInterface {
 	private Hub hub;
 	private VBox sidebar;
 	//test
-	private String myCellShape = "TRIANGLE";
+	private String myCellShape = "SQUARE";
 
 	//give the display the title
 	public String getTitle() {
@@ -46,9 +47,9 @@ public class UserInterface {
 	
 	public void loadRenders(){
 		myPossibleRenders = new HashMap<String, RenderShapes>();
-		myPossibleRenders.put("RECTANGLE", new RenderSquares(screenWidth, screenHeight, myParameters, colors));
+		myPossibleRenders.put("SQUARE", new RenderSquares(screenWidth, screenHeight, myParameters, colors));
 		myPossibleRenders.put("TRIANGLE", new RenderTriangles(screenWidth, screenHeight, myParameters, colors));
-		myPossibleRenders.put("HEXAGON", new RenderHexagons());
+		myPossibleRenders.put("HEXAGON", new RenderHexagons(screenWidth, screenHeight, myParameters, colors));
 	}
 	
 	//set internal representation of hub so hub methods can be called
@@ -65,16 +66,30 @@ public class UserInterface {
 		myUserInterface = new Scene(root, width, height, Color.WHITE);
 		root.getChildren().add(loadLayout());
 		initButtonEvents();
-		
-		Polygon t = new Polygon();
 		return myUserInterface;
 	}
 	
 	private void loadSidebar(){
 		sidebar = new VBox();
+		sidebar.setSpacing(20);
 		textField = new TextField();
-		textField.setPromptText("Data File:");
-		sidebar.getChildren().addAll(textField);
+		textField.setPromptText(myResources.getString("XMLInput"));
+		HBox cellControl = new HBox();
+		selectCells = new ChoiceBox<String>();
+		selectCells.getItems().addAll(
+				"SQUARE",
+				"TRIANGLE",
+				"HEXAGON");
+		Button go = new Button("Go");
+		go.setOnMouseClicked(e-> changeCells());
+		cellControl.getChildren().addAll(selectCells, go);
+		cellControl.setSpacing(10);
+		sidebar.getChildren().addAll(textField, cellControl);
+	}
+	
+	private void changeCells(){
+		myCellShape = selectCells.getSelectionModel().getSelectedItem().toString();
+		load();
 	}
 	
 	private BorderPane loadLayout(){ 
@@ -98,7 +113,7 @@ public class UserInterface {
 		myPossibleRenders.get(myCellShape).initGrid(states);
 		Pane myGrid = myPossibleRenders.get(myCellShape).getPane();
 		layout.setCenter(myGrid);
-		BorderPane.setMargin(myGrid, new Insets(screenHeight/12,0,0,screenWidth/12));
+		BorderPane.setMargin(myGrid, new Insets(screenHeight/20,0,0,screenWidth/12));
 		layout.setAlignment(myGrid, Pos.CENTER);
 		myPossibleRenders.get(myCellShape).setGridOutline(true);
 	}
