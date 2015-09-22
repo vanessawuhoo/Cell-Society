@@ -5,18 +5,22 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import main.Hub;
 import main.SimVars;
@@ -29,15 +33,17 @@ public class UserInterface {
 	private ResourceBundle myResources;
 	private int[] myParameters;
 	Group root;
+	ChoiceBox<String> selectCells;
 	TextField textField;
 	private Map<Double,String> colors;
 	private double screenWidth, screenHeight;
 	private Button start, stop, step, slow, fast, load;
 	private Scene myUserInterface;
 	private Hub hub;
+	CheckBox outlines;
 	private VBox sidebar;
 	//test
-	private String myCellShape = "TRIANGLE";
+	private String myCellShape = "SQUARE";
 
 	//give the display the title
 	public String getTitle() {
@@ -46,9 +52,9 @@ public class UserInterface {
 	
 	public void loadRenders(){
 		myPossibleRenders = new HashMap<String, RenderShapes>();
-		myPossibleRenders.put("RECTANGLE", new RenderSquares(screenWidth, screenHeight, myParameters, colors));
+		myPossibleRenders.put("SQUARE", new RenderSquares(screenWidth, screenHeight, myParameters, colors));
 		myPossibleRenders.put("TRIANGLE", new RenderTriangles(screenWidth, screenHeight, myParameters, colors));
-		myPossibleRenders.put("HEXAGON", new RenderHexagons());
+		myPossibleRenders.put("HEXAGON", new RenderHexagons(screenWidth, screenHeight, myParameters, colors));
 	}
 	
 	//set internal representation of hub so hub methods can be called
@@ -64,17 +70,33 @@ public class UserInterface {
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + resource);
 		myUserInterface = new Scene(root, width, height, Color.WHITE);
 		root.getChildren().add(loadLayout());
-		initButtonEvents();
-		
-		Polygon t = new Polygon();
+		buttonEvents();
 		return myUserInterface;
 	}
 	
 	private void loadSidebar(){
 		sidebar = new VBox();
+		sidebar.setSpacing(30);
 		textField = new TextField();
-		textField.setPromptText("Data File:");
-		sidebar.getChildren().addAll(textField);
+		textField.setPromptText(myResources.getString("XMLInput"));
+		HBox cellControl = new HBox();
+		selectCells = new ChoiceBox<String>();
+		selectCells.getItems().addAll(
+				"SQUARE",
+				"TRIANGLE",
+				"HEXAGON");
+		Button go = new Button("Go");
+		go.setOnMouseClicked(e-> changeCells());
+		cellControl.getChildren().addAll(selectCells, go);
+		cellControl.setSpacing(10);
+		outlines = new CheckBox("Grid Visible");
+		outlines.setSelected(true);
+		sidebar.getChildren().addAll(textField, cellControl, outlines);
+	}
+	
+	private void changeCells(){
+		myCellShape = selectCells.getSelectionModel().getSelectedItem().toString();
+		load();
 	}
 	
 	private BorderPane loadLayout(){ 
@@ -84,7 +106,7 @@ public class UserInterface {
 		BorderPane.setMargin(control, new Insets(screenHeight/20,screenWidth/20,screenHeight/20,screenWidth/20));
 		loadSidebar();
 		layout.setRight(sidebar);
-		layout.setMargin(sidebar, new Insets(0,screenWidth/20,screenHeight/20,screenWidth/20));
+		BorderPane.setMargin(sidebar, new Insets(screenHeight/20,screenWidth/20,screenHeight/20,screenWidth/20));
 		return layout;
 	}
 
@@ -98,7 +120,7 @@ public class UserInterface {
 		myPossibleRenders.get(myCellShape).initGrid(states);
 		Pane myGrid = myPossibleRenders.get(myCellShape).getPane();
 		layout.setCenter(myGrid);
-		BorderPane.setMargin(myGrid, new Insets(screenHeight/12,0,0,screenWidth/12));
+		BorderPane.setMargin(myGrid, new Insets(screenHeight/20,0,0,screenWidth/12));
 		layout.setAlignment(myGrid, Pos.CENTER);
 		myPossibleRenders.get(myCellShape).setGridOutline(true);
 	}
@@ -117,13 +139,19 @@ public class UserInterface {
 	}
 
 	//button event handler method
-	private void initButtonEvents(){
+	private void buttonEvents(){
 		fast.setOnMouseClicked(e -> hub.increaseRate());
 		slow.setOnMouseClicked(e->hub.decreaseRate());
 		stop.setOnMouseClicked(e->hub.pauseSimulation());
 		start.setOnMouseClicked(e->hub.playSimulation());
 		step.setOnMouseClicked(e->hub.simulationStep());
 		load.setOnMouseClicked(e->load());
+        outlines.selectedProperty().addListener(new ChangeListener<Boolean>() {
+           public void changed(ObservableValue<? extends Boolean> ov,
+             Boolean old_val, Boolean new_val) {
+             myPossibleRenders.get(myCellShape).setGridOutline(outlines.isSelected());
+          }
+        });
 	}
 
 	public void updateStep(Queue<Double> states) {
