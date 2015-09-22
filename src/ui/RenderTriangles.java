@@ -40,7 +40,7 @@ public class RenderTriangles extends RenderShapes {
 			TriangleShape triangle = new TriangleShape(id, myColors.get(currState));
 			myArray[row][col] = triangle;
 			myGrid.getChildren().add(triangle);
-			if (calcOrientation(id)){
+			if (calcOrientation(id,row)){
 				triangle.getPoints().addAll(new Double[]{
 					calcBaseLength()/2, 0.0,
 					0.0, calcHeight(),
@@ -63,28 +63,45 @@ public class RenderTriangles extends RenderShapes {
 		}
 	}
 	
-	public boolean calcOrientation(int id){
-		if (myParameters[0]%2!=0){
-			if (id%2==0){
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			//row is even
-			if (myParameters[1]%2==0) {
+	public boolean calcOrientation(int id, int row){
+		if (myParameters[0]%2==0) {
+			//number of cols is EVEN
+			if (row%2==0){
+				//even row
 				if (id%2==0){
+					//up
 					return true;
-				}else {
+				}
+				else {
 					return false;
 				}
 			} else {
-				if (id%2==0) {
+				//odd row
+				if (id%2==0){
 					return false;
 				} else {
 					return true;
 				}
 			}
+		} else {
+			//number of cols is ODD
+			if (row%2==0){
+				//even row
+				if (id%2==0){
+					//even ID
+					return false;
+				} else {
+					return true;
+				}
+			} else {
+				//odd row
+				if (id%2==0){
+					return true;
+				} else {
+					return false;
+				}
+			}
+			
 		}
 	}
 
@@ -106,9 +123,9 @@ public class RenderTriangles extends RenderShapes {
 		for (int row = 0; row < myArray.length; row++) {
 			for (int col = 0; col < myArray[0].length; col++){
 				if (on){
-//					myArray[row][col].setStroke(Color.BLACK);
+					myArray[row][col].setStroke(Color.BLACK);
 				} else {
-//					myArray[row][col].setStroke(myArray[row][col].getFill());
+					myArray[row][col].setStroke(myArray[row][col].getFill());
 				}
 			}
 		}
@@ -129,7 +146,8 @@ public class RenderTriangles extends RenderShapes {
 	}
 
 	private void setLocation(TriangleShape triangle, int row, int col){
-		triangle.setLayoutX(col*calcBaseLength()/2);
+		
+			triangle.setLayoutX(col*calcBaseLength()/2);
 		triangle.setLayoutY(row*calcHeight());
 	}
 	

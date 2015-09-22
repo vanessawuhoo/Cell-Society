@@ -43,7 +43,7 @@ public class UserInterface {
 	CheckBox outlines;
 	private VBox sidebar;
 	//test
-	private String myCellShape = "SQUARE";
+	private String myCellShape = "TRIANGLE";
 
 	//give the display the title
 	public String getTitle() {
