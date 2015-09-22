@@ -1,49 +1,35 @@
 package ui;
 
+import java.util.Queue;
+
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 
 public class RenderTriangles extends RenderShapes {
 
 	@Override
-	public void initGrid() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateStep() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setLocation() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void initRegion() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Region getRegion() {
+	Pane getPane() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public double calcOffsetX() {
+	void initGrid(Queue<Double> states) {
 		// TODO Auto-generated method stub
-		return 0;
+		
 	}
 
 	@Override
-	public double calcOffsetY() {
+	void updateStep(Queue<Double> states) {
 		// TODO Auto-generated method stub
-		return 0;
+		
 	}
+
+	@Override
+	void setGridOutline(boolean on) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

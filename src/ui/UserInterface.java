@@ -73,8 +73,17 @@ public class UserInterface {
 		textField = new TextField();
 		textField.setPromptText("Data File:");
 		sidebar.getChildren().addAll(textField);
-		
 	}
+	
+	//helper method to initialize buttons with proper x and y placement 
+	private Button buttonInit(String text, double x, double y){
+		Button myButton = new Button(text);
+		myButton.setLayoutX(x);
+		myButton.setLayoutY(y);
+		root.getChildren().add(myButton);
+		return myButton;
+	}
+
 	
 	private BorderPane loadLayout(){ 
 		layout = new BorderPane();
