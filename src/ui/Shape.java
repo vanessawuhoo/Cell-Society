@@ -8,6 +8,7 @@ public abstract class Shape {
 	//sets the color of the shape to a hex value
 	public abstract void setColor(String newColor);
 	
+	public abstract void setOutline(boolean on);
 	
 	//returns the color of the Shape
 	public abstract String getColor();
