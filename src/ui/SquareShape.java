@@ -16,6 +16,14 @@ public class SquareShape extends Shape {
 		square.setFill(Color.web(hex));
 	}
 	
+	public void setOutline(boolean on){
+		if (on){
+			square.setStroke(Color.BLACK);
+		} else {
+			square.setStroke(Color.web(hex));
+		}
+	}
+	
 	//set object color to new Hex value passed by String
 	public void setColor(String newColor){
 		hex = newColor;
