@@ -2,7 +2,6 @@ package ui;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Queue;
 import java.util.ResourceBundle;
 
@@ -11,14 +10,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import main.Hub;
 import main.SimVars;
@@ -38,6 +36,8 @@ public class UserInterface {
 	private Scene myUserInterface;
 	private Hub hub;
 	private VBox sidebar;
+	//test
+	private String myCellShape = "TRIANGLE";
 
 	//give the display the title
 	public String getTitle() {
@@ -47,7 +47,7 @@ public class UserInterface {
 	public void loadRenders(){
 		myPossibleRenders = new HashMap<String, RenderShapes>();
 		myPossibleRenders.put("RECTANGLE", new RenderSquares(screenWidth, screenHeight, myParameters, colors));
-		myPossibleRenders.put("TRIANGLE", new RenderTriangles());
+		myPossibleRenders.put("TRIANGLE", new RenderTriangles(screenWidth, screenHeight, myParameters, colors));
 		myPossibleRenders.put("HEXAGON", new RenderHexagons());
 	}
 	
@@ -65,6 +65,8 @@ public class UserInterface {
 		myUserInterface = new Scene(root, width, height, Color.WHITE);
 		root.getChildren().add(loadLayout());
 		initButtonEvents();
+		
+		Polygon t = new Polygon();
 		return myUserInterface;
 	}
 	
@@ -74,16 +76,6 @@ public class UserInterface {
 		textField.setPromptText("Data File:");
 		sidebar.getChildren().addAll(textField);
 	}
-	
-	//helper method to initialize buttons with proper x and y placement 
-	private Button buttonInit(String text, double x, double y){
-		Button myButton = new Button(text);
-		myButton.setLayoutX(x);
-		myButton.setLayoutY(y);
-		root.getChildren().add(myButton);
-		return myButton;
-	}
-
 	
 	private BorderPane loadLayout(){ 
 		layout = new BorderPane();
@@ -103,7 +95,6 @@ public class UserInterface {
 		myParameters = variables.rule.getGrid_parameters();
 		Queue<Double> states = variables.states;
 		loadRenders();
-		String myCellShape = "RECTANGLE";
 		myPossibleRenders.get(myCellShape).initGrid(states);
 		Pane myGrid = myPossibleRenders.get(myCellShape).getPane();
 		layout.setCenter(myGrid);
@@ -111,19 +102,7 @@ public class UserInterface {
 		layout.setAlignment(myGrid, Pos.CENTER);
 		myPossibleRenders.get(myCellShape).setGridOutline(true);
 	}
-	
-//	private String getFile(){
-//		TextInputDialog input = new TextInputDialog("");
-//		input.setTitle(myResources.getString("FilePromptTitle"));
-//        input.setContentText(myResources.getString("FilePrompt"));
-//        Optional<String> response = input.showAndWait();
-//        if (response.isPresent()) {
-//            return response.get();
-//        }
-//        //error
-//        return "";
-//	}
-//	
+		
 	private HBox loadHBox() {
 		HBox controlBar = new HBox();
 		load = new Button(myResources.getString("LoadButton"));
@@ -148,8 +127,6 @@ public class UserInterface {
 	}
 
 	public void updateStep(Queue<Double> states) {
-		// TODO Auto-generated method stub
-		String myCellShape = "RECTANGLE";
 		myPossibleRenders.get(myCellShape).updateStep(states);
 	}
 }
