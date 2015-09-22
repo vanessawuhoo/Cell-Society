@@ -1,57 +1,28 @@
 package ui;
-
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class SquareShape extends Shape {
+
+public class SquareShape extends Rectangle{
+	private int id;
 	private String hex;
-	private Rectangle square;
-	private double sideLength;
 	
 	//constructor
-	SquareShape(double blockLength, String color, int[] myParameters){
+	public SquareShape(int id, double blockLength, String color) {
 		hex = color;
-		sideLength = blockLength;
-		square = new Rectangle(sideLength, sideLength);
-		square.setFill(Color.web(hex));
-		square.setStroke(Color.BLACK);
-	}
-	
-	public void setFill(boolean control) {
-		if (control) {
-			square.setStroke(Color.BLACK);
-		} else {
-			square.setStroke(Color.WHITE);
-		}
-	}
-	
-	public void setOutline(boolean on){
-		if (on){
-			square.setStroke(Color.BLACK);
-		} else {
-			square.setStroke(Color.web(hex));
-		}
+		this.setWidth(blockLength);
+		this.setHeight(blockLength);
+		this.setFill(Color.web(color));
+		this.setStroke(Color.BLACK);
 	}
 	
 	//set object color to new Hex value passed by String
 	public void setColor(String newColor){
 		hex = newColor;
-		square.setFill(Color.web(hex));
-	}
+		this.setFill(Color.web(hex));
+	}	
 	
-	//get current hex value
 	public String getColor(){
 		return hex;
 	}
-	
-	//retrieve a javafx shape representation of the object
-	public Rectangle getObject(){
-		return square;
-	}
-	
-	//get javafx shape block side length
-	private double getBlockLength(){
-		return sideLength;
-	}
-	
 }

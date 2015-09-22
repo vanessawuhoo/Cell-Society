@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.Queue;
 
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 
 public abstract class RenderShapes {
 	private double screenWidth, screenHeight;
@@ -14,11 +14,13 @@ public abstract class RenderShapes {
 	private Shape[][] myArray;
 	private Pane myGrid;
 	
-	abstract Pane getPane();
+	public abstract Pane getPane();
 	
-	abstract void initGrid(Queue<Double> states);
+	public abstract void initGrid(Queue<Double> states);
 	
-	abstract void updateStep(Queue<Double> states);
+	public abstract void setGridOutline(boolean on);
 
-	abstract void setGridOutline(boolean on);
+	public abstract void updateStep(Queue<Double> states);
+		
+	
 }
