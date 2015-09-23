@@ -45,6 +45,16 @@ public class RenderSquares extends RenderShapes {
 		myGrid.setMaxWidth(screenWidth*2/3);
 	}
 	
+	public void updateColor(Map<Double, String> color) {
+		myColors = color;
+		for (int row = 0; row < myArray.length; row++){
+			for (int col = 0; col < myArray[0].length;col++){
+				myArray[row][col].setColor(myColors.get(myArray[row][col].state));
+			}
+		}
+	}
+	
+	
 	//initializes the grid upon loading an XML and inserts things into the pane
 		public void initGrid(Queue<Double> states){
 			myArray = new SquareShape[myParameters[1]][myParameters[0]];
@@ -53,7 +63,7 @@ public class RenderSquares extends RenderShapes {
 			int id = 1;
 			while (!states.isEmpty()) {
 				double currState = states.remove();
-				SquareShape square = new SquareShape(id, calcSideLength(), myColors.get(currState));
+				SquareShape square = new SquareShape(id, calcSideLength(), myColors.get(currState), currState);
 				myArray[row][col] = square;
 				myGrid.getChildren().add(square);
 				setLocation(square, row, col);

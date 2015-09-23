@@ -37,6 +37,7 @@ public class RenderHexagons extends RenderShapes {
 				}
 			}
 	}
+
 	
 	public void initPane() {
 		myGrid = new Pane();
@@ -53,7 +54,7 @@ public class RenderHexagons extends RenderShapes {
 			int id = 1;
 			while (!states.isEmpty()) {
 				double currState = states.remove();
-				HexagonShape hexagon = new HexagonShape(id, myColors.get(currState));
+				HexagonShape hexagon = new HexagonShape(id, myColors.get(currState), currState);
 				myArray[row][col] = hexagon;
 				myGrid.getChildren().add(hexagon);
 				double c = calcSideLength();
@@ -91,6 +92,14 @@ public class RenderHexagons extends RenderShapes {
 				}
 			}
 		}
+		public void updateColor(Map<Double, String> color) {
+			myColors = color;
+			for (int row = 0; row < myArray.length; row++){
+				for (int col = 0; col < myArray[0].length;col++){
+					myArray[row][col].setColor(myColors.get(myArray[row][col].state));
+				}
+			}
+		}
 		
 		//helper method to set locations of squares in the grid
 		private void setLocation(HexagonShape square, int row, int col){
@@ -115,5 +124,7 @@ public class RenderHexagons extends RenderShapes {
 				return cbyWidth;
 			}
 		}
+
+		
 		
 }
