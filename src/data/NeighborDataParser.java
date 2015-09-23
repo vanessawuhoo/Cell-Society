@@ -105,4 +105,43 @@ public abstract class NeighborDataParser extends DataParser{
 	public AllData getAllData() {
 		return allData;
 	}
+	
+	@Override
+	protected void setCellToMap(){
+		cellMap = new HashMap<Integer, Map<String, Double>>();
+		NodeList cellNodeList = doc.getElementsByTagName("Cell");
+		for(int i = 1; i<=cellNodeList.getLength(); i++){
+			
+			Node tempNode = cellNodeList.item(i-1);
+			Map<String, Double> parameterMap = new HashMap<String, Double>();
+			if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
+				NodeList parameterList = tempNode.getChildNodes();
+				for(int j = 0; j<parameterList.getLength(); j++){
+					Node tempParameter = parameterList.item(j);
+					if (tempParameter.getNodeType() == Node.ELEMENT_NODE) {
+						String stateValue = this.getNodeValue(tempParameter.getNodeName(), tempNode.getChildNodes());
+						parameterMap.put(tempParameter.getNodeName(), Double.parseDouble(stateValue));
+					}
+
+				}
+			cellMap.put(i, parameterMap);
+		    }
+			
+		}
+	}
+	
+	@Override
+	protected void setParameters() {
+		parameters = new HashMap<String, Double>();
+		Node dimension = getNode("Parameters", root.getChildNodes());
+		NodeList parameterList = dimension.getChildNodes();
+		for(int i = 0; i<parameterList.getLength(); i++){
+			Node tempParameter = parameterList.item(i);
+			if (tempParameter.getNodeType() == Node.ELEMENT_NODE) {
+				parameters.put(tempParameter.getNodeName(), Double.parseDouble(getNodeValue(tempParameter.getNodeName(), dimension.getChildNodes())));
+			}
+		}
+		
+
+	}
 }

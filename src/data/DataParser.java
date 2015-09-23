@@ -11,7 +11,7 @@ import simulation_type.Rule;
 import simulation_type.SegregationRule;
 
 
-public abstract class DataParser extends nodeTraverser {
+public abstract class DataParser extends NodeTraverser {
 
 	public abstract void parseData(Node head, Document document);
 	

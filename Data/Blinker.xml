@@ -11,12 +11,14 @@
 	<Parameters>
 	</Parameters>
 	<Cell>
-		<ID>1</ID>
 		<State>0</State>
+		<ID>2</ID>
+		<BLECH>8</BLECH>
 	</Cell>
 	<Cell>
 		<ID>2</ID>
 		<State>0</State>
+		<BLECH>8</BLECH>
 	</Cell>
 	<Cell>
 		<ID>3</ID>
@@ -47,11 +49,11 @@
 		<State>0</State>
 	</Cell>
 	<Cell>
-	<ID>10</ID>
+		<ID>10</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
-	<ID>11</ID>
+		<ID>11</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
@@ -59,7 +61,7 @@
 		<State>1</State>
 	</Cell>
 	<Cell>
-	<ID>13</ID>
+		<ID>13</ID>
 		<State>1</State>
 	</Cell>
 	<Cell>

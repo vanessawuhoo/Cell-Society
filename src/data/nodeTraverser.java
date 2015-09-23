@@ -4,7 +4,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class nodeTraverser {
+public class NodeTraverser {
 	protected Node getNode(String tagName, NodeList nodes) {
 	    for ( int x = 0; x < nodes.getLength(); x++ ) {
 	        Node node = nodes.item(x);
