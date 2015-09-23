@@ -1,0 +1,12 @@
+
+
+Kevin:
+
+in the XML possibly add what each state corresponds to, ex. 0.0: water, 1.0: fish etc
+put it in a Map<Double,String> and pass it to me through Hub please
+
+create a new neighborhood maker (?) class that Chris can access in order to dynamically change what cell type
+a user has 
+Chris also needs to make a method I can access so I can use an event handler to switch the neighborhoods
+*note, this does not need to preserve the place the simulation is at. when the user changes from ex squares
+to hexagons it just reloads the entire file.
