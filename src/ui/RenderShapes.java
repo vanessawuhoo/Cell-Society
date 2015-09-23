@@ -21,6 +21,7 @@ public abstract class RenderShapes {
 	public abstract void setGridOutline(boolean on);
 
 	public abstract void updateStep(Queue<Double> states);
-		
-	
+
+	public abstract void updateColor(Map<Double, String> colors);
+
 }

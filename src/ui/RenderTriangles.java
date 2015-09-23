@@ -12,7 +12,7 @@ public class RenderTriangles extends RenderShapes {
 	private double screenWidth, screenHeight;
 	private int[] myParameters;
 	private Map<Double,String> myColors;
-	private Polygon[][] myArray;
+	private TriangleShape[][] myArray;
 	private Pane myGrid;
 	
 	public RenderTriangles(double width, double height, int[] parameters, Map<Double,String>key){
@@ -29,6 +29,15 @@ public class RenderTriangles extends RenderShapes {
 		myGrid.setMaxWidth(screenWidth*2/3);
 	}
 	
+	public void updateColor(Map<Double, String> color) {
+		myColors = color;
+		for (int row = 0; row < myArray.length; row++){
+			for (int col = 0; col < myArray[0].length;col++){
+				myArray[row][col].setColor(myColors.get(myArray[row][col].state));
+			}
+		}
+	}
+	
 	
 	public void initGrid(Queue<Double> states) {
 		myArray = new TriangleShape[myParameters[1]][myParameters[0]];
@@ -37,7 +46,7 @@ public class RenderTriangles extends RenderShapes {
 		int id = 1;
 		while (!states.isEmpty()) {
 			double currState = states.remove();
-			TriangleShape triangle = new TriangleShape(id, myColors.get(currState));
+			TriangleShape triangle = new TriangleShape(id, myColors.get(currState), currState);
 			myArray[row][col] = triangle;
 			myGrid.getChildren().add(triangle);
 			if (calcOrientation(id,row)){
