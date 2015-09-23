@@ -1,6 +1,7 @@
 package ui;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.ResourceBundle;
@@ -15,12 +16,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import main.Hub;
 import main.SimVars;
@@ -39,10 +40,11 @@ public class UserInterface {
 	private double screenWidth, screenHeight;
 	private Button start, stop, step, slow, fast, load;
 	private Scene myUserInterface;
+	private Map<Double,Queue<Integer>> graphData;
 	private Hub hub;
 	private CheckBox outlines;
 	//test
-	private String myCellShape = "TRIANGLE";
+	private String myCellShape = "SQUARE";
 
 	//give the display the title
 	public String getTitle() {
@@ -72,6 +74,7 @@ public class UserInterface {
 		BorderPane.setMargin(sidebar, new Insets(screenHeight/20,screenWidth/20,screenHeight/20,screenWidth/20));
 		return layout;
 	}
+	
 	private HBox loadHBox() {
 		HBox controlBar = new HBox();
 		load = new Button(myResources.getString("LoadButton"));
@@ -88,16 +91,18 @@ public class UserInterface {
 	//load the UI sidebar to control the simulation
 	private VBox loadSidebar(){
 		VBox sidebar = new VBox();
-		sidebar.setSpacing(30);
+		sidebar.setSpacing(40);
 		loadFileInput();
 		HBox cellControl = loadCellShapeControl();
 		outlines = new CheckBox(myResources.getString("gridvis"));
 		outlines.setSelected(true);
 		HBox colorControl = loadColorControl();
-		sidebar.getChildren().addAll(xmlField, cellControl, outlines, colorControl);
+		Button getGraph = new Button(myResources.getString("graph"));
+		getGraph.setOnMouseClicked(e->launchPopup(new Stage()));
+		sidebar.getChildren().addAll(xmlField, cellControl, colorControl, getGraph, outlines);
 		return sidebar;
 	}
-	
+
 	private void loadFileInput(){
 		xmlField = new TextField();
 		xmlField.setPromptText(myResources.getString("XMLInput"));
@@ -150,18 +155,15 @@ public class UserInterface {
 		hub = h;
 	}
 	
-	private void changeCells(){
-		myCellShape = selectCells.getSelectionModel().getSelectedItem().toString();
-		load();
-	}
 
 	
 	private void load(){
 		SimVars variables = hub.loadSimulation(xmlField.getText());
-		colors = variables.color_map;
-		myParameters = variables.rule.getGrid_parameters();
+		this.colors = variables.color_map;
+		this.myParameters = variables.rule.getGrid_parameters();
 		Queue<Double> states = variables.states;
 		loadRenders();
+		initGraphData(states);
 		myPossibleRenders.get(myCellShape).initGrid(states);
 		Pane myGrid = myPossibleRenders.get(myCellShape).getPane();
 		layout.setCenter(myGrid);
@@ -173,13 +175,60 @@ public class UserInterface {
 		}
 		myPossibleRenders.get(myCellShape).setGridOutline(true);
 	}
-		
 	
+	private void initGraphData(Queue<Double> states){
+		graphData = new HashMap<Double,Queue<Integer>>();
+		Map<Double,Integer> countOfStates = countStates(states);
+		for (Double d : colors.keySet()){
+			Queue<Integer> queue = new LinkedList<Integer>();
+			queue.add(countOfStates.get(d));
+			graphData.put(d, queue);
+		}
+	}
+	
+	private void addGraphData(Map<Double,Integer> countOfStates){
+		for (Double d : colors.keySet()){
+			Queue<Integer> queue = graphData.get(d);
+			queue.add(countOfStates.get(d));
+			graphData.put(d, queue);
+		}
+	}
+	
+	private Map<Double,Integer> countStates(Queue<Double> states){
+		Queue<Double> copy = new LinkedList<Double>(states);
+		Map<Double,Integer> counts = new HashMap<Double,Integer>();
+		while (!copy.isEmpty()){
+			double d = copy.remove();
+			if (!counts.containsKey(d)){
+				counts.put(d, 1);
+			} else {
+				counts.put(d, counts.get(d)+1);
+			}
+		}
+		return counts;
+	}
+	
+	
+	private void changeCells(){
+		myCellShape = selectCells.getSelectionModel().getSelectedItem().toString();
+		load();
+	}
+
 	private void updateColor(Map<Double,String> newcolors){
 		myPossibleRenders.get(myCellShape).updateColor(colors);
 	}
 	
-
+	private void launchPopup(Stage s){
+		s.setTitle(myResources.getString("chart"));
+		Popup popup = new Popup();
+		popup.show(s);
+		Group r = new Group();
+		DrawGraph draw = new DrawGraph(new HashMap<Double,Queue<Integer>>(graphData));
+		r.getChildren().add(draw.getChart());
+		s.setScene(new Scene(r));
+		s.show();
+	}
+	
 	//button event handler method
 	private void buttonEvents(){
 		fast.setOnMouseClicked(e -> hub.increaseRate());
@@ -197,7 +246,9 @@ public class UserInterface {
 	}
 
 	public void updateStep(Queue<Double> states) {
+		Map<Double,Integer>countOfStates = countStates(states);
 		myPossibleRenders.get(myCellShape).updateStep(states);
+		addGraphData(countOfStates);
 	}
 }
 
