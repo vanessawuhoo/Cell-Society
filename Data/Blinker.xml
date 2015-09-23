@@ -4,7 +4,7 @@
 	<Author>Team 1</Author>
 	<Dimension>
 		<X>5</X>
-		<Y>5</Y>
+		<Y>4</Y>
 	</Dimension>
 	<Color state="0">#ffffff</Color>
 	<Color state="1">#000000</Color>
@@ -90,26 +90,6 @@
 	</Cell>
 	<Cell>
 		<ID>4</ID>
-		<State>0</State>
-	</Cell>
-		<Cell>
-		<ID>5</ID>
-		<State>0</State>
-	</Cell>
-	<Cell>
-		<ID>6</ID>
-		<State>0</State>
-	</Cell>
-	<Cell>
-		<ID>7</ID>
-		<State>0</State>
-	</Cell>
-	<Cell>
-		<ID>8</ID>
-		<State>0</State>
-	</Cell>
-	<Cell>
-		<ID>9</ID>
 		<State>0</State>
 	</Cell>
 </Data>

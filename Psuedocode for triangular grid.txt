@@ -1,0 +1,33 @@
+// Triangle
+
+Assumptions: grid is mxn, indices go 1->mn
+Map<Integer, Cell> cells initialized
+
+for (int i = 1; i <= m; i++) {
+	for (int j = 1; i <= n; j++) {
+		int index = (i-1)*n + j;
+		List<Cell> neighbors = new List<Cell>();
+		// left
+		if (j != 1) {
+			Cell left_c = cells.get(index - 1);
+			neighbors.add(up_c);
+		}
+		// right
+		if (j != n) {
+			Cell right_c = cells.get(index + 1);
+			neighbors.add(right_c);
+		}
+		if (i % 2 == 1) { // odd row
+			if (j % 2 == 1) {
+				if (i != 1) {
+					Cell up_c = cells.get(index - n);
+					neighbors.add(up_c);
+				}
+			} else {
+				if (i != m) {
+					Cell down_c = cells.get(index + n);
+				}
+			}
+
+					
+		

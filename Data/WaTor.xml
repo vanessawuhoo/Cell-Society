@@ -14,7 +14,7 @@
 	<SharkStep>10</SharkStep>
 	<SharkMax>9</SharkMax>
 	<SharkEatHealth>1</SharkEatHealth>
-	<SharkEnergyLoss>1</SharkEnergyLoss>
+	<SharkEnergyLoss>2</SharkEnergyLoss>
 	</Parameters>
 	<Cell>
 		<ID>1</ID>
