@@ -10,3 +10,7 @@ a user has
 Chris also needs to make a method I can access so I can use an event handler to switch the neighborhoods
 *note, this does not need to preserve the place the simulation is at. when the user changes from ex squares
 to hexagons it just reloads the entire file.
+
+
+If you implement toroidal, please make a method that will allow switching between using toroidal and regular grid
+neighborhoods. That way, I can add that switching functionality to the UI.

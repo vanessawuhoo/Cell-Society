@@ -113,7 +113,6 @@ public class RenderHexagons extends RenderShapes {
 		
 		//calculates the optimal side length based on scaling vertically or horizontally
 		private double calcSideLength(){
-			double blockLength = 0;
 			double maxGridWidth = screenWidth *2/3;
 			double maxGridHeight = screenHeight*2/3;
 			double cbyHeight = maxGridHeight / (2 + myParameters[1]);
