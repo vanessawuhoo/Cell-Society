@@ -10,6 +10,7 @@
 	<Color state="1">#000000</Color>
 	<Parameters>
 	</Parameters>
+	<CellFill>ManualFill</CellFill>
 	<Cell>
 		<ID>1</ID>
 		<State>1</State>

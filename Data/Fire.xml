@@ -12,6 +12,7 @@
 	<Parameters>
 	<ProbCatch>.6</ProbCatch>
 	</Parameters>
+	<CellFill>ManualFill</CellFill>
 	<Cell>
 		<ID>1</ID>
 		<State>1</State>
