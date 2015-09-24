@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -24,7 +27,7 @@ import simulation_type.SegregationRule;
 import main.Hub;
 
 
-public class XMLLoader extends nodeTraverser{
+public class XMLLoader extends NodeTraverser{
 	private Hub hub;
 	
 	private String simulationType;
@@ -33,7 +36,7 @@ public class XMLLoader extends nodeTraverser{
 	private Map<Integer, Map<String, String>> cellMap;
 	
 	private String fileName;
-	private DocumentBuilderFactory dbf;
+	private DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	private DocumentBuilder db;
 	private Document doc;
 	private NodeList rootList;
@@ -41,9 +44,11 @@ public class XMLLoader extends nodeTraverser{
 	private Map<String, DataParser> ruleMap = new HashMap<String, DataParser>();
 	private int dimensions[];
 	private Rule rule;
+	private Schema schema = null;
+
+	
 	
 	public XMLLoader(){
-		dbf = DocumentBuilderFactory.newInstance();
 		try {
 			db = dbf.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
@@ -71,6 +76,7 @@ public class XMLLoader extends nodeTraverser{
 	public void load(){
 		try {
 			doc = db.parse(new File(fileName));
+			
 			System.out.println("File Loaded");
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block

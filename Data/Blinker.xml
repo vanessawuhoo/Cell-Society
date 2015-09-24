@@ -10,9 +10,16 @@
 	<Color state="1">#000000</Color>
 	<Parameters>
 	</Parameters>
+	<CellFill>ManualFill</CellFill>
+	<ProbFill>
+		<State>
+			<Probability state="0">.2</Probability>
+			<Probability state="1">.8</Probability>
+		</State>	
+	</ProbFill>
 	<Cell>
-		<ID>1</ID>
 		<State>0</State>
+		<ID>1</ID>
 	</Cell>
 	<Cell>
 		<ID>2</ID>
@@ -26,7 +33,7 @@
 		<ID>4</ID>
 		<State>0</State>
 	</Cell>
-		<Cell>
+	<Cell>
 		<ID>5</ID>
 		<State>0</State>
 	</Cell>
@@ -47,11 +54,11 @@
 		<State>0</State>
 	</Cell>
 	<Cell>
-	<ID>10</ID>
+		<ID>10</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
-	<ID>11</ID>
+		<ID>11</ID>
 		<State>0</State>
 	</Cell>
 	<Cell>
@@ -59,7 +66,7 @@
 		<State>1</State>
 	</Cell>
 	<Cell>
-	<ID>13</ID>
+		<ID>13</ID>
 		<State>1</State>
 	</Cell>
 	<Cell>
