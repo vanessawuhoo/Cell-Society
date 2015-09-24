@@ -16,6 +16,7 @@
 	<SharkEatHealth>1</SharkEatHealth>
 	<SharkEnergyLoss>2</SharkEnergyLoss>
 	</Parameters>
+	<CellFill>ManualFill</CellFill>
 	<Cell>
 		<ID>1</ID>
 		<State>2</State>

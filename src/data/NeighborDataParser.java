@@ -25,12 +25,15 @@ public abstract class NeighborDataParser extends DataParser{
 	protected Document doc;
 	protected int dimensions[];
 	protected AllData allData;
+	protected String probFill;
+	protected Map<String, CellFill> fillMap;
 
 	@Override
 	public void parseData(Node head, Document document) {
 		this.reset();
 		root = head;
 		doc = document;
+		this.makeFillMap();
 		this.setCellToMap();
 		this.setDimensions();
 		this.setParameters();
@@ -39,7 +42,14 @@ public abstract class NeighborDataParser extends DataParser{
 		this.setColor();
 		this.setAllData();
 	}
-		
+	
+	@Override
+	protected void makeFillMap(){
+		fillMap = new HashMap<String, CellFill>();
+		fillMap.put("ProbFill", new ProbFill(doc));
+		fillMap.put("ManualFill", new ManualFill(doc));
+	}
+	
 	@Override
 	protected void setColor(){
 		colorMap = new HashMap<Double, String>();
@@ -108,26 +118,8 @@ public abstract class NeighborDataParser extends DataParser{
 	
 	@Override
 	protected void setCellToMap(){
-		cellMap = new HashMap<Integer, Map<String, Double>>();
-		NodeList cellNodeList = doc.getElementsByTagName("Cell");
-		for(int i = 1; i<=cellNodeList.getLength(); i++){
-			
-			Node tempNode = cellNodeList.item(i-1);
-			Map<String, Double> parameterMap = new HashMap<String, Double>();
-			if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
-				NodeList parameterList = tempNode.getChildNodes();
-				for(int j = 0; j<parameterList.getLength(); j++){
-					Node tempParameter = parameterList.item(j);
-					if (tempParameter.getNodeType() == Node.ELEMENT_NODE) {
-						String stateValue = this.getNodeValue(tempParameter.getNodeName(), tempNode.getChildNodes());
-						parameterMap.put(tempParameter.getNodeName(), Double.parseDouble(stateValue));
-					}
-
-				}
-			cellMap.put(i, parameterMap);
-		    }
-			
-		}
+		String fill = getNodeValue("CellFill", root.getChildNodes());
+		cellMap = fillMap.get(fill).getFilledMap();
 	}
 	
 	@Override

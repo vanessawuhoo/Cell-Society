@@ -29,6 +29,8 @@ public abstract class DataParser extends NodeTraverser {
 	
 	protected abstract void setRule();
 	
+	protected abstract void makeFillMap();
+	
 	public abstract Map<Integer, Map<String, Double>> getCellMap();
 
 	public abstract int[] getDimensions();
@@ -42,5 +44,7 @@ public abstract class DataParser extends NodeTraverser {
 	public abstract AllData getAllData();
 	
 	public abstract void reset();
+	
+	
 	
 }
