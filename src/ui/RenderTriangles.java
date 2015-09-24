@@ -99,9 +99,9 @@ public class RenderTriangles extends RenderShapes {
 				//even row
 				if (id%2==0){
 					//even ID
-					return false;
-				} else {
 					return true;
+				} else {
+					return false;
 				}
 			} else {
 				//odd row
