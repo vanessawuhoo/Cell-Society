@@ -4,13 +4,13 @@
 	<Author>Team 1</Author>
 	<Dimension>
 		<X>4</X>
-		<Y>4</Y>
+		<Y>5</Y>
 	</Dimension>
 	<Color state="0">#ffff32</Color>
 	<Color state="1">#198c19</Color>
 	<Color state="2">#fa8072</Color>
 	<Parameters>
-	<ProbCatch>1</ProbCatch>
+	<ProbCatch>.6</ProbCatch>
 	</Parameters>
 	<Cell>
 		<ID>1</ID>
@@ -61,6 +61,22 @@
 		<State>1</State>
 	</Cell>
 	<Cell>
+		<ID>13</ID>
+		<State>1</State>
+	</Cell>
+		<Cell>
+		<ID>14</ID>
+		<State>1</State>
+	</Cell>
+		<Cell>
+		<ID>15</ID>
+		<State>1</State>
+	</Cell>
+		<Cell>
+		<ID>16</ID>
+		<State>1</State>
+	</Cell>
+		<Cell>
 		<ID>13</ID>
 		<State>1</State>
 	</Cell>
