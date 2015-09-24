@@ -27,6 +27,8 @@ import javafx.stage.Stage;
 import main.Hub;
 import main.SimVars;
 
+//main UI class that initializes and orients all objects in the GUI
+//dependent on Hub 
 public class UserInterface {
 	private String TITLE = "Group 1 Cellular Automata Simulator";
 	private BorderPane layout;
@@ -75,6 +77,7 @@ public class UserInterface {
 		return layout;
 	}
 	
+	//loads the horizontal bar of buttons at top of GUI
 	private HBox loadHBox() {
 		HBox controlBar = new HBox();
 		load = new Button(myResources.getString("LoadButton"));
@@ -103,11 +106,13 @@ public class UserInterface {
 		return sidebar;
 	}
 
+	//loads text field that asks for which XML file to open
 	private void loadFileInput(){
 		xmlField = new TextField();
 		xmlField.setPromptText(myResources.getString("XMLInput"));
 	}
 	
+	//loads the section of the sidebar that allows user to control cell parameters
 	private VBox loadCellShapeControl(){
 		VBox box = new VBox();
 		HBox cellControl = new HBox();
@@ -141,6 +146,7 @@ public class UserInterface {
 		return box;
 	}
 	
+	//loads section that allows user to dynamically change the color representation of a state
 	private HBox loadColorControl(){
 		HBox colorControl = new HBox();
 		colorControl.setSpacing(5);
@@ -154,6 +160,7 @@ public class UserInterface {
 		return colorControl;
 	}
 	
+	//helper method to help change the key map of colors in UI
 	private void changeColorMap(){
 		String newhex = hexField.getText();
 		Double state = selectState.getSelectionModel().getSelectedItem().doubleValue();
@@ -170,6 +177,7 @@ public class UserInterface {
 		
 	}
 	
+	//helper method to allow all the objects in the grid to be clickable to change state
 	private void getShapeArray(){
 		Shape[][] array = myPossibleRenders.get(myCellShape).getArray();
 		for (int row = 0; row < array.length;row++){
@@ -180,6 +188,7 @@ public class UserInterface {
 		}
 	}
 	
+	//helper method to call the method in hub that changes cell state
 	private void changeCell(int ID){
 		System.out.println(ID);
 //		hub.changeCell(ID);
@@ -191,6 +200,7 @@ public class UserInterface {
 		hub = h;
 	}
 	
+	//main method to load in an XML file and its visual representation
 	private void load(){
 		SimVars variables = hub.loadSimulation(xmlField.getText());
 		this.colors = variables.color_map;
@@ -210,6 +220,8 @@ public class UserInterface {
 		}
 		myPossibleRenders.get(myCellShape).setGridOutline(true);
 	}
+	
+	//method to update cell parameters if the user decides to change it 
 	private void loadNewCellParameters(Queue<Double> states){
 		loadRenders();
 		initGraphData(states);
@@ -226,7 +238,7 @@ public class UserInterface {
 		myPossibleRenders.get(myCellShape).setGridOutline(true);
 	}
 
-	
+	//helper method to initialize ability to track cell state population
 	private void initGraphData(Queue<Double> states){
 		graphData = new HashMap<Double,Queue<Integer>>();
 		Map<Double,Integer> countOfStates = countStates(states);
@@ -237,6 +249,7 @@ public class UserInterface {
 		}
 	}
 	
+	//method that adds data to the data structure that tracks cell state population
 	private void addGraphData(Map<Double,Integer> countOfStates){
 		for (Double d : colors.keySet()){
 			Queue<Integer> queue = graphData.get(d);
@@ -245,6 +258,7 @@ public class UserInterface {
 		}
 	}
 	
+	//method that goes through all of the passed states and counts occurrence of each
 	private Map<Double,Integer> countStates(Queue<Double> states){
 		Queue<Double> copy = new LinkedList<Double>(states);
 		Map<Double,Integer> counts = new HashMap<Double,Integer>();
@@ -259,6 +273,7 @@ public class UserInterface {
 		return counts;
 	}
 	
+	//method to change the cell parameters of the GUI, calls hub
 	private void changeCells(){
 		myCellShape = selectCells.getSelectionModel().getSelectedItem();
 		myEdgeType = selectEdge.getSelectionModel().getSelectedItem();
@@ -277,17 +292,20 @@ public class UserInterface {
 //			loadNewCellParameters(hub.METHOD(STRING, STRING,STRING));	
 		}
 	}
-
+	
+	//method to update the colors map key in the render class 
 	private void updateColor(Map<Double,String> newcolors){
 		myPossibleRenders.get(myCellShape).updateColor(colors);
 	}
 	
+	//method that launches a popup that holds a graph
 	private void launchPopup(Stage s){
 		s.setTitle(myResources.getString("chart"));
 		Popup popup = new Popup();
 		popup.show(s);
 		Group r = new Group();
-		DrawGraph draw = new DrawGraph(new HashMap<Double,Queue<Integer>>(graphData));
+		Map<Double,Queue<Integer>> copy = new HashMap<Double,Queue<Integer>>(graphData);
+		DrawGraph draw = new DrawGraph(new HashMap<Double,Queue<Integer>>(copy));
 		r.getChildren().add(draw.getChart());
 		s.setScene(new Scene(r));
 		s.show();
@@ -309,6 +327,7 @@ public class UserInterface {
         });
 	}
 
+	//method that updates the states of objects each step
 	public void updateStep(Queue<Double> states) {
 		Map<Double,Integer>countOfStates = countStates(states);
 		myPossibleRenders.get(myCellShape).updateStep(states);
