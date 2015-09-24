@@ -17,6 +17,10 @@ public class CellGraph {
 		all_cells = cells;
 	}
 
+	public Map<Integer, Cell> getCells() {
+		return all_cells;
+	}
+	
 	public Map<Integer, Map<String, Double>> getStates() {
 		Map<Integer, Map<String, Double>> states = new HashMap<Integer, Map<String, Double>>();
 		for (int id : all_cells.keySet()) {
