@@ -7,13 +7,37 @@ import simulation_type.Rule;
 
 public class SimVars {
 
-	public boolean success;
-	public Rule rule;
-	public Queue<Double> states;
-	public Map<Double, String> color_map;
-	public String error;
-	public double frames_per_second;
+	private boolean success;
+	private Rule rule;
+	private Queue<Double> states;
+	private Map<Double, String> color_map;
+	private String error;
+	private double frames_per_second;
 	
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public Rule getRule() {
+		return rule;
+	}
+
+	public Queue<Double> getStates() {
+		return states;
+	}
+
+	public Map<Double, String> getColor_map() {
+		return color_map;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public double getFrames_per_second() {
+		return frames_per_second;
+	}
+
 	public SimVars(boolean success, Rule rule, Queue<Double> states,
 			Map<Double, String> color_map,
 			String error, double frames_per_second) {
