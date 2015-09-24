@@ -102,6 +102,14 @@ public class Hub {
 		return states;
 	}
 	
+	public void updateGridType(String grid_type) {
+		cell_graph.changeGridType(grid_type);
+	}
+	
+	public void updateToroidal(boolean toroidal) {
+		cell_graph.changeToroidal(toroidal);
+	}
+	
 	public Rule getRule(){
 		return rule;
 	}
