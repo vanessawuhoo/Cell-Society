@@ -29,6 +29,7 @@ public abstract class NeighborDataParser extends DataParser{
 	protected Map<String, CellFill> fillMap;
 	protected boolean toroidal = false;
 	protected String shape;
+	protected Map<Double, String> stateMap;
 	
 	@Override
 	protected void setCelltoGraph(){
@@ -49,6 +50,7 @@ public abstract class NeighborDataParser extends DataParser{
 		root = head;
 		doc = document;
 		this.makeFillMap();
+		this.setStateMap();
 		this.setToroidal();
 		this.setShape();
 		this.setCellToMap();
@@ -109,13 +111,19 @@ public abstract class NeighborDataParser extends DataParser{
 
 	@Override
 	public void reset() {
+		rule = null;
 		dimensions = null;
 		parameters = null;
 		colorMap = null;
 		cellMap = null;
 		cellGraph = null;
 		cellMapGraph = null;
-		
+		allData = null;
+		probFill = null;
+		fillMap = null;
+		toroidal = false;
+		shape = null;
+		stateMap = null;
 	}
 
 	@Override
@@ -125,7 +133,7 @@ public abstract class NeighborDataParser extends DataParser{
 	
 	@Override
 	protected void setAllData() {
-		allData = new AllData(rule, cellGraph, parameters);		
+		allData = new AllData(rule, cellGraph, parameters, stateMap);		
 	}
 	
 	@Override
@@ -154,21 +162,43 @@ public abstract class NeighborDataParser extends DataParser{
 
 	}
 	
+	@Override
 	protected void setShape(){
 		shape = getNodeValue("Shape", root.getChildNodes());
 	}
 	
+	@Override
 	protected String getShape(){
 		return shape;
 	}
 	
+	@Override
 	protected void setToroidal(){
 		if(Integer.parseInt(getNodeValue("Toroidal", root.getChildNodes())) == 1){
 			toroidal = !toroidal;
 		}
 	}
 	
+	@Override
 	protected boolean getToroidal(){
 		return toroidal;
+	}
+	
+	@Override
+	public void setStateMap(){
+		stateMap = new HashMap<Double, String>();
+		Node stateMapNode = getNode("StateMap", root.getChildNodes());
+		NodeList nameMapNodeList = stateMapNode.getChildNodes();
+		for(int i = 0; i<nameMapNodeList.getLength(); i++){
+			Node tempNode = nameMapNodeList.item(i);
+			String name = this.getNodeValue(tempNode);
+			double state = Double.parseDouble(this.getNodeAttr("state", tempNode));
+			stateMap.put(state, name);
+		}
+	}
+	
+	@Override
+	public Map<Double, String> getStateMap(){
+		return stateMap;
 	}
 }

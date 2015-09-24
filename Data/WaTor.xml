@@ -16,8 +16,13 @@
 	<SharkEatHealth>1</SharkEatHealth>
 	<SharkEnergyLoss>2</SharkEnergyLoss>
 	</Parameters>
-	<Shape>SQUARE</Shape>
-	<Toroidal>0</Toroidal>
+	<Shape>SQUARE4</Shape>
+	<Toroidal>1</Toroidal>
+	<StateMap>
+		<Map state = "0">Vacant</Map>
+		<Map state = "1">Fish</Map>
+		<Map state = "2">Shark</Map>
+	</StateMap>
 	<CellFill>ManualFill</CellFill>
 	<Cell>
 		<ID>1</ID>

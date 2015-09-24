@@ -9,6 +9,7 @@ public class AllData {
 	private Rule rule;
 	private CellGraph cellGraph;
 	private Map<String, Double> parameter;
+	private Map<Double, String> nameMap;
 
 	public Rule getRule() {
 		return rule;
@@ -22,9 +23,10 @@ public class AllData {
 		return parameter;
 	}
 
-	public AllData(Rule r, CellGraph cg, Map<String, Double> p){
+	public AllData(Rule r, CellGraph cg, Map<String, Double> p, Map<Double, String> n){
 		rule = r;
 		cellGraph = cg;
 		parameter = p;
+		nameMap = n;
 	}
 }
