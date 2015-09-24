@@ -98,16 +98,17 @@ public class Hub {
 	
 	private Queue<Double> step() {
 		cell_graph.updateCells(rule);
-		Queue<Double> states = cell_graph.getRelevantStates();
-		return states;
+		return cell_graph.getRelevantStates();
 	}
 	
-	public void updateGridType(String grid_type) {
+	public Queue<Double> updateGridType(String grid_type) {
 		cell_graph.changeGridType(grid_type);
+		return cell_graph.getRelevantStates();
 	}
 	
-	public void updateToroidal(boolean toroidal) {
+	public Queue<Double> updateToroidal(boolean toroidal) {
 		cell_graph.changeToroidal(toroidal);
+		return cell_graph.getRelevantStates();
 	}
 	
 	public Rule getRule(){
