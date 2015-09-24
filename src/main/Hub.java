@@ -118,29 +118,26 @@ public class Hub {
 	}
 
 	public double increaseRate() {
-		animation.stop();
-		Timeline newAnimation = new Timeline();
-		frames_per_second += DELTA_FPS;
-		newAnimation.getKeyFrames().add(getStepKeyFrame());
-		newAnimation.setCycleCount(Timeline.INDEFINITE);
-		newAnimation.play();
-		animation = newAnimation;
+		double temp_fps = frames_per_second + DELTA_FPS;
+		changeRateAndAnimation(temp_fps);
 		return frames_per_second;
 	}
 	
 	public double decreaseRate() {
-		animation.stop();
-		Timeline newAnimation = new Timeline();
 		double temp_fps = frames_per_second - DELTA_FPS;
+		changeRateAndAnimation(temp_fps);
+		return frames_per_second;
+	}
+	
+	private void changeRateAndAnimation(double temp_fps) {
 		if (temp_fps > 0) {
+			animation.stop();
 			frames_per_second = temp_fps;
+			Timeline newAnimation = new Timeline();
 			newAnimation.getKeyFrames().add(getStepKeyFrame());
 			newAnimation.setCycleCount(Timeline.INDEFINITE);
 			newAnimation.play();
 			animation = newAnimation;
 		}
-		return frames_per_second;
 	}
-	
-
 }
