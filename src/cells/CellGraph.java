@@ -12,13 +12,32 @@ import simulation_type.Rule;
 public class CellGraph {
 
 	private Map<Integer, Cell> all_cells;
+	private String grid_type;
+	boolean toroidal;
 
-	public CellGraph(Map<Integer, Cell> cells) {
+	public CellGraph(Map<Integer, Cell> cells, String grid_type, boolean toroidal) {
 		all_cells = cells;
+		this.grid_type = grid_type;
+		this.toroidal = toroidal;
 	}
 
 	public Map<Integer, Cell> getCells() {
 		return all_cells;
+	}
+	public String getGrid_type() {
+		return grid_type;
+	}
+
+	public void setGrid_type(String grid_type) {
+		this.grid_type = grid_type;
+	}
+
+	public boolean isToroidal() {
+		return toroidal;
+	}
+
+	public void setToroidal(boolean toroidal) {
+		this.toroidal = toroidal;
 	}
 	
 	public Map<Integer, Map<String, Double>> getStates() {

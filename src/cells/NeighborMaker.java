@@ -9,6 +9,6 @@ public interface NeighborMaker {
 	 * 1. # neighbors: four, eight
 	 * 2. grid option: toroidal
 	 */
-	public void getNeighbors(Map<Integer, Cell> cells, int m, int n, List<String> misc_parameters);
+	public void getNeighbors(Map<Integer, Cell> cells, int m, int n, boolean toroidal);
 	
 }
