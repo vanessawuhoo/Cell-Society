@@ -11,15 +11,19 @@
 	<Parameters>
 	</Parameters>
 	<CellFill>ManualFill</CellFill>
+	<ProbFill>
+		<State>
+			<Probability state="0">.2</Probability>
+			<Probability state="1">.8</Probability>
+		</State>	
+	</ProbFill>
 	<Cell>
 		<State>0</State>
-		<ID>2</ID>
-		<BLECH>8</BLECH>
+		<ID>1</ID>
 	</Cell>
 	<Cell>
 		<ID>2</ID>
 		<State>0</State>
-		<BLECH>8</BLECH>
 	</Cell>
 	<Cell>
 		<ID>3</ID>
@@ -29,7 +33,7 @@
 		<ID>4</ID>
 		<State>0</State>
 	</Cell>
-		<Cell>
+	<Cell>
 		<ID>5</ID>
 		<State>0</State>
 	</Cell>

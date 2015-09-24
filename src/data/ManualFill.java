@@ -9,8 +9,8 @@ import org.w3c.dom.NodeList;
 
 public class ManualFill extends CellFill {
 
-	public ManualFill(Document doc) {
-		super(doc);
+	public ManualFill(Document doc, Node root) {
+		super(doc, root);
 	}
 
 	@Override

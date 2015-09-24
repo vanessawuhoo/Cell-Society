@@ -10,10 +10,12 @@
 	<Color state="1">#000000</Color>
 	<Parameters>
 	</Parameters>
-	<CellFill>ManualFill</CellFill>
+	<CellFill>ProbFill</CellFill>
 	<ProbFill>
-		<Probability State="0">.2</Probability>
-		<Probability State="1">.8</Probability>				
+		<State>
+			<Probability state="0">.8</Probability>
+			<Probability state="1">.2</Probability>
+		</State>			
 	</ProbFill>
 	<Cell>
 		<State>0</State>

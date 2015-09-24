@@ -46,8 +46,8 @@ public abstract class NeighborDataParser extends DataParser{
 	@Override
 	protected void makeFillMap(){
 		fillMap = new HashMap<String, CellFill>();
-		fillMap.put("ProbFill", new ProbFill(doc));
-		fillMap.put("ManualFill", new ManualFill(doc));
+		fillMap.put("ProbFill", new ProbFill(doc, root));
+		fillMap.put("ManualFill", new ManualFill(doc, root));
 	}
 	
 	@Override
