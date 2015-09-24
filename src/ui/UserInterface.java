@@ -34,7 +34,7 @@ public class UserInterface {
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	private ResourceBundle myResources;
 	private int[] myParameters;
-	private ChoiceBox<String> selectCells, selectEdge;
+	private ChoiceBox<String> selectCells, selectEdge, selectNeighborhood;
 	private ChoiceBox<Double> selectState;
 	private TextField xmlField, hexField;
 	private Map<Double,String> colors;
@@ -44,7 +44,8 @@ public class UserInterface {
 	private Map<Double,Queue<Integer>> graphData;
 	private Hub hub;
 	private CheckBox outlines;
-	private String myCellShape = "SQUARE", myEdgeType = "FINITE", myNeighborhood = "CARDINAL DIRECTIONS";
+	private String myCellShape = "SQUARE", myEdgeType = "FINITE", myNeighborhood = "ALL";
+	
 	//give the display the title
 	public String getTitle() {
 		return TITLE;
@@ -121,11 +122,21 @@ public class UserInterface {
 				myResources.getString("fin"),
 				myResources.getString("tor"));
 		selectEdge.getSelectionModel().select(myEdgeType);
+		selectNeighborhood = new ChoiceBox<String>();
+		selectNeighborhood.getItems().addAll(
+				myResources.getString("card"),
+				myResources.getString("diag"),
+				myResources.getString("all"));
+		selectNeighborhood.getSelectionModel().select(myNeighborhood);
 		Button parametersGo = new Button(myResources.getString("Trigger"));
 		parametersGo.setOnMouseClicked(e-> changeCells());
 		cellControl.getChildren().addAll(selectEdge, parametersGo);
 		cellControl.setSpacing(10);
-		box.getChildren().addAll(selectCells,cellControl);
+		if (myCellShape.equals(myResources.getString("sq"))){
+			box.getChildren().addAll(selectCells,selectNeighborhood,cellControl);	
+		} else {
+			box.getChildren().addAll(selectCells,cellControl);	
+		}
 		box.setSpacing(5);
 		return box;
 	}
@@ -251,10 +262,20 @@ public class UserInterface {
 	private void changeCells(){
 		myCellShape = selectCells.getSelectionModel().getSelectedItem();
 		myEdgeType = selectEdge.getSelectionModel().getSelectedItem();
+		myNeighborhood = selectNeighborhood.getSelectionModel().getSelectedItem();
+		VBox sidebar = loadSidebar();
+		layout.setRight(sidebar);
+		BorderPane.setMargin(sidebar, new Insets(screenHeight/20,screenWidth/20,screenHeight/20,screenWidth/20));
 		load();
 		System.out.println(myCellShape);
 		System.out.println(myEdgeType);
-//		loadNewCellParameters(hub.METHOD(STRING, STRING));
+		System.out.println(myNeighborhood);
+		if (myCellShape.equals(myResources.getString("sq"))){
+//			loadNewCellParameters(hub.METHOD(STRING, STRING,STRING));
+			//NULL!!!
+		} else {
+//			loadNewCellParameters(hub.METHOD(STRING, STRING,STRING));	
+		}
 	}
 
 	private void updateColor(Map<Double,String> newcolors){

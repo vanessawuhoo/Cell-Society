@@ -1,4 +1,10 @@
 
+9/24 update:
+I still need to be passed the map of double to String state (0.0 : water) 
+I need to be passed the initial parameters from the XML (Square, Toroidal, Diagonal)
+I need the methods for updating one cell and for updating the back end on cell shape parameters to be created
+Thanks guys, leggo
+
 
 Kevin:
 
