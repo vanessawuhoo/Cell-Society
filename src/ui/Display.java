@@ -47,8 +47,8 @@ public class Display extends Application {
 	
 	//Updates the states of the shapes 
 	public void updateStep(StepVars step_var) {
-		if (step_var.sim_not_running) {
-			myUserInterface.updateStep(step_var.states);
+		if (step_var.isSim_not_running()) {
+			myUserInterface.updateStep(step_var.getStates());
 		}
 	}
 

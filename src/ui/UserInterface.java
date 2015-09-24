@@ -203,9 +203,9 @@ public class UserInterface {
 	//main method to load in an XML file and its visual representation
 	private void load(){
 		SimVars variables = hub.loadSimulation(xmlField.getText());
-		this.colors = variables.color_map;
-		this.myParameters = variables.rule.getGrid_parameters();
-		Queue<Double> states = variables.states;
+		this.colors = variables.getColor_map();
+		this.myParameters = variables.getRule().getGrid_parameters();
+		Queue<Double> states = variables.getStates();
 		loadRenders();
 		initGraphData(states);
 		myPossibleRenders.get(myCellShape).initGrid(states);
@@ -218,7 +218,6 @@ public class UserInterface {
 		for (Double d : colors.keySet()){
 			selectState.getItems().add(d);
 		}
-		myPossibleRenders.get(myCellShape).setGridOutline(true);
 	}
 	
 	//method to update cell parameters if the user decides to change it 
@@ -277,14 +276,17 @@ public class UserInterface {
 	private void changeCells(){
 		myCellShape = selectCells.getSelectionModel().getSelectedItem();
 		myEdgeType = selectEdge.getSelectionModel().getSelectedItem();
-		myNeighborhood = selectNeighborhood.getSelectionModel().getSelectedItem();
+		if(!myCellShape.equals(myResources.getString("sq"))){
+			myNeighborhood = selectNeighborhood.getSelectionModel().getSelectedItem();
+		}
+		load();
 		VBox sidebar = loadSidebar();
 		layout.setRight(sidebar);
 		BorderPane.setMargin(sidebar, new Insets(screenHeight/20,screenWidth/20,screenHeight/20,screenWidth/20));
-		load();
 		System.out.println(myCellShape);
 		System.out.println(myEdgeType);
 		System.out.println(myNeighborhood);
+		buttonEvents();
 		if (myCellShape.equals(myResources.getString("sq"))){
 //			loadNewCellParameters(hub.METHOD(STRING, STRING,STRING));
 			//NULL!!!
