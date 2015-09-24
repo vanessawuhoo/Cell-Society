@@ -27,6 +27,21 @@ public abstract class NeighborDataParser extends DataParser{
 	protected AllData allData;
 	protected String probFill;
 	protected Map<String, CellFill> fillMap;
+	protected boolean toroidal = false;
+	protected String shape;
+	
+	@Override
+	protected void setCelltoGraph(){
+		cellMapGraph = new HashMap<Integer, Cell>();
+		for(int i: cellMap.keySet()){
+			Cell tempCell = new Cell(i, cellMap.get(i));
+			cellMapGraph.put(i, tempCell);
+		}
+		int m = dimensions[1];
+		int n = dimensions[0];
+		cellGraph = new CellGraph(cellMapGraph, shape, m, n, toroidal);
+		
+	}
 
 	@Override
 	public void parseData(Node head, Document document) {
@@ -34,6 +49,8 @@ public abstract class NeighborDataParser extends DataParser{
 		root = head;
 		doc = document;
 		this.makeFillMap();
+		this.setToroidal();
+		this.setShape();
 		this.setCellToMap();
 		this.setDimensions();
 		this.setParameters();
@@ -135,5 +152,23 @@ public abstract class NeighborDataParser extends DataParser{
 		}
 		
 
+	}
+	
+	protected void setShape(){
+		shape = getNodeValue("Shape", root.getChildNodes());
+	}
+	
+	protected String getShape(){
+		return shape;
+	}
+	
+	protected void setToroidal(){
+		if(Integer.parseInt(getNodeValue("Toroidal", root.getChildNodes())) == 1){
+			toroidal = !toroidal;
+		}
+	}
+	
+	protected boolean getToroidal(){
+		return toroidal;
 	}
 }

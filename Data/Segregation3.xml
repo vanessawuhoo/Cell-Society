@@ -11,6 +11,8 @@
 	<Color state="2">#f6546a</Color>
 	<Parameters>
 	</Parameters>
+	<Shape>SQUARE</Shape>
+	<Toroidal>0</Toroidal>
 	<CellFill>ProbFill</CellFill>
 	<ProbFill>
 		<State>

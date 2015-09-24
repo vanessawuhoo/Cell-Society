@@ -29,6 +29,14 @@ public abstract class DataParser extends NodeTraverser {
 	
 	protected abstract void setRule();
 	
+	protected abstract void setShape();
+	
+	protected abstract String getShape();
+	
+	protected abstract void setToroidal();
+	
+	protected abstract boolean getToroidal();
+	
 	protected abstract void makeFillMap();
 	
 	public abstract Map<Integer, Map<String, Double>> getCellMap();
