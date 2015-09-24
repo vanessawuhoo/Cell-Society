@@ -87,6 +87,16 @@ public class CellGraph {
 		neighbor_adder.addNeighborsToGraph(this);
 	}
 
+	public void changeGridType(String grid_type) {
+		this.grid_type = grid_type;
+		neighbor_adder.addNeighborsToGraph(this);
+	}
+	
+	public void changeToroidal(boolean toroidal) {
+		this.toroidal = toroidal;
+		neighbor_adder.addNeighborsToGraph(this);
+	}
+	
 	public void updateCells(Rule r) {
 		Map<Integer, Map<String, Double>> current_states = getStates();
 		Map<Integer, Map<String, Double>> next_states = new HashMap<Integer, Map<String, Double>>();
