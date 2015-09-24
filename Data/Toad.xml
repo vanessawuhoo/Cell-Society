@@ -10,6 +10,9 @@
 	<Color state="1">#000000</Color>
 	<Parameters>
 	</Parameters>
+	<Shape>SQUARE</Shape>
+	<Toroidal>0</Toroidal>
+	<CellFill>ManualFill</CellFill>
 	<Cell>
 		<State>0</State>
 	</Cell>

@@ -12,6 +12,9 @@
 	<Parameters>
 	<ProbCatch>.6</ProbCatch>
 	</Parameters>
+	<Shape>SQUARE</Shape>
+	<Toroidal>0</Toroidal>
+	<CellFill>ManualFill</CellFill>
 	<Cell>
 		<ID>1</ID>
 		<State>1</State>

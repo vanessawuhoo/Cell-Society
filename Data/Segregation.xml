@@ -11,6 +11,9 @@
 	<Color state="2">#f6546a</Color>
 	<Parameters>
 	</Parameters>
+	<Shape>SQUARE</Shape>
+	<Toroidal>0</Toroidal>
+	<CellFill>ManualFill</CellFill>
 	<Cell>
 		<State>1</State>
 	</Cell>

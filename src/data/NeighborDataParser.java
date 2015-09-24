@@ -25,12 +25,32 @@ public abstract class NeighborDataParser extends DataParser{
 	protected Document doc;
 	protected int dimensions[];
 	protected AllData allData;
+	protected String probFill;
+	protected Map<String, CellFill> fillMap;
+	protected boolean toroidal = false;
+	protected String shape;
+	
+	@Override
+	protected void setCelltoGraph(){
+		cellMapGraph = new HashMap<Integer, Cell>();
+		for(int i: cellMap.keySet()){
+			Cell tempCell = new Cell(i, cellMap.get(i));
+			cellMapGraph.put(i, tempCell);
+		}
+		int m = dimensions[1];
+		int n = dimensions[0];
+		cellGraph = new CellGraph(cellMapGraph, shape, m, n, toroidal);
+		
+	}
 
 	@Override
 	public void parseData(Node head, Document document) {
 		this.reset();
 		root = head;
 		doc = document;
+		this.makeFillMap();
+		this.setToroidal();
+		this.setShape();
 		this.setCellToMap();
 		this.setDimensions();
 		this.setParameters();
@@ -39,7 +59,14 @@ public abstract class NeighborDataParser extends DataParser{
 		this.setColor();
 		this.setAllData();
 	}
-		
+	
+	@Override
+	protected void makeFillMap(){
+		fillMap = new HashMap<String, CellFill>();
+		fillMap.put("ProbFill", new ProbFill(doc, root));
+		fillMap.put("ManualFill", new ManualFill(doc, root));
+	}
+	
 	@Override
 	protected void setColor(){
 		colorMap = new HashMap<Double, String>();
@@ -104,5 +131,44 @@ public abstract class NeighborDataParser extends DataParser{
 	@Override
 	public AllData getAllData() {
 		return allData;
+	}
+	
+	@Override
+	protected void setCellToMap(){
+		String fill = getNodeValue("CellFill", root.getChildNodes());
+		cellMap = fillMap.get(fill).getFilledMap();
+	}
+	
+	@Override
+	protected void setParameters() {
+		parameters = new HashMap<String, Double>();
+		Node dimension = getNode("Parameters", root.getChildNodes());
+		NodeList parameterList = dimension.getChildNodes();
+		for(int i = 0; i<parameterList.getLength(); i++){
+			Node tempParameter = parameterList.item(i);
+			if (tempParameter.getNodeType() == Node.ELEMENT_NODE) {
+				parameters.put(tempParameter.getNodeName(), Double.parseDouble(getNodeValue(tempParameter.getNodeName(), dimension.getChildNodes())));
+			}
+		}
+		
+
+	}
+	
+	protected void setShape(){
+		shape = getNodeValue("Shape", root.getChildNodes());
+	}
+	
+	protected String getShape(){
+		return shape;
+	}
+	
+	protected void setToroidal(){
+		if(Integer.parseInt(getNodeValue("Toroidal", root.getChildNodes())) == 1){
+			toroidal = !toroidal;
+		}
+	}
+	
+	protected boolean getToroidal(){
+		return toroidal;
 	}
 }

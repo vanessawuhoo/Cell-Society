@@ -13,37 +13,42 @@ public class Square4NeighborMaker implements NeighborMaker {
 				int curr_index = n*(i-1) + j;
 				Cell c = cells.get(curr_index);
 				List<Cell> neighbors = new ArrayList<Cell>();
-				// handle up
-				if (i != 1) {
-					int up_index = curr_index - n;
-					neighbors.add(cells.get(up_index));
-				}
-				// handle right
-				if (j != n) {
-					int right_index = curr_index + 1;
-					neighbors.add(cells.get(right_index));
-				} else {
-					if (toroidal) {
-						int right_index = curr_index - n + 1;
-						neighbors.add(cells.get(right_index));
-					}
-				}
-				// handle down
-				if (i != m) {
-					int down_index = curr_index + n;
-					neighbors.add(cells.get(down_index));
-				}
-				//handle left
-				if (j != 1) {
-					int left_index = curr_index - 1;
-					neighbors.add(cells.get(left_index));
-				} else {
-					if (toroidal) {
-						int left_index = curr_index + n - 1;
-						neighbors.add(cells.get(left_index));
-					}
-				}
+				addSideNeighbors(neighbors, cells, m, n, toroidal, c, i, j, curr_index);
 				c.setConnections(neighbors);
+			}
+		}
+	}
+	
+	protected void addSideNeighbors(List<Cell> neighbors, Map<Integer, Cell> cells, int m, int n, boolean toroidal,
+			Cell c, int i, int j, int curr_index) {
+		// handle up
+		if (i != 1) {
+			int up_index = curr_index - n;
+			neighbors.add(cells.get(up_index));
+		}
+		// handle right
+		if (j != n) {
+			int right_index = curr_index + 1;
+			neighbors.add(cells.get(right_index));
+		} else {
+			if (toroidal) {
+				int right_index = curr_index - n + 1;
+				neighbors.add(cells.get(right_index));
+			}
+		}
+		// handle down
+		if (i != m) {
+			int down_index = curr_index + n;
+			neighbors.add(cells.get(down_index));
+		}
+		//handle left
+		if (j != 1) {
+			int left_index = curr_index - 1;
+			neighbors.add(cells.get(left_index));
+		} else {
+			if (toroidal) {
+				int left_index = curr_index + n - 1;
+				neighbors.add(cells.get(left_index));
 			}
 		}
 	}

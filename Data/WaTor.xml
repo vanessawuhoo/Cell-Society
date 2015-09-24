@@ -16,6 +16,9 @@
 	<SharkEatHealth>1</SharkEatHealth>
 	<SharkEnergyLoss>2</SharkEnergyLoss>
 	</Parameters>
+	<Shape>SQUARE</Shape>
+	<Toroidal>0</Toroidal>
+	<CellFill>ManualFill</CellFill>
 	<Cell>
 		<ID>1</ID>
 		<State>2</State>

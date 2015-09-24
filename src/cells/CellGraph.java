@@ -88,12 +88,7 @@ public class CellGraph {
 	}
 
 	public void updateCells(Rule r) {
-		Map<Integer, Map<String, Double>> current_states = new HashMap<Integer, Map<String, Double>>();
-		for (int id : all_cells.keySet()) {
-			Cell c = all_cells.get(id);
-			Map<String, Double> s = c.getState();
-			current_states.put(id, s);
-		}
+		Map<Integer, Map<String, Double>> current_states = getStates();
 		Map<Integer, Map<String, Double>> next_states = new HashMap<Integer, Map<String, Double>>();
 		// calculate updates
 		for (int id : all_cells.keySet()) {
