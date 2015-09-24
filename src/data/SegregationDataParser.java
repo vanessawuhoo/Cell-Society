@@ -37,7 +37,7 @@ public class SegregationDataParser extends NeighborDataParser {
 	
 	@Override
 	protected void setRule(){
-		rule = new SegregationRule(dimensions[0], dimensions[1]);
+		rule = new SegregationRule();
 	}
 		
 }

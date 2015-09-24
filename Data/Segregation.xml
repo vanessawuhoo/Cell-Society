@@ -11,8 +11,13 @@
 	<Color state="2">#f6546a</Color>
 	<Parameters>
 	</Parameters>
-	<Shape>SQUARE</Shape>
-	<Toroidal>0</Toroidal>
+	<Shape>SQUARE8</Shape>
+	<Toroidal>1</Toroidal>
+	<StateMap>
+		<Map state = "0">Vacant</Map>
+		<Map state = "1">X</Map>
+		<Map state = "2">0</Map>
+	</StateMap>
 	<CellFill>ManualFill</CellFill>
 	<Cell>
 		<State>1</State>
