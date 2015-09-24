@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 public class RenderTriangles extends RenderShapes {
 	private double screenWidth, screenHeight;
@@ -46,7 +47,7 @@ public class RenderTriangles extends RenderShapes {
 		int id = 1;
 		while (!states.isEmpty()) {
 			double currState = states.remove();
-			TriangleShape triangle = new TriangleShape(id, myColors.get(currState), currState);
+			TriangleShape triangle = new TriangleShape(myColors.get(currState), currState);
 			myArray[row][col] = triangle;
 			myGrid.getChildren().add(triangle);
 			if (calcOrientation(id,row)){
@@ -113,6 +114,8 @@ public class RenderTriangles extends RenderShapes {
 			
 		}
 	}
+	
+	
 
 	public void updateStep(Queue<Double> newStates) {
 		int row = 0;
@@ -142,8 +145,8 @@ public class RenderTriangles extends RenderShapes {
 	
 	private double calcBaseLength(){
 		double baseLength = 0;
-		double maxGridWidth = screenWidth *2/3;
-		double maxGridHeight = screenHeight*2/3;
+		double maxGridWidth = screenWidth *7/12;
+		double maxGridHeight = screenHeight*7/12;
 		double base = maxGridWidth/myParameters[0];
 		double height = maxGridHeight/myParameters[1];
 		if (base > height){
@@ -166,6 +169,11 @@ public class RenderTriangles extends RenderShapes {
 
 	public Pane getPane() {
 		return myGrid;
+	}
+
+	@Override
+	public Shape[][] getArray() {
+		return myArray;
 	}
 
 

@@ -23,5 +23,8 @@ public abstract class RenderShapes {
 	public abstract void updateStep(Queue<Double> states);
 
 	public abstract void updateColor(Map<Double, String> colors);
+	
+	public abstract Shape[][] getArray();
+	
 
 }

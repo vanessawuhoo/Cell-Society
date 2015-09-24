@@ -21,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import main.Hub;
@@ -29,11 +30,11 @@ import main.SimVars;
 public class UserInterface {
 	private String TITLE = "Group 1 Cellular Automata Simulator";
 	private BorderPane layout;
-	private Map<String, RenderShapes> myPossibleRenders;
+	public Map<String, RenderShapes> myPossibleRenders;
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	private ResourceBundle myResources;
 	private int[] myParameters;
-	private ChoiceBox<String> selectCells;
+	private ChoiceBox<String> selectCells, selectEdge;
 	private ChoiceBox<Double> selectState;
 	private TextField xmlField, hexField;
 	private Map<Double,String> colors;
@@ -43,9 +44,7 @@ public class UserInterface {
 	private Map<Double,Queue<Integer>> graphData;
 	private Hub hub;
 	private CheckBox outlines;
-	//test
-	private String myCellShape = "SQUARE";
-
+	private String myCellShape = "SQUARE", myEdgeType = "FINITE", myNeighborhood = "CARDINAL DIRECTIONS";
 	//give the display the title
 	public String getTitle() {
 		return TITLE;
@@ -93,7 +92,7 @@ public class UserInterface {
 		VBox sidebar = new VBox();
 		sidebar.setSpacing(40);
 		loadFileInput();
-		HBox cellControl = loadCellShapeControl();
+		VBox cellControl = loadCellShapeControl();
 		outlines = new CheckBox(myResources.getString("gridvis"));
 		outlines.setSelected(true);
 		HBox colorControl = loadColorControl();
@@ -108,18 +107,27 @@ public class UserInterface {
 		xmlField.setPromptText(myResources.getString("XMLInput"));
 	}
 	
-	private HBox loadCellShapeControl(){
+	private VBox loadCellShapeControl(){
+		VBox box = new VBox();
 		HBox cellControl = new HBox();
 		selectCells = new ChoiceBox<String>();
 		selectCells.getItems().addAll(
 				myResources.getString("sq"),
 				myResources.getString("tri"),
 				myResources.getString("hex"));
-		Button cellShapeGo = new Button(myResources.getString("Trigger"));
-		cellShapeGo.setOnMouseClicked(e-> changeCells());
-		cellControl.getChildren().addAll(selectCells, cellShapeGo);
+		selectCells.getSelectionModel().select(myCellShape);;
+		selectEdge = new ChoiceBox<String>();
+		selectEdge.getItems().addAll(
+				myResources.getString("fin"),
+				myResources.getString("tor"));
+		selectEdge.getSelectionModel().select(myEdgeType);
+		Button parametersGo = new Button(myResources.getString("Trigger"));
+		parametersGo.setOnMouseClicked(e-> changeCells());
+		cellControl.getChildren().addAll(selectEdge, parametersGo);
 		cellControl.setSpacing(10);
-		return cellControl;
+		box.getChildren().addAll(selectCells,cellControl);
+		box.setSpacing(5);
+		return box;
 	}
 	
 	private HBox loadColorControl(){
@@ -148,14 +156,29 @@ public class UserInterface {
 		myPossibleRenders.put("SQUARE", new RenderSquares(screenWidth, screenHeight, myParameters, colors));
 		myPossibleRenders.put("TRIANGLE", new RenderTriangles(screenWidth, screenHeight, myParameters, colors));
 		myPossibleRenders.put("HEXAGON", new RenderHexagons(screenWidth, screenHeight, myParameters, colors));
+		
 	}
+	
+	private void getShapeArray(){
+		Shape[][] array = myPossibleRenders.get(myCellShape).getArray();
+		for (int row = 0; row < array.length;row++){
+			for (int col = 0; col < array[0].length;col++){
+				int id = col + row * myParameters[0]+1;
+				array[row][col].setOnMouseClicked(e->changeCell(id));
+			}
+		}
+	}
+	
+	private void changeCell(int ID){
+		System.out.println(ID);
+//		hub.changeCell(ID);
+	}
+	
 	
 	//set internal representation of hub so hub methods can be called
 	public void setHub(Hub h){
 		hub = h;
 	}
-	
-
 	
 	private void load(){
 		SimVars variables = hub.loadSimulation(xmlField.getText());
@@ -168,13 +191,30 @@ public class UserInterface {
 		Pane myGrid = myPossibleRenders.get(myCellShape).getPane();
 		layout.setCenter(myGrid);
 		BorderPane.setMargin(myGrid, new Insets(screenHeight/20,0,0,screenWidth/12));
-		layout.setAlignment(myGrid, Pos.CENTER);
+		BorderPane.setAlignment(myGrid, Pos.CENTER);
+		getShapeArray();
 		selectState.getItems().clear();
 		for (Double d : colors.keySet()){
 			selectState.getItems().add(d);
 		}
 		myPossibleRenders.get(myCellShape).setGridOutline(true);
 	}
+	private void loadNewCellParameters(Queue<Double> states){
+		loadRenders();
+		initGraphData(states);
+		myPossibleRenders.get(myCellShape).initGrid(states);
+		Pane myGrid = myPossibleRenders.get(myCellShape).getPane();
+		layout.setCenter(myGrid);
+		BorderPane.setMargin(myGrid, new Insets(screenHeight/20,0,0,screenWidth/12));
+		BorderPane.setAlignment(myGrid, Pos.CENTER);
+		getShapeArray();
+		selectState.getItems().clear();
+		for (Double d : colors.keySet()){
+			selectState.getItems().add(d);
+		}
+		myPossibleRenders.get(myCellShape).setGridOutline(true);
+	}
+
 	
 	private void initGraphData(Queue<Double> states){
 		graphData = new HashMap<Double,Queue<Integer>>();
@@ -208,10 +248,13 @@ public class UserInterface {
 		return counts;
 	}
 	
-	
 	private void changeCells(){
-		myCellShape = selectCells.getSelectionModel().getSelectedItem().toString();
+		myCellShape = selectCells.getSelectionModel().getSelectedItem();
+		myEdgeType = selectEdge.getSelectionModel().getSelectedItem();
 		load();
+		System.out.println(myCellShape);
+		System.out.println(myEdgeType);
+//		loadNewCellParameters(hub.METHOD(STRING, STRING));
 	}
 
 	private void updateColor(Map<Double,String> newcolors){
