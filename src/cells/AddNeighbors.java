@@ -15,10 +15,10 @@ public class AddNeighbors {
 		maker_map.put("hexagon", new HexagonNeighborMaker());
 	}
 	
-	public void addNeighborsToGraph(CellGraph graph, String grid_type, boolean toroidal) {
-		NeighborMaker nm = maker_map.get(grid_type);
+	public void addNeighborsToGraph(CellGraph graph) {
+		NeighborMaker nm = maker_map.get(graph.getGrid_type());
 		int[] dims = graph.getDimensions();
 		int m = dims[0]; int n = dims[1];
-		nm.getNeighbors(graph.getCells(), m, n, toroidal);
+		nm.getNeighbors(graph.getCells(), m, n, graph.isToroidal());
 	}
 }
