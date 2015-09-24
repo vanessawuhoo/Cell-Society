@@ -1,4 +1,10 @@
 
+9/24 update:
+I still need to be passed the map of double to String state (0.0 : water) 
+I need to be passed the initial parameters from the XML (Square, Toroidal, Diagonal)
+I need the methods for updating one cell and for updating the back end on cell shape parameters to be created
+Thanks guys, leggo
+
 
 Kevin:
 
@@ -7,10 +13,17 @@ put it in a Map<Double,String> and pass it to me through Hub please
 
 create a new neighborhood maker (?) class that Chris can access in order to dynamically change what cell type
 a user has 
+
 Chris also needs to make a method I can access so I can use an event handler to switch the neighborhoods
 *note, this does not need to preserve the place the simulation is at. when the user changes from ex squares
 to hexagons it just reloads the entire file.
 
-
 If you implement toroidal, please make a method that will allow switching between using toroidal and regular grid
 neighborhoods. That way, I can add that switching functionality to the UI.
+
+add in neighborhood types to xml
+add in what state double to state name
+add state double to state color
+error checking
+probability making
+making xml

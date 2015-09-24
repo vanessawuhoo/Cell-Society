@@ -11,6 +11,14 @@
 	<Color state="2">#f6546a</Color>
 	<Parameters>
 	</Parameters>
+	<CellFill>ProbFill</CellFill>
+	<ProbFill>
+		<State>
+			<Probability state="0">.1</Probability>
+			<Probability state="1">.45</Probability>
+			<Probability state="2">.45</Probability>
+		</State>	
+	</ProbFill>
 	<Cell>
 		<State>1</State>
 	</Cell>

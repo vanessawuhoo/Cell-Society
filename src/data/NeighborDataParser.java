@@ -25,12 +25,15 @@ public abstract class NeighborDataParser extends DataParser{
 	protected Document doc;
 	protected int dimensions[];
 	protected AllData allData;
+	protected String probFill;
+	protected Map<String, CellFill> fillMap;
 
 	@Override
 	public void parseData(Node head, Document document) {
 		this.reset();
 		root = head;
 		doc = document;
+		this.makeFillMap();
 		this.setCellToMap();
 		this.setDimensions();
 		this.setParameters();
@@ -39,7 +42,14 @@ public abstract class NeighborDataParser extends DataParser{
 		this.setColor();
 		this.setAllData();
 	}
-		
+	
+	@Override
+	protected void makeFillMap(){
+		fillMap = new HashMap<String, CellFill>();
+		fillMap.put("ProbFill", new ProbFill(doc, root));
+		fillMap.put("ManualFill", new ManualFill(doc, root));
+	}
+	
 	@Override
 	protected void setColor(){
 		colorMap = new HashMap<Double, String>();
@@ -104,5 +114,26 @@ public abstract class NeighborDataParser extends DataParser{
 	@Override
 	public AllData getAllData() {
 		return allData;
+	}
+	
+	@Override
+	protected void setCellToMap(){
+		String fill = getNodeValue("CellFill", root.getChildNodes());
+		cellMap = fillMap.get(fill).getFilledMap();
+	}
+	
+	@Override
+	protected void setParameters() {
+		parameters = new HashMap<String, Double>();
+		Node dimension = getNode("Parameters", root.getChildNodes());
+		NodeList parameterList = dimension.getChildNodes();
+		for(int i = 0; i<parameterList.getLength(); i++){
+			Node tempParameter = parameterList.item(i);
+			if (tempParameter.getNodeType() == Node.ELEMENT_NODE) {
+				parameters.put(tempParameter.getNodeName(), Double.parseDouble(getNodeValue(tempParameter.getNodeName(), dimension.getChildNodes())));
+			}
+		}
+		
+
 	}
 }

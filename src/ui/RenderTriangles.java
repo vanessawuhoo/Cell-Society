@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 public class RenderTriangles extends RenderShapes {
 	private double screenWidth, screenHeight;
@@ -46,7 +47,7 @@ public class RenderTriangles extends RenderShapes {
 		int id = 1;
 		while (!states.isEmpty()) {
 			double currState = states.remove();
-			TriangleShape triangle = new TriangleShape(id, myColors.get(currState), currState);
+			TriangleShape triangle = new TriangleShape(myColors.get(currState), currState);
 			myArray[row][col] = triangle;
 			myGrid.getChildren().add(triangle);
 			if (calcOrientation(id,row)){
@@ -74,18 +75,14 @@ public class RenderTriangles extends RenderShapes {
 	
 	public boolean calcOrientation(int id, int row){
 		if (myParameters[0]%2==0) {
-			//number of cols is EVEN
 			if (row%2==0){
-				//even row
 				if (id%2==0){
-					//up
 					return true;
 				}
 				else {
 					return false;
 				}
 			} else {
-				//odd row
 				if (id%2==0){
 					return false;
 				} else {
@@ -93,24 +90,19 @@ public class RenderTriangles extends RenderShapes {
 				}
 			}
 		} else {
-			//number of cols is ODD
 			if (row%2==0){
-				//even row
 				if (id%2==0){
-					//even ID
-					return false;
-				} else {
 					return true;
+				} else {
+					return false;
 				}
 			} else {
-				//odd row
 				if (id%2==0){
 					return true;
 				} else {
 					return false;
 				}
 			}
-			
 		}
 	}
 
@@ -142,8 +134,8 @@ public class RenderTriangles extends RenderShapes {
 	
 	private double calcBaseLength(){
 		double baseLength = 0;
-		double maxGridWidth = screenWidth *2/3;
-		double maxGridHeight = screenHeight*2/3;
+		double maxGridWidth = screenWidth *7/12;
+		double maxGridHeight = screenHeight*7/12;
 		double base = maxGridWidth/myParameters[0];
 		double height = maxGridHeight/myParameters[1];
 		if (base > height){
@@ -155,8 +147,7 @@ public class RenderTriangles extends RenderShapes {
 	}
 
 	private void setLocation(TriangleShape triangle, int row, int col){
-		
-			triangle.setLayoutX(col*calcBaseLength()/2);
+		triangle.setLayoutX(col*calcBaseLength()/2);
 		triangle.setLayoutY(row*calcHeight());
 	}
 	
@@ -168,5 +159,8 @@ public class RenderTriangles extends RenderShapes {
 		return myGrid;
 	}
 
+	public Shape[][] getArray() {
+		return myArray;
+	}
 
 }

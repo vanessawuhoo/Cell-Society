@@ -11,7 +11,7 @@ import simulation_type.Rule;
 import simulation_type.SegregationRule;
 
 
-public abstract class DataParser extends nodeTraverser {
+public abstract class DataParser extends NodeTraverser {
 
 	public abstract void parseData(Node head, Document document);
 	
@@ -29,6 +29,8 @@ public abstract class DataParser extends nodeTraverser {
 	
 	protected abstract void setRule();
 	
+	protected abstract void makeFillMap();
+	
 	public abstract Map<Integer, Map<String, Double>> getCellMap();
 
 	public abstract int[] getDimensions();
@@ -42,5 +44,7 @@ public abstract class DataParser extends nodeTraverser {
 	public abstract AllData getAllData();
 	
 	public abstract void reset();
+	
+	
 	
 }
