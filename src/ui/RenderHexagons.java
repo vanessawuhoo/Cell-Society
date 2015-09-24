@@ -51,10 +51,9 @@ public class RenderHexagons extends RenderShapes {
 			myArray = new HexagonShape[myParameters[1]][myParameters[0]];
 			int row = 0;
 			int col = 0;
-			int id = 1;
 			while (!states.isEmpty()) {
 				double currState = states.remove();
-				HexagonShape hexagon = new HexagonShape(id, myColors.get(currState), currState);
+				HexagonShape hexagon = new HexagonShape(myColors.get(currState), currState);
 				myArray[row][col] = hexagon;
 				myGrid.getChildren().add(hexagon);
 				double c = calcSideLength();
@@ -70,7 +69,6 @@ public class RenderHexagons extends RenderShapes {
 				});
 				setLocation(hexagon, row, col);
 				col++;
-				id++;
 				if (col > myParameters[0]-1){
 					row++;
 					col=0;
@@ -113,8 +111,8 @@ public class RenderHexagons extends RenderShapes {
 		
 		//calculates the optimal side length based on scaling vertically or horizontally
 		private double calcSideLength(){
-			double maxGridWidth = screenWidth *2/3;
-			double maxGridHeight = screenHeight*2/3;
+			double maxGridWidth = screenWidth *7/12;
+			double maxGridHeight = screenHeight*7/12;
 			double cbyHeight = maxGridHeight / (2 + myParameters[1]);
 			double cbyWidth = maxGridWidth/(myParameters[0]*2 + 0.5)*2/Math.sqrt(3);
 			if (cbyHeight < cbyWidth){
@@ -122,6 +120,10 @@ public class RenderHexagons extends RenderShapes {
 			} else {
 				return cbyWidth;
 			}
+		}
+		
+		public HexagonShape[][] getArray(){
+			return myArray;
 		}
 
 		

@@ -4,9 +4,7 @@ import java.util.Map;
 import java.util.Queue;
 
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class RenderSquares extends RenderShapes {
 	private double screenWidth, screenHeight;
@@ -60,20 +58,21 @@ public class RenderSquares extends RenderShapes {
 			myArray = new SquareShape[myParameters[1]][myParameters[0]];
 			int row = 0;
 			int col = 0;
-			int id = 1;
 			while (!states.isEmpty()) {
 				double currState = states.remove();
-				SquareShape square = new SquareShape(id, calcSideLength(), myColors.get(currState), currState);
+				SquareShape square = new SquareShape(calcSideLength(), myColors.get(currState), currState);
 				myArray[row][col] = square;
 				myGrid.getChildren().add(square);
 				setLocation(square, row, col);
 				col++;
-				id++;
 				if (col > myParameters[0]-1){
 					row++;
 					col=0;
 				}
 			}
+		}
+		public SquareShape[][] getArray(){
+			return myArray;
 		}
 	
 		//method to run updates on the grid square states
@@ -100,8 +99,8 @@ public class RenderSquares extends RenderShapes {
 		//calculates the optimal side length based on scaling vertically or horizontally
 		private double calcSideLength(){
 			double blockLength = 0;
-			double maxGridWidth = screenWidth *2/3;
-			double maxGridHeight = screenHeight*2/3;
+			double maxGridWidth = screenWidth *7/12;
+			double maxGridHeight = screenHeight*7/12;
 			double blockWidth = maxGridWidth/myParameters[0];
 			double blockHeight = maxGridHeight/myParameters[1];
 			if (blockWidth > blockHeight) {
