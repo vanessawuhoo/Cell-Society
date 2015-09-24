@@ -75,18 +75,14 @@ public class RenderTriangles extends RenderShapes {
 	
 	public boolean calcOrientation(int id, int row){
 		if (myParameters[0]%2==0) {
-			//number of cols is EVEN
 			if (row%2==0){
-				//even row
 				if (id%2==0){
-					//up
 					return true;
 				}
 				else {
 					return false;
 				}
 			} else {
-				//odd row
 				if (id%2==0){
 					return false;
 				} else {
@@ -94,28 +90,21 @@ public class RenderTriangles extends RenderShapes {
 				}
 			}
 		} else {
-			//number of cols is ODD
 			if (row%2==0){
-				//even row
 				if (id%2==0){
-					//even ID
 					return true;
 				} else {
 					return false;
 				}
 			} else {
-				//odd row
 				if (id%2==0){
 					return true;
 				} else {
 					return false;
 				}
 			}
-			
 		}
 	}
-	
-	
 
 	public void updateStep(Queue<Double> newStates) {
 		int row = 0;
@@ -158,8 +147,7 @@ public class RenderTriangles extends RenderShapes {
 	}
 
 	private void setLocation(TriangleShape triangle, int row, int col){
-		
-			triangle.setLayoutX(col*calcBaseLength()/2);
+		triangle.setLayoutX(col*calcBaseLength()/2);
 		triangle.setLayoutY(row*calcHeight());
 	}
 	
@@ -171,10 +159,8 @@ public class RenderTriangles extends RenderShapes {
 		return myGrid;
 	}
 
-	@Override
 	public Shape[][] getArray() {
 		return myArray;
 	}
-
 
 }
