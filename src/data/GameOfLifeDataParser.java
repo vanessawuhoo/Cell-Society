@@ -13,7 +13,7 @@ import simulation_type.GameOfLifeRule;
 import simulation_type.Rule;
 import simulation_type.SegregationRule;
 
-public class GameOfLifeDataParser extends EightNeighborDataParser {
+public class GameOfLifeDataParser extends NeighborDataParser {
 	
 
 	@Override

@@ -8,7 +8,7 @@ import org.w3c.dom.NodeList;
 
 import simulation_type.FireRule;
 
-public class FireDataParser extends FourNeighborDataParser {
+public class FireDataParser extends NeighborDataParser {
 		
 	@Override
 	protected void setRule(){
