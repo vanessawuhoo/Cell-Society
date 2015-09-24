@@ -8,6 +8,8 @@
 	</Dimension>
 	<Color state="0">#ffffff</Color>
 	<Color state="1">#000000</Color>
+	<SHAPE>SQUARE</SHAPE>
+	<TOROIDAL>0</TOROIDAL>
 	<Parameters>
 	</Parameters>
 	<CellFill>ProbFill</CellFill>
