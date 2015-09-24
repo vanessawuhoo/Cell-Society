@@ -33,10 +33,6 @@ public class CellGraph {
 		return grid_type;
 	}
 
-	public void setGrid_type(String grid_type) {
-		this.grid_type = grid_type;
-	}
-
 	public boolean isToroidal() {
 		return toroidal;
 	}
@@ -88,13 +84,17 @@ public class CellGraph {
 	}
 
 	public void changeGridType(String grid_type) {
-		this.grid_type = grid_type;
-		neighbor_adder.addNeighborsToGraph(this);
+		if (!this.grid_type.equals(grid_type)) {
+			this.grid_type = grid_type;
+			neighbor_adder.addNeighborsToGraph(this);
+		}
 	}
 	
 	public void changeToroidal(boolean toroidal) {
-		this.toroidal = toroidal;
-		neighbor_adder.addNeighborsToGraph(this);
+		if (this.toroidal != toroidal) {
+			this.toroidal = toroidal;
+			neighbor_adder.addNeighborsToGraph(this);
+		}
 	}
 	
 	public void updateCells(Rule r) {
