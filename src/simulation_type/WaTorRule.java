@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
+
+import cells.Cell;
 
 public class WaTorRule extends Rule {
 	
@@ -32,11 +33,29 @@ public class WaTorRule extends Rule {
 	 * "moves": number of moves the fish or shark has made
 	 * "shark_energy": number of energy left in shark
 	 */
+	
 	@Override
-	public void updateCell(int id, Map<String, Double> cell_state, 
-			Map<Integer, Map<String, Double>> neighboring_states,
+	public void updateCells(Map<Integer, Cell> cells) {
+		Map<Integer, Map<String, Double>> current_states = super.getStates(cells);
+		Map<Integer, Map<String, Double>> next_states = new HashMap<Integer, Map<String, Double>>();
+		for (int id : cells.keySet()) {
+			Cell c = cells.get(id);
+			updateCell(c, current_states, next_states);
+		}
+		for (int id: cells.keySet()) {
+			if (!next_states.containsKey(id)) {
+				next_states.put(id, createNewState(0, 0, 0));
+			}
+		}
+		super.setUpdates(cells, next_states);
+	}
+
+	private void updateCell(Cell c,
 			Map<Integer, Map<String, Double>> current_states, 
 			Map<Integer, Map<String, Double>> next_states) {
+		int id = c.getId();
+		Map<String, Double> cell_state = c.getState();
+		Map<Integer, Map<String, Double>> neighboring_states = super.getNeighboringStates(c);
 		if (next_states.containsKey(id))
 			return;
 		double type = cell_state.get("State");
@@ -129,7 +148,8 @@ public class WaTorRule extends Rule {
 		}
 		return states;
 	}
-	public Map<String, Double> createNewState(double type, double moves, double energy) {
+	
+	private Map<String, Double> createNewState(double type, double moves, double energy) {
 		Map<String, Double> new_state = new HashMap<String, Double>();
 		new_state.put("State", type);
 		if (type == 1 || type == 2) {
@@ -139,15 +159,6 @@ public class WaTorRule extends Rule {
 			}
 		}
 		return new_state;
-	}
-
-	@Override
-	public void fillVoids(Set<Integer> ids, Map<Integer, Map<String, Double>> next_states) {
-		for (int id: ids) {
-			if (!next_states.containsKey(id)) {
-				next_states.put(id, createNewState(0, 0, 0));
-			}
-		}
 	}
 
 	@Override

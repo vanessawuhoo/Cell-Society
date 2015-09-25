@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import cells.Cell;
+
 public class GameOfLifeRule extends Rule {
 	public GameOfLifeRule(){}
 	
@@ -11,21 +13,31 @@ public class GameOfLifeRule extends Rule {
 	 * States: 
 	 * "State": 0=dead, 1=alive
 	 */
+	
 	@Override
-	public void updateCell(int id, Map<String, Double> cell_state, 
-			Map<Integer, Map<String, Double>> neighboring_states,
+	public void updateCells(Map<Integer, Cell> cells) {
+		Map<Integer, Map<String, Double>> current_states = super.getStates(cells);
+		Map<Integer, Map<String, Double>> next_states = new HashMap<Integer, Map<String, Double>>();
+		for (int id : cells.keySet()) {
+			Cell c = cells.get(id);
+			updateCell(c, current_states, next_states);
+		}
+		super.setUpdates(cells, next_states);
+	}
+	
+	private void updateCell(Cell c,
 			Map<Integer, Map<String, Double>> current_states, 
 			Map<Integer, Map<String, Double>> next_states) {
+		
+		int id = c.getId();
+		Map<String, Double> cell_state = c.getState();
+		Map<Integer, Map<String, Double>> neighboring_states = super.getNeighboringStates(c);
 		if (next_states.containsKey(id))
 			return;
 		double state = cell_state.get("State");
 		int alive = 0;
-		int dead = 0;
 		for (int neighbor_state_id: neighboring_states.keySet()) {
 			double n_state = neighboring_states.get(neighbor_state_id).get("State");
-			if (n_state == 0) {
-				dead++;
-			}
 			if (n_state == 1){
 				alive++;
 			}
@@ -53,17 +65,6 @@ public class GameOfLifeRule extends Rule {
 		new_state.put("State", s);
 		return new_state;
 	}
-	
-	@Override
-	public void fillVoids(Set<Integer> ids, Map<Integer, Map<String, Double>> next_states) {
-		for (int id: ids) {
-			if (!next_states.containsKey(id)) {
-				Map<String, Double> zero = new HashMap<String, Double>();
-				zero.put("State", (double) 0);
-				next_states.put(id, zero);
-			}
-		}
-	}
 
 	@Override
 	public void updateParameter() {
@@ -76,5 +77,7 @@ public class GameOfLifeRule extends Rule {
 		// TODO Auto-generated method stub
 
 	}
+
+
 
 }
