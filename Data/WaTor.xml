@@ -10,11 +10,11 @@
 	<Color state="1">#ffff32</Color>
 	<Color state="2">#198c19</Color>
 	<Parameters>
-	<FishStep>4</FishStep>
-	<SharkStep>10</SharkStep>
-	<SharkMax>9</SharkMax>
-	<SharkEatHealth>1</SharkEatHealth>
-	<SharkEnergyLoss>2</SharkEnergyLoss>
+	<FishStep>2</FishStep>
+	<SharkStep>9</SharkStep>
+	<SharkMax>10</SharkMax>
+	<SharkEatHealth>2</SharkEatHealth>
+	<SharkEnergyLoss>4</SharkEnergyLoss>
 	</Parameters>
 	<Shape>SQUARE4</Shape>
 	<Toroidal>1</Toroidal>

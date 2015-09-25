@@ -25,4 +25,14 @@ public class WaTorDataParser extends NeighborDataParser {
 				parameters.get("SharkEnergyLoss"));
 	}
 
+	@Override
+	public void setDefaultParameter() {
+		parameters = new HashMap<String, Double>();
+		parameters.put("FishStep", 4.0);
+		parameters.put("SharkStep", 9.0);
+		parameters.put("SharkMax", 9.0);
+		parameters.put("SharkEatHealth", 1.0);
+		parameters.put("SharkEnergyLoss", 2.0);
+	}
+
 }

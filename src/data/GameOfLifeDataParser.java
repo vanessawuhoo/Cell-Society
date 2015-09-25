@@ -20,5 +20,11 @@ public class GameOfLifeDataParser extends NeighborDataParser {
 	protected void setRule(){
 		rule = new GameOfLifeRule();
 	}
+
+	@Override
+	public void setDefaultParameter() {
+		parameters = new HashMap<String, Double>();
+		
+	}
 	
 }

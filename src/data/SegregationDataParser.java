@@ -39,5 +39,11 @@ public class SegregationDataParser extends NeighborDataParser {
 	protected void setRule(){
 		rule = new SegregationRule();
 	}
+
+	@Override
+	public void setDefaultParameter() {
+		parameters = new HashMap<String, Double>();
+		
+	}
 		
 }

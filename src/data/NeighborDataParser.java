@@ -49,12 +49,13 @@ public abstract class NeighborDataParser extends DataParser{
 		this.reset();
 		root = head;
 		doc = document;
+		this.setDimensions();
 		this.makeFillMap();
 		this.setStateMap();
 		this.setToroidal();
 		this.setShape();
 		this.setCellToMap();
-		this.setDimensions();
+		this.setDefaultParameter();
 		this.setParameters();
 		this.setRule();		
 		this.setCelltoGraph();
@@ -65,8 +66,8 @@ public abstract class NeighborDataParser extends DataParser{
 	@Override
 	protected void makeFillMap(){
 		fillMap = new HashMap<String, CellFill>();
-		fillMap.put("ProbFill", new ProbFill(doc, root));
-		fillMap.put("ManualFill", new ManualFill(doc, root));
+		fillMap.put("ProbFill", new ProbFill(doc, root, dimensions));
+		fillMap.put("ManualFill", new ManualFill(doc, root, dimensions));
 	}
 	
 	@Override
@@ -149,7 +150,6 @@ public abstract class NeighborDataParser extends DataParser{
 	
 	@Override
 	protected void setParameters() {
-		parameters = new HashMap<String, Double>();
 		Node dimension = getNode("Parameters", root.getChildNodes());
 		NodeList parameterList = dimension.getChildNodes();
 		for(int i = 0; i<parameterList.getLength(); i++){
