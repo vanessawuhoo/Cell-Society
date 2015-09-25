@@ -26,6 +26,10 @@ public class SimVars {
 	public Queue<Double> getStates() {
 		return states;
 	}
+	
+	public int[] getGrid_dimensions() {
+		return grid_dimensions;
+	}
 
 	public Map<Double, String> getColor_map() {
 		return color_map;
