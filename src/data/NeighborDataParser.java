@@ -191,9 +191,11 @@ public abstract class NeighborDataParser extends DataParser{
 		NodeList nameMapNodeList = stateMapNode.getChildNodes();
 		for(int i = 0; i<nameMapNodeList.getLength(); i++){
 			Node tempNode = nameMapNodeList.item(i);
-			String name = this.getNodeValue(tempNode);
-			double state = Double.parseDouble(this.getNodeAttr("state", tempNode));
-			stateMap.put(state, name);
+			if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
+				String name = this.getNodeValue(tempNode);
+				double state = Double.parseDouble(this.getNodeAttr("state", tempNode));
+				stateMap.put(state, name);
+			}
 		}
 	}
 	
