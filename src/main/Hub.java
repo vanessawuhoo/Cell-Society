@@ -115,8 +115,8 @@ public class Hub {
 		return rule;
 	}
 	
-	public int[] getParameters(){
-		return xml_loader.getParser(xml_loader.getRuleName()).getDimensions();
+	public int[] getGridDimensions() {
+		return cell_graph.getDimensions();
 	}
 	
 	private KeyFrame getStepKeyFrame() {
