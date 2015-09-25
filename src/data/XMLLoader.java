@@ -29,12 +29,12 @@ import main.Hub;
 
 public class XMLLoader extends NodeTraverser{
 	private Hub hub;
-	
+
 	private String simulationType;
 
 	private Map<String, String> parameters;
 	private Map<Integer, Map<String, String>> cellMap;
-	
+
 	private String fileName;
 	private DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	private DocumentBuilder db;
@@ -46,8 +46,8 @@ public class XMLLoader extends NodeTraverser{
 	private Rule rule;
 	private Schema schema = null;
 
-	
-	
+
+
 	public XMLLoader(){
 		try {
 			db = dbf.newDocumentBuilder();
@@ -57,27 +57,27 @@ public class XMLLoader extends NodeTraverser{
 		}
 		this.addRulesToMap();
 	}
-	
+
 	private void addRulesToMap(){
 		ruleMap.put("segregation", new SegregationDataParser());
 		ruleMap.put("fire", new FireDataParser());
 		ruleMap.put("waTor", new WaTorDataParser());
 		ruleMap.put("gameOfLife", new GameOfLifeDataParser());
 	}
-	
+
 	public void setHub(Hub h) {
 		hub = h;
 	}
-	
+
 	public void setFileName(String name){
 
 		fileName = name;
 	}
-	
+
 	public void load(){
 		try {
 			doc = db.parse(new File(fileName));
-			
+
 			System.out.println("File Loaded");
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
@@ -87,34 +87,32 @@ public class XMLLoader extends NodeTraverser{
 			e.printStackTrace();
 		}
 		doc.getDocumentElement().normalize();
-		this.getRoot();
-	};
-	
-	private void getRoot(){
-
 		try {
-			rootList = doc.getChildNodes();
-			root = getNode("Data", rootList);
+			this.getRoot();
 		} catch (ParserException e) {
 			// TODO Auto-generated catch block
-			System.out.println("XML error, make sure you have your data tag around whole thing");
+			e.printStackTrace();
 		}
+	};
+
+	private void getRoot() throws ParserException{
+
+		rootList = doc.getChildNodes();
+		root = getNode("Data", rootList);
 
 
 	}
-	
+
 	public String getRuleName(){
 		simulationType = getNodeValue("Simulation", root.getChildNodes());
-		if(simulationType.isEmpty()){
-			throw new ParserException("Please input simulation type");
-		}
+
 		return simulationType;
 	}
-	
+
 	public void parseDataSpecific(String index){
 		ruleMap.get(index).parseData(root, doc);
 	}
-	
+
 	public DataParser getParser(String index){
 		return ruleMap.get(index);
 	}

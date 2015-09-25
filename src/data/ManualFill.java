@@ -18,7 +18,7 @@ public class ManualFill extends CellFill {
 		cellMap = new HashMap<Integer, Map<String, Double>>();
 		NodeList cellNodeList = doc.getElementsByTagName("Cell");
 		if(cellNodeList.getLength() < (dimensions[0]*dimensions[1])){
-			throw new ParserException("need to add more cells");
+			System.out.println("NEED TO ADD MORE CELLS");
 		} else{
 			for(int i = 1; i<=(dimensions[0]*dimensions[1]); i++){	
 				Node tempNode = cellNodeList.item(i-1);

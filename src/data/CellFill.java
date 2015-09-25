@@ -19,7 +19,7 @@ public abstract class CellFill extends NodeTraverser {
 		dimensions = d;
 	}	
 
-	protected abstract void fill();
+	protected abstract void fill() throws ParserException;
 	
 	public abstract Map<Integer, Map<String, Double>> getFilledMap();
 }
