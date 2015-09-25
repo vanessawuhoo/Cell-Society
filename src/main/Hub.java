@@ -57,9 +57,9 @@ public class Hub {
 			rule = data.getRule();
 			simulation_loaded = true;
 			Queue<Double> states = cell_graph.getRelevantStates();
-			return new SimVars(true, rule, states, color_map, "", frames_per_second);
+			return new SimVars(true, rule, states, cell_graph.getDimensions(), color_map, "", frames_per_second);
 		}
-		return new SimVars(false, null, null, null, "Simulation running",
+		return new SimVars(false, null, null, null, null, "Simulation running",
 				frames_per_second);
 	}
 
@@ -113,10 +113,6 @@ public class Hub {
 	
 	public Rule getRule(){
 		return rule;
-	}
-	
-	public int[] getGridDimensions() {
-		return cell_graph.getDimensions();
 	}
 	
 	private KeyFrame getStepKeyFrame() {
