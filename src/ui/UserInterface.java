@@ -130,7 +130,6 @@ public class UserInterface {
 		selectNeighborhood = new ChoiceBox<String>();
 		selectNeighborhood.getItems().addAll(
 				myResources.getString("card"),
-				myResources.getString("diag"),
 				myResources.getString("all"));
 		selectNeighborhood.getSelectionModel().select(myNeighborhood);
 		Button parametersGo = new Button(myResources.getString("Trigger"));
@@ -288,10 +287,9 @@ public class UserInterface {
 		System.out.println(myNeighborhood);
 		buttonEvents();
 		if (myCellShape.equals(myResources.getString("sq"))){
-//			loadNewCellParameters(hub.METHOD(STRING, STRING,STRING));
-			//NULL!!!
+			loadNewCellParameters(hub.updateGridSettings(myCellShape, myEdgeType, ""));
 		} else {
-//			loadNewCellParameters(hub.METHOD(STRING, STRING,STRING));	
+			loadNewCellParameters(hub.updateGridSettings(myCellShape, myEdgeType, myNeighborhood));
 		}
 	}
 	
