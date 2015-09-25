@@ -8,10 +8,14 @@ import javafx.stage.Stage;
 import main.Hub;
 import main.StepVars;
 
+
+//Main UI class, accesses all the other UI classes
+//Dependent on the main back end class Hub
 public class Display extends Application {
 	private Hub hub;
 	private UserInterface myUserInterface;
 	
+	//sets the Display's internal instance of hub so that it can call methods in hub
 	public void setHub(Hub h) {
 		hub = h;
 	}
@@ -41,16 +45,11 @@ public class Display extends Application {
 		myUserInterface.updateStep(states);
 	}
 	
+	//Updates the states of the shapes 
 	public void updateStep(StepVars step_var) {
-		if (step_var.sim_not_running) {
-			myUserInterface.updateStep(step_var.states);
+		if (step_var.isSim_not_running()) {
+			myUserInterface.updateStep(step_var.getStates());
 		}
 	}
-	
-	public void startTestSim(){
-//		hub.loadTestSim();
-//		hub.playSimulation();
-	}
-	
 
 }

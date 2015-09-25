@@ -8,8 +8,12 @@
 	</Dimension>
 	<Color state="0">#ffffff</Color>
 	<Color state="1">#000000</Color>
-	<SHAPE>SQUARE</SHAPE>
-	<TOROIDAL>0</TOROIDAL>
+	<Shape>SQUARE8</Shape>
+	<Toroidal>0</Toroidal>
+	<StateMap>
+		<Map state = "0">Dead</Map>
+		<Map state = "1">Alive</Map>
+	</StateMap>
 	<Parameters>
 	</Parameters>
 	<CellFill>ProbFill</CellFill>

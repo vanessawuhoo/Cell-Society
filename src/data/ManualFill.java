@@ -17,8 +17,7 @@ public class ManualFill extends CellFill {
 	protected void fill(){
 		cellMap = new HashMap<Integer, Map<String, Double>>();
 		NodeList cellNodeList = doc.getElementsByTagName("Cell");
-		for(int i = 1; i<=cellNodeList.getLength(); i++){
-			
+		for(int i = 1; i<=cellNodeList.getLength(); i++){	
 			Node tempNode = cellNodeList.item(i-1);
 			Map<String, Double> parameterMap = new HashMap<String, Double>();
 			if (tempNode.getNodeType() == Node.ELEMENT_NODE) {

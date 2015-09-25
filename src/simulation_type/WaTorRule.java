@@ -16,10 +16,8 @@ public class WaTorRule extends Rule {
 	private double energy_loss;
 	private Random random;
 	
-	public WaTorRule(int dim_x, int dim_y, int fish_breed_steps, int shark_breed_steps,
+	public WaTorRule(int fish_breed_steps, int shark_breed_steps,
 			double max_shark_energy, double food_energy, double energy_loss) {
-		super.setGrid_type("rectangle");
-		super.setGrid_parameters(new int[] {dim_x, dim_y});
 		this.fish_breed_steps = fish_breed_steps;
 		this.shark_breed_steps = shark_breed_steps;
 		this.max_shark_energy = max_shark_energy;

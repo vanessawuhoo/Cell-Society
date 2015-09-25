@@ -10,9 +10,7 @@ public class FireRule extends Rule {
 	private double prob_catch;
 	private Random random;
 	
-	public FireRule(int dim_x, int dim_y, double prob_catch) {
-		super.setGrid_type("rectangle");
-		super.setGrid_parameters(new int[] {dim_x, dim_y});
+	public FireRule(double prob_catch) {
 		this.prob_catch = prob_catch;
 		random = new Random();
 	}

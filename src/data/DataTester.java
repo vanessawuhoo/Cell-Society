@@ -3,7 +3,7 @@ package data;
 public class DataTester {
 	public static void main(String[] args){
 		XMLLoader loader = new XMLLoader();
-		loader.setFileName("Data/blinker.xml");
+		loader.setFileName("Data/WaTor.xml");
 		loader.load();
 		System.out.println(loader.getRuleName());
 		loader.parseDataSpecific(loader.getRuleName());

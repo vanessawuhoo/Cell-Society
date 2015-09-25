@@ -5,10 +5,9 @@ import java.util.Queue;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
+//class to render a grid of triangles 
 public class RenderTriangles extends RenderShapes {
 	private double screenWidth, screenHeight;
 	private int[] myParameters;
@@ -16,6 +15,7 @@ public class RenderTriangles extends RenderShapes {
 	private TriangleShape[][] myArray;
 	private Pane myGrid;
 	
+	//constructor
 	public RenderTriangles(double width, double height, int[] parameters, Map<Double,String>key){
 		this.screenHeight=height;
 		this.screenWidth=width;
@@ -24,12 +24,14 @@ public class RenderTriangles extends RenderShapes {
 		initPane();
 	}
 
+	//intializes the pane and its parameters
 	public void initPane() {
 		myGrid = new Pane();
 		myGrid.setMaxHeight(screenHeight*2/3);
 		myGrid.setMaxWidth(screenWidth*2/3);
 	}
 	
+	//updates the colors of each triangle to match the new state after a step
 	public void updateColor(Map<Double, String> color) {
 		myColors = color;
 		for (int row = 0; row < myArray.length; row++){
@@ -39,7 +41,7 @@ public class RenderTriangles extends RenderShapes {
 		}
 	}
 	
-	
+	//intializes the grid of triangles and the array to access each one
 	public void initGrid(Queue<Double> states) {
 		myArray = new TriangleShape[myParameters[1]][myParameters[0]];
 		int row = 0;
@@ -73,6 +75,7 @@ public class RenderTriangles extends RenderShapes {
 		}
 	}
 	
+	//helper method to calculate whether a triangle points up or down
 	public boolean calcOrientation(int id, int row){
 		if (myParameters[0]%2==0) {
 			if (row%2==0){
@@ -106,6 +109,7 @@ public class RenderTriangles extends RenderShapes {
 		}
 	}
 
+	//method to update the triangle colors
 	public void updateStep(Queue<Double> newStates) {
 		int row = 0;
 		int col = 0;
@@ -120,6 +124,7 @@ public class RenderTriangles extends RenderShapes {
 		}
 	}
 
+	//method to turn grid outline on or off
 	public void setGridOutline(boolean on) {
 		for (int row = 0; row < myArray.length; row++) {
 			for (int col = 0; col < myArray[0].length; col++){
@@ -132,6 +137,7 @@ public class RenderTriangles extends RenderShapes {
 		}
 	}
 	
+	//helper method to calculate optimal base length of equilateral triangle
 	private double calcBaseLength(){
 		double baseLength = 0;
 		double maxGridWidth = screenWidth *7/12;
@@ -146,19 +152,23 @@ public class RenderTriangles extends RenderShapes {
 		return baseLength;
 	}
 
+	//method to set individual location of each triangle in pane
 	private void setLocation(TriangleShape triangle, int row, int col){
 		triangle.setLayoutX(col*calcBaseLength()/2);
 		triangle.setLayoutY(row*calcHeight());
 	}
 	
+	//method to calculate optimal height of triangles
 	private double calcHeight(){
 		return calcBaseLength()*Math.sqrt(3)/2;
 	}
 
+	//getter for pane
 	public Pane getPane() {
 		return myGrid;
 	}
 
+	//getter for triangle array
 	public Shape[][] getArray() {
 		return myArray;
 	}
