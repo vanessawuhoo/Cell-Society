@@ -17,6 +17,9 @@ public class CellGraph {
 	private int[] dimensions; // 0:m 1:n
 	AddNeighbors neighbor_adder;
 
+	/* Grid types:
+	 * square_4, square_8, hexagon, triangle
+	 */
 	public CellGraph(Map<Integer, Cell> cells, String grid_type, int m, int n, boolean toroidal) {
 		all_cells = cells;
 		this.grid_type = grid_type;
