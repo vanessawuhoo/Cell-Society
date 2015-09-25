@@ -2,6 +2,7 @@ package main;
 
 import java.util.Map;
 import java.util.Queue;
+import java.util.ResourceBundle;
 
 import cells.CellGraph;
 import data.AllData;
@@ -14,6 +15,8 @@ import ui.Display;
 
 public class Hub {
 
+	private ResourceBundle myResources;
+	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/Data";
 	private XMLLoader xml_loader;
 	private Display display;
 	
@@ -28,6 +31,7 @@ public class Hub {
 	private boolean simulation_loaded;
 	
 	public Hub(XMLLoader xml_loader, Display display) {
+		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE);
 		this.xml_loader = xml_loader;
 		this.display = display;
 		simulation_running = false;
@@ -57,7 +61,10 @@ public class Hub {
 			rule = data.getRule();
 			simulation_loaded = true;
 			Queue<Double> states = cell_graph.getRelevantStates();
-			return new SimVars(true, rule, states, cell_graph.getDimensions(), color_map, "", frames_per_second);
+			int[] dimensions = cell_graph.getDimensions();
+			int m = dimensions[0]; int n = dimensions[1];
+			int dim_x = n; int dim_y = m;
+			return new SimVars(true, rule, states, new int[] {dim_x, dim_y}, color_map, "", frames_per_second);
 		}
 		return new SimVars(false, null, null, null, null, "Simulation running",
 				frames_per_second);
@@ -101,13 +108,22 @@ public class Hub {
 		return cell_graph.getRelevantStates();
 	}
 	
-	public Queue<Double> updateGridType(String grid_type) {
-		cell_graph.changeGridType(grid_type);
-		return cell_graph.getRelevantStates();
-	}
-	
-	public Queue<Double> updateToroidal(boolean toroidal) {
-		cell_graph.changeToroidal(toroidal);
+	public Queue<Double> updateGridSettings(String cell_shape, String edge_type, String neighborhood_type) {
+		String grid_type = null;
+		boolean toroidal = false;
+		if (edge_type.equals(myResources.getString("tor"))) {
+			toroidal = true;
+		}
+		if (cell_shape.equals(myResources.getString("sq"))) {
+			if (edge_type.equals(myResources.getString("card"))) {
+				grid_type = myResources.getString("sq4");
+			} else {
+				grid_type = myResources.getString("sq8");
+			}
+		} else {
+			grid_type = cell_shape;
+		}
+		cell_graph.changeGridSettings(grid_type, toroidal);
 		return cell_graph.getRelevantStates();
 	}
 	
