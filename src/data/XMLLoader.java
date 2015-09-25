@@ -107,12 +107,6 @@ public class XMLLoader extends NodeTraverser{
 	public DataParser getParser(String index){
 		return ruleMap.get(index);
 	}
-	
-	
-	//JUST ADDING THIS SO MY CODE WILL COMPILE :(
-	public Object[] getData(){
-		Object[] o = new Object[2];
-		return o;
-	}
+
 }
 
