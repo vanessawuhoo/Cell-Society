@@ -57,7 +57,10 @@ public class Hub {
 			rule = data.getRule();
 			simulation_loaded = true;
 			Queue<Double> states = cell_graph.getRelevantStates();
-			return new SimVars(true, rule, states, cell_graph.getDimensions(), color_map, "", frames_per_second);
+			int[] dimensions = cell_graph.getDimensions();
+			int m = dimensions[0]; int n = dimensions[1];
+			int dim_x = n; int dim_y = m;
+			return new SimVars(true, rule, states, new int[] {dim_x, dim_y}, color_map, "", frames_per_second);
 		}
 		return new SimVars(false, null, null, null, null, "Simulation running",
 				frames_per_second);
