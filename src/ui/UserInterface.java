@@ -97,6 +97,7 @@ public class UserInterface {
 		VBox sidebar = new VBox();
 		sidebar.setSpacing(40);
 		loadFileInput();
+		xmlField.setText(myXML);
 		VBox cellControl = loadCellShapeControl();
 		outlines = new CheckBox(myResources.getString("gridvis"));
 		outlines.setSelected(true);
