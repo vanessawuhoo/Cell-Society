@@ -3,6 +3,7 @@ package ui;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.ResourceBundle;
 
@@ -37,16 +38,16 @@ public class UserInterface {
 	private ResourceBundle myResources;
 	private int[] myParameters;
 	private ChoiceBox<String> selectCells, selectEdge, selectNeighborhood;
-	private ChoiceBox<Double> selectState;
+	private ChoiceBox<String> selectState;
 	private TextField xmlField, hexField;
-	private Map<Double,String> colors;
+	private Map<Double,String> colors, stateMap;
 	private double screenWidth, screenHeight;
 	private Button start, stop, step, slow, fast, load;
 	private Scene myUserInterface;
 	private Map<Double,Queue<Integer>> graphData;
 	private Hub hub;
 	private CheckBox outlines;
-	private String myCellShape = "SQUARE", myEdgeType = "FINITE", myNeighborhood = "ALL";
+	private String myCellShape = "SQUARE", myEdgeType = "FINITE", myNeighborhood = "ALL", myXML = "";
 	
 	//give the display the title
 	public String getTitle() {
@@ -149,7 +150,7 @@ public class UserInterface {
 	private HBox loadColorControl(){
 		HBox colorControl = new HBox();
 		colorControl.setSpacing(5);
-		selectState = new ChoiceBox<Double>();
+		selectState = new ChoiceBox<String>();
 		hexField = new TextField();
 		hexField.setPromptText(myResources.getString("Hex"));
 		hexField.setMaxWidth(70);
@@ -162,7 +163,13 @@ public class UserInterface {
 	//helper method to help change the key map of colors in UI
 	private void changeColorMap(){
 		String newhex = hexField.getText();
-		Double state = selectState.getSelectionModel().getSelectedItem().doubleValue();
+		String stateMeaning = selectState.getSelectionModel().getSelectedItem();
+		Double state = null;
+		for (Entry<Double, String> e : stateMap.entrySet()){
+			if (e.getValue().equals(stateMeaning)){
+				state = e.getKey();
+			}
+		}
 		colors.put(state, newhex);
 		updateColor(colors);
 	}
@@ -172,8 +179,7 @@ public class UserInterface {
 		myPossibleRenders = new HashMap<String, RenderShapes>();
 		myPossibleRenders.put("SQUARE", new RenderSquares(screenWidth, screenHeight, myParameters, colors));
 		myPossibleRenders.put("TRIANGLE", new RenderTriangles(screenWidth, screenHeight, myParameters, colors));
-		myPossibleRenders.put("HEXAGON", new RenderHexagons(screenWidth, screenHeight, myParameters, colors));
-		
+		myPossibleRenders.put("HEXAGON", new RenderHexagons(screenWidth, screenHeight, myParameters, colors));	
 	}
 	
 	//helper method to allow all the objects in the grid to be clickable to change state
@@ -201,9 +207,15 @@ public class UserInterface {
 	
 	//main method to load in an XML file and its visual representation
 	private void load(){
-		SimVars variables = hub.loadSimulation(xmlField.getText());
+		myXML = xmlField.getText();
+		if (myXML.equals("")){
+			myXML = "Data/LargeGameOfLife.xml";
+			System.out.println("No xml given; using default");
+		} 
+		SimVars variables = hub.loadSimulation(myXML);
 		this.colors = variables.getColor_map();
 		this.myParameters = variables.getGrid_dimensions();
+		this.stateMap = variables.getName_map();
 		Queue<Double> states = variables.getStates();
 		loadRenders();
 		initGraphData(states);
@@ -215,7 +227,7 @@ public class UserInterface {
 		getShapeArray();
 		selectState.getItems().clear();
 		for (Double d : colors.keySet()){
-			selectState.getItems().add(d);
+			selectState.getItems().add(stateMap.get(d));
 		}
 	}
 	
@@ -231,7 +243,7 @@ public class UserInterface {
 		getShapeArray();
 		selectState.getItems().clear();
 		for (Double d : colors.keySet()){
-			selectState.getItems().add(d);
+			selectState.getItems().add(stateMap.get(d));
 		}
 		myPossibleRenders.get(myCellShape).setGridOutline(true);
 	}
