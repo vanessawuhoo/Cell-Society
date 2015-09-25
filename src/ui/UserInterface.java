@@ -204,7 +204,7 @@ public class UserInterface {
 	private void load(){
 		SimVars variables = hub.loadSimulation(xmlField.getText());
 		this.colors = variables.getColor_map();
-		this.myParameters = variables.getRule().getGrid_parameters();
+		this.myParameters = variables.getGrid_dimensions();
 		Queue<Double> states = variables.getStates();
 		loadRenders();
 		initGraphData(states);
