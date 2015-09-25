@@ -5,18 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class GameOfLifeRule extends Rule {
-	public GameOfLifeRule(int dim_x, int dim_y){
-		super.setGrid_type("rectangle");
-		super.setGrid_parameters(new int[] {dim_x, dim_y});
-	}
-	
-	public String getGridType() {
-		return super.getGrid_type();
-	}
-	
-	public int[] getGridParameters() {
-		return super.getGrid_parameters();
-	}
+	public GameOfLifeRule(){}
 	
 	/*
 	 * States: 

@@ -6,6 +6,7 @@ import java.util.Queue;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+//class to render a grid of squares
 public class RenderSquares extends RenderShapes {
 	private double screenWidth, screenHeight;
 	private int[] myParameters;
@@ -13,6 +14,8 @@ public class RenderSquares extends RenderShapes {
 	private SquareShape[][] myArray;
 	private Pane myGrid;
 
+	
+	//constructor
 	public RenderSquares(double width, double height, int[] parameters, Map<Double,String> key) {
 		this.screenHeight=height;
 		this.screenWidth=width;
@@ -21,10 +24,12 @@ public class RenderSquares extends RenderShapes {
 		initPane();
 	}
 	
+	//returns the pane with grid of squares
 	public Pane getPane() {
 		return myGrid;
 	}
 	
+	//turns grid outline on or off
 	public void setGridOutline(boolean on){
 			for (int row = 0; row < myArray.length; row++) {
 				for (int col = 0; col < myArray[0].length; col++){
@@ -37,12 +42,14 @@ public class RenderSquares extends RenderShapes {
 			}
 	}
 	
+	//initializes pane with parameters
 	public void initPane() {
 		myGrid = new Pane();
 		myGrid.setMaxHeight(screenHeight*2/3);
 		myGrid.setMaxWidth(screenWidth*2/3);
 	}
 	
+	//updates colors of squares in grid to new states
 	public void updateColor(Map<Double, String> color) {
 		myColors = color;
 		for (int row = 0; row < myArray.length; row++){
@@ -71,6 +78,8 @@ public class RenderSquares extends RenderShapes {
 				}
 			}
 		}
+		
+		//returns array of square shapes
 		public SquareShape[][] getArray(){
 			return myArray;
 		}

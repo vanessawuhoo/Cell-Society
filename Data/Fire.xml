@@ -12,8 +12,13 @@
 	<Parameters>
 	<ProbCatch>.6</ProbCatch>
 	</Parameters>
-	<Shape>SQUARE</Shape>
+	<Shape>SQUARE4</Shape>
 	<Toroidal>0</Toroidal>
+	<StateMap>
+		<Map state = "0">Vacant</Map>
+		<Map state = "1">Tree</Map>
+		<Map state = "1">Burning</Map>
+	</StateMap>
 	<CellFill>ManualFill</CellFill>
 	<Cell>
 		<ID>1</ID>

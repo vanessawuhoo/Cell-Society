@@ -1,25 +1,21 @@
 package ui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.ResourceBundle;
 
-import javafx.collections.FXCollections;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Data;
-import javafx.scene.chart.XYChart.Series;
 
+//Class that handles the functionality of drawing the graph obtained from the Get Graph button
 public class DrawGraph {
 	private LineChart<Number, Number> myChart;
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	private ResourceBundle myResources;
 	private Map<Double, Queue<Integer>> graphData;
 
+	//constructor to create class
 	public DrawGraph(Map<Double, Queue<Integer>> data) {
 		this.graphData = data;
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "Data");
@@ -27,6 +23,7 @@ public class DrawGraph {
 		addData();
 	}
 
+	//initializes the graph and all of its components
 	private void initGraph() {
 		NumberAxis xAxis = new NumberAxis();
 		NumberAxis yAxis = new NumberAxis();
@@ -38,6 +35,7 @@ public class DrawGraph {
 		myChart.setTitle(myResources.getString("Title"));
 	}
 
+	//Adds all of the series into the graph
 	private void addData() {
 		for (Double d : graphData.keySet()) {
 			Queue<Integer> queue = graphData.get(d);
@@ -45,6 +43,7 @@ public class DrawGraph {
 		}
 	}
 
+	//Adds an individual series into the graph by state
 	private void addSeries(Queue<Integer> data, Double id) {
 		XYChart.Series<Number, Number> series = new XYChart.Series<>();
 		series.setName(id.toString());
@@ -56,8 +55,8 @@ public class DrawGraph {
 		myChart.getData().add(series);
 	}
 
+	//returns the chart to be shown in a popup in the UI
 	public LineChart<Number, Number> getChart() {
-		
 		return myChart;
 	}
 }

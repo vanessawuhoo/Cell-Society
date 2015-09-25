@@ -12,7 +12,7 @@ public class FireDataParser extends NeighborDataParser {
 		
 	@Override
 	protected void setRule(){
-		rule = new FireRule(dimensions[0], dimensions[1], parameters.get("ProbCatch"));
+		rule = new FireRule(parameters.get("ProbCatch"));
 	}
 
 }

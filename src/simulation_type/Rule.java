@@ -4,26 +4,6 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class Rule {
-	
-	private String grid_type;
-	private int[] grid_parameters;
-	
-	public String getGrid_type() {
-		return grid_type;
-	}
-
-	public void setGrid_type(String grid_type) {
-		this.grid_type = grid_type;
-	}
-
-	public int[] getGrid_parameters() {
-		return grid_parameters;
-	}
-
-	public void setGrid_parameters(int[] grid_parameters) {
-		this.grid_parameters = grid_parameters;
-	}
-	
 	/*
 	 * Update cell states
 	 */

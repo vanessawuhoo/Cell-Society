@@ -1,12 +1,13 @@
 package ui;
 
 import java.util.Map;
+
 import java.util.Queue;
 
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
+//class to render a grid of hexagons 
 public class RenderHexagons extends RenderShapes {
 	private double screenWidth, screenHeight;
 	private int[] myParameters;
@@ -14,6 +15,7 @@ public class RenderHexagons extends RenderShapes {
 	private HexagonShape[][] myArray;
 	private Pane myGrid;
 
+	//constructor
 	public RenderHexagons(double width, double height, int[] parameters, Map<Double,String> key) {
 		this.screenHeight=height;
 		this.screenWidth=width;
@@ -22,10 +24,12 @@ public class RenderHexagons extends RenderShapes {
 		initPane();
 	}
 	
+	//getter for pane of hexagons
 	public Pane getPane() {
 		return myGrid;
 	}
 	
+	//turns grid outline on or off
 	public void setGridOutline(boolean on){
 			for (int row = 0; row < myArray.length; row++) {
 				for (int col = 0; col < myArray[0].length; col++){
@@ -38,14 +42,13 @@ public class RenderHexagons extends RenderShapes {
 			}
 	}
 
-	
+	//intializes pane and its parameters
 	public void initPane() {
 		myGrid = new Pane();
 		myGrid.setMaxHeight(screenHeight*2/3);
 		myGrid.setMaxWidth(screenWidth*2/3);
 	}
-	
-	
+
 	//initializes the grid upon loading an XML and inserts things into the pane
 		public void initGrid(Queue<Double> states){
 			myArray = new HexagonShape[myParameters[1]][myParameters[0]];
@@ -90,6 +93,8 @@ public class RenderHexagons extends RenderShapes {
 				}
 			}
 		}
+		
+		//method to update color of all hexagons in the grid
 		public void updateColor(Map<Double, String> color) {
 			myColors = color;
 			for (int row = 0; row < myArray.length; row++){
@@ -122,10 +127,9 @@ public class RenderHexagons extends RenderShapes {
 			}
 		}
 		
+		//getter for array of hexagon objects
 		public HexagonShape[][] getArray(){
 			return myArray;
 		}
-
-		
 		
 }
