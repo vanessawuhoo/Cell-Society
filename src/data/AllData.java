@@ -22,6 +22,10 @@ public class AllData {
 	public Map<String, Double> getParameter() {
 		return parameter;
 	}
+	
+	public Map<Double, String> getNameMap() {
+		return nameMap;
+	}
 
 	public AllData(Rule r, CellGraph cg, Map<String, Double> p, Map<Double, String> n){
 		rule = r;

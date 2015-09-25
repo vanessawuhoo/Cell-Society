@@ -12,6 +12,7 @@ public class SimVars {
 	private Queue<Double> states;
 	private int[] grid_dimensions;
 	private Map<Double, String> color_map;
+	private Map<Double, String> name_map;
 	private String error;
 	private double frames_per_second;
 	
@@ -34,6 +35,10 @@ public class SimVars {
 	public Map<Double, String> getColor_map() {
 		return color_map;
 	}
+	
+	public Map<Double, String> getName_map() {
+		return name_map;
+	}
 
 	public String getError() {
 		return error;
@@ -45,12 +50,14 @@ public class SimVars {
 
 	public SimVars(boolean success, Rule rule, Queue<Double> states,
 			int[] grid_dimensions, Map<Double, String> color_map,
+			Map<Double, String> name_map,
 			String error, double frames_per_second) {
 		this.success = success;
 		this.rule = rule;
 		this.states = states;
 		this.grid_dimensions = grid_dimensions;
 		this.color_map = color_map;
+		this.name_map = name_map;
 		this.error = error;
 		this.frames_per_second = frames_per_second;
 	}
