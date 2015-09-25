@@ -12,8 +12,8 @@ public class ProbFill extends CellFill {
 	protected Map<String, Map<Double, Double>> probMap;
 	protected Map<String, Map<Double, Double>> cumeMap;
 
-	public ProbFill(Document doc, Node root) {
-		super(doc, root);
+	public ProbFill(Document doc, Node root, int[] d) {
+		super(doc, root, d);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -48,7 +48,6 @@ public class ProbFill extends CellFill {
 		cellMap = new HashMap<Integer, Map<String, Double>>();
 		NodeList cellNodeList = doc.getElementsByTagName("Cell");
 		for(int i = 1; i<=cellNodeList.getLength(); i++){
-			
 			Node tempNode = cellNodeList.item(i-1);
 			Map<String, Double> parameterMap = new HashMap<String, Double>();
 			if (tempNode.getNodeType() == Node.ELEMENT_NODE) {

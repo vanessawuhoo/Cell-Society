@@ -57,6 +57,8 @@ public abstract class DataParser extends NodeTraverser {
 	
 	public abstract Map<Double, String> getStateMap();
 	
+	public abstract void setDefaultParameter();
+	
 	
 	
 }

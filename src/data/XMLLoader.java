@@ -70,6 +70,7 @@ public class XMLLoader extends NodeTraverser{
 	}
 	
 	public void setFileName(String name){
+
 		fileName = name;
 	}
 	
@@ -90,13 +91,23 @@ public class XMLLoader extends NodeTraverser{
 	};
 	
 	private void getRoot(){
-		rootList = doc.getChildNodes();
-		root = getNode("Data", rootList);
+
+		try {
+			rootList = doc.getChildNodes();
+			root = getNode("Data", rootList);
+		} catch (ParserException e) {
+			// TODO Auto-generated catch block
+			System.out.println("XML error, make sure you have your data tag around whole thing");
+		}
+
+
 	}
 	
 	public String getRuleName(){
 		simulationType = getNodeValue("Simulation", root.getChildNodes());
-		
+		if(simulationType.isEmpty()){
+			throw new ParserException("Please input simulation type");
+		}
 		return simulationType;
 	}
 	
@@ -107,12 +118,6 @@ public class XMLLoader extends NodeTraverser{
 	public DataParser getParser(String index){
 		return ruleMap.get(index);
 	}
-	
-	
-	//JUST ADDING THIS SO MY CODE WILL COMPILE :(
-	public Object[] getData(){
-		Object[] o = new Object[2];
-		return o;
-	}
+
 }
 

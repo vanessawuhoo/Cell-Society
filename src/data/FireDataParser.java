@@ -15,4 +15,10 @@ public class FireDataParser extends NeighborDataParser {
 		rule = new FireRule(parameters.get("ProbCatch"));
 	}
 
+	@Override
+	public void setDefaultParameter() {
+		parameters = new HashMap<String, Double>();
+		parameters.put("ProbCatch", .5);
+	}
+
 }
