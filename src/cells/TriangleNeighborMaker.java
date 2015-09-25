@@ -18,15 +18,15 @@ public class TriangleNeighborMaker implements NeighborMaker {
 				if (j != 1) {
 					Cell left_c = cells.get(curr_index - 1);
 					neighbors.add(left_c);
-				} else if (toroidal && m % 2 == 0) {
-					int left_index = curr_index - 1;
+				} else if (toroidal && n % 2 == 0) {
+					int left_index = curr_index + n - 1;
 					neighbors.add(cells.get(left_index));
 				}
 				// right
 				if (j != n) {
 					Cell right_c = cells.get(curr_index + 1);
 					neighbors.add(right_c);
-				} else if (toroidal && m % 2 == 0) {
+				} else if (toroidal && n % 2 == 0) {
 					int right_index = curr_index - n + 1;
 					neighbors.add(cells.get(right_index));
 				}
