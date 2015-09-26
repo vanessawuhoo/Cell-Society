@@ -6,6 +6,7 @@
 		<X>4</X>
 		<Y>4</Y>
 	</Dimension>
+	<Color State="-1">#000000</Color>
 	<Color State="0">#FFFFFF</Color>
 	<Color State="1">#FFE7E7</Color>
 	<Color State="2">#FFD0D0</Color>
