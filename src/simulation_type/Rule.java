@@ -32,7 +32,7 @@ public abstract class Rule {
 		List<Cell> connections = c.getConnections();
 		Map<Integer, Map<String, Double>> neighboring_states = new HashMap<Integer, Map<String, Double>>();
 		for (Cell connection : connections) {
-			neighboring_states.put(connection.getId(), connection.getState());
+			neighboring_states.put(connection.getId(), new HashMap<String, Double>(connection.getState()));
 		}
 		return neighboring_states;
 	}

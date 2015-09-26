@@ -18,7 +18,7 @@ public class SugarScapeRule extends Rule {
 	public SugarScapeRule(int sugar_grow_back_rate, int sugar_grow_back_interval) {
 		this.sugar_grow_back_rate = sugar_grow_back_rate;
 		this.sugar_grow_back_interval = sugar_grow_back_interval;
-		sugar_time = sugar_grow_back_interval;
+		sugar_time = sugar_grow_back_rate;
 	}
 	
 	/* States: 
@@ -49,7 +49,7 @@ public class SugarScapeRule extends Rule {
 				Map<String, Double> cell_state = c.getState();
 				double sugar_level = cell_state.get("State");
 				double max_sugar_level = cell_state.get("max_sugar_level");
-				double temp_sugar_level = sugar_level + sugar_grow_back_rate;
+				double temp_sugar_level = sugar_level + sugar_grow_back_interval;
 				if (temp_sugar_level <= max_sugar_level) {
 					sugar_level = temp_sugar_level;
 				} else { 
@@ -116,18 +116,17 @@ public class SugarScapeRule extends Rule {
 		if (best_cell == c) {
 			double temp_patch_sugar_level = patch_sugar_level - metabolism;
 			if (temp_patch_sugar_level > 0) {
-				Map<String, Double> new_current_state = createNewState(best_cell, temp_patch_sugar_level,
-						max_sugar_level, 1, agent_sugar_level + metabolism,
-						metabolism, vision);
+				Map<String, Double> new_current_state = createNewAgentState(c, c,
+						temp_patch_sugar_level, max_sugar_level, agent_sugar_level, metabolism);
 				next_states.put(id, new_current_state);
 			} else {
 				Map<String, Double> new_current_state = createNewState(best_cell, 0,
-						max_sugar_level, 0, 0, 0, 0);
+						max_sugar_level, 0);
 				next_states.put(id, new_current_state);
 			}
 		} else {
 			Map<String, Double> new_current_state = createNewState(best_cell, patch_sugar_level,
-					max_sugar_level, 0, 0, 0, 0);
+					max_sugar_level, 0);
 			next_states.put(id, new_current_state);
 			Cell next_cell = best_cell;
 			int next_id = next_cell.getId();
@@ -136,28 +135,36 @@ public class SugarScapeRule extends Rule {
 			double next_max_sugar_level = next_cell_state.get("max_sugar_level");
 			double temp_patch_sugar_level = next_patch_sugar_level - metabolism;
 			if (temp_patch_sugar_level > 0) {
-				Map<String, Double> new_state = createNewState(best_cell, temp_patch_sugar_level,
-						next_max_sugar_level, 1, agent_sugar_level + metabolism,
-						metabolism, vision);
+				Map<String, Double> new_state = createNewAgentState(best_cell, c, temp_patch_sugar_level,
+						next_max_sugar_level, agent_sugar_level, metabolism);
 				next_states.put(next_id, new_state);
 			} else {
-				Map<String, Double> new_state = createNewState(best_cell, 0,
-						next_max_sugar_level, 0, 0, 0, 0);
+				Map<String, Double> new_state = createNewState(best_cell, 0, next_max_sugar_level, 0);
 				next_states.put(next_id, new_state);
 			}
 		}
 	}
 
-	private Map<String, Double> createNewState(Cell c, double patch_sugar_level, double max_sugar_level,
-			double agent_present, double agent_sugar_level, double sugar_metabolism, double vision) {
+	protected Map<String, Double> createNewState(Cell c, double patch_sugar_level, double max_sugar_level,
+			double agent_present) {
 		Map<String, Double> new_state = new HashMap<String, Double>(c.getState());
 		new_state.put("State", patch_sugar_level);
 		new_state.put("max_sugar_level", max_sugar_level);
 		new_state.put("Agent", agent_present);
-		if (agent_present == 1) {
-			new_state.put("agent_sugar_level", agent_sugar_level);
-			new_state.put("sugar_metabolism", sugar_metabolism);
-			new_state.put("vision", vision);
+		return new_state;
+	}
+	
+	private Map<String, Double> createNewAgentState(Cell c, Cell prev_agent_cell, double patch_sugar_level,
+			double max_sugar_level, double agent_sugar_level, double metabolism) {
+		Map<String, Double> new_state = createNewState(c, patch_sugar_level, max_sugar_level, 1.0);
+		for (String state_property: prev_agent_cell.getState().keySet()) {
+			if (!state_property.equals("State") && !state_property.equals("max_sugar_level") 
+					&& !state_property.equals("Agent") && !state_property.equals("agent_sugar_level")) {
+				new_state.put(state_property, prev_agent_cell.getState().get(state_property));
+			} else if (!state_property.equals("State") && !state_property.equals("max_sugar_level") 
+					&& !state_property.equals("Agent")) { // state_property.equals("agent_sugar_level")
+				new_state.put("agent_sugar_level", agent_sugar_level + metabolism);
+			}
 		}
 		return new_state;
 	}

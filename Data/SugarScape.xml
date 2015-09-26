@@ -19,7 +19,7 @@
 	<Color State="9">#FF2E2E</Color>
 	<Color State="10">#FF1717</Color>
 	<Parameters>
-	<GrowBackRate>2</GrowBackRate>
+	<GrowBackRate>22</GrowBackRate>
 	<GrowBackInterval>2</GrowBackInterval>
 	</Parameters>
 	<Shape>SQUARE4</Shape>
