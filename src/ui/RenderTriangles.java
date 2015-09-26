@@ -123,19 +123,6 @@ public class RenderTriangles extends RenderShapes {
 			}
 		}
 	}
-
-	//method to turn grid outline on or off
-	public void setGridOutline(boolean on) {
-		for (int row = 0; row < myArray.length; row++) {
-			for (int col = 0; col < myArray[0].length; col++){
-				if (on){
-					myArray[row][col].setStroke(Color.BLACK);
-				} else {
-					myArray[row][col].setStroke(myArray[row][col].getFill());
-				}
-			}
-		}
-	}
 	
 	//helper method to calculate optimal base length of equilateral triangle
 	private double calcBaseLength(){
@@ -152,6 +139,18 @@ public class RenderTriangles extends RenderShapes {
 		return baseLength;
 	}
 
+	//method to turn outlines on shapes on or off
+	public void setGridOutline(boolean on){
+		for (int row = 0; row < myArray.length; row++) {
+			for (int col = 0; col < myArray[0].length; col++){
+				if (on){
+					myArray[row][col].setStroke(Color.BLACK);
+				} else {
+					myArray[row][col].setStroke(myArray[row][col].getFill());
+				}
+			}
+		}
+}
 	//method to set individual location of each triangle in pane
 	private void setLocation(TriangleShape triangle, int row, int col){
 		triangle.setLayoutX(col*calcBaseLength()/2);
