@@ -72,9 +72,7 @@ public class UserInterface {
 		HBox control = loadHBox();
 		layout.setTop(control);
 		BorderPane.setMargin(control, new Insets(screenHeight/20,screenWidth/20,screenHeight/20,screenWidth/20));
-		VBox sidebar = loadSidebar();
-		layout.setRight(sidebar);
-		BorderPane.setMargin(sidebar, new Insets(screenHeight/20,screenWidth/20,screenHeight/20,screenWidth/20));
+		loadSidebar();
 		return layout;
 	}
 	
@@ -93,7 +91,7 @@ public class UserInterface {
 	}
 	
 	//load the UI sidebar to control the simulation
-	private VBox loadSidebar(){
+	private VBox loadSidebarElements(){
 		VBox sidebar = new VBox();
 		sidebar.setSpacing(40);
 		loadFileInput();
@@ -218,6 +216,10 @@ public class UserInterface {
 		this.myParameters = variables.getGrid_dimensions();
 		this.stateMap = variables.getName_map();
 		Queue<Double> states = variables.getStates();
+		initLoadElements(states);
+	}
+	
+	public void initLoadElements(Queue<Double> states){
 		loadRenders();
 		initGraphData(states);
 		myPossibleRenders.get(myCellShape).initGrid(states);
@@ -234,19 +236,7 @@ public class UserInterface {
 	
 	//method to update cell parameters if the user decides to change it 
 	private void loadNewCellParameters(Queue<Double> states){
-		loadRenders();
-		initGraphData(states);
-		myPossibleRenders.get(myCellShape).initGrid(states);
-		Pane myGrid = myPossibleRenders.get(myCellShape).getPane();
-		layout.setCenter(myGrid);
-		BorderPane.setMargin(myGrid, new Insets(screenHeight/20,0,0,screenWidth/12));
-		BorderPane.setAlignment(myGrid, Pos.CENTER);
-		getShapeArray();
-		selectState.getItems().clear();
-		for (Double d : colors.keySet()){
-			selectState.getItems().add(stateMap.get(d));
-		}
-		myPossibleRenders.get(myCellShape).setGridOutline(true);
+		initLoadElements(states);
 	}
 
 	//helper method to initialize ability to track cell state population
@@ -292,9 +282,7 @@ public class UserInterface {
 			myNeighborhood = selectNeighborhood.getSelectionModel().getSelectedItem();
 		}
 		load();
-		VBox sidebar = loadSidebar();
-		layout.setRight(sidebar);
-		BorderPane.setMargin(sidebar, new Insets(screenHeight/20,screenWidth/20,screenHeight/20,screenWidth/20));
+		loadSidebar();
 		System.out.println(myCellShape);
 		System.out.println(myEdgeType);
 		System.out.println(myNeighborhood);
@@ -304,6 +292,12 @@ public class UserInterface {
 		} else {
 			loadNewCellParameters(hub.updateGridSettings(myCellShape, myEdgeType, myNeighborhood));
 		}
+	}
+	
+	private void loadSidebar(){
+		VBox sidebar = loadSidebarElements();
+		layout.setRight(sidebar);
+		BorderPane.setMargin(sidebar, new Insets(screenHeight/20,screenWidth/20,screenHeight/20,screenWidth/20));
 	}
 	
 	//method to update the colors map key in the render class 

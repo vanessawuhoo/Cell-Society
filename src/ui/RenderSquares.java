@@ -23,23 +23,21 @@ public class RenderSquares extends RenderShapes {
 		this.myColors=key;
 		initPane();
 	}
-	
+	//method to turn outlines on shapes on or off
+	public void setGridOutline(boolean on){
+		for (int row = 0; row < myArray.length; row++) {
+			for (int col = 0; col < myArray[0].length; col++){
+				if (on){
+					myArray[row][col].setStroke(Color.BLACK);
+				} else {
+					myArray[row][col].setStroke(myArray[row][col].getFill());
+				}
+			}
+		}
+}
 	//returns the pane with grid of squares
 	public Pane getPane() {
 		return myGrid;
-	}
-	
-	//turns grid outline on or off
-	public void setGridOutline(boolean on){
-			for (int row = 0; row < myArray.length; row++) {
-				for (int col = 0; col < myArray[0].length; col++){
-					if (on){
-						myArray[row][col].setStroke(Color.BLACK);
-					} else {
-						myArray[row][col].setStroke(myArray[row][col].getFill());
-					}
-				}
-			}
 	}
 	
 	//initializes pane with parameters
@@ -70,6 +68,12 @@ public class RenderSquares extends RenderShapes {
 				SquareShape square = new SquareShape(calcSideLength(), myColors.get(currState), currState);
 				myArray[row][col] = square;
 				myGrid.getChildren().add(square);
+				square.getPoints().addAll(new Double[]{
+						0.0, 0.0,
+						0.0, calcSideLength(),
+						calcSideLength(), calcSideLength(),
+						calcSideLength(), 0.0
+					});
 				setLocation(square, row, col);
 				col++;
 				if (col > myParameters[0]-1){

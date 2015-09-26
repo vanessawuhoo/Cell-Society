@@ -28,19 +28,6 @@ public class RenderHexagons extends RenderShapes {
 	public Pane getPane() {
 		return myGrid;
 	}
-	
-	//turns grid outline on or off
-	public void setGridOutline(boolean on){
-			for (int row = 0; row < myArray.length; row++) {
-				for (int col = 0; col < myArray[0].length; col++){
-					if (on){
-						myArray[row][col].setStroke(Color.BLACK);
-					} else {
-						myArray[row][col].setStroke(myArray[row][col].getFill());
-					}
-				}
-			}
-	}
 
 	//intializes pane and its parameters
 	public void initPane() {
@@ -78,7 +65,21 @@ public class RenderHexagons extends RenderShapes {
 				}
 			}
 		}
-	
+
+		//method to turn outlines on shapes on or off	
+		public void setGridOutline(boolean on){
+			for (int row = 0; row < myArray.length; row++) {
+				for (int col = 0; col < myArray[0].length; col++){
+					if (on){
+						myArray[row][col].setStroke(Color.BLACK);
+					} else {
+						myArray[row][col].setStroke(myArray[row][col].getFill());
+					}
+				}
+			}
+	}
+		
+
 		//method to run updates on the grid square states
 		public void updateStep(Queue<Double> newStates) {
 			int row = 0;
