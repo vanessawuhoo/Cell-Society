@@ -35,7 +35,8 @@ public class SugarScapeRule extends Rule {
 		Map<Integer, Map<String, Double>> next_states = new HashMap<Integer, Map<String, Double>>();
 		for (int id : cells.keySet()) {
 			Cell c = cells.get(id);
-			agentMovement(c, current_states, next_states);
+			if (c.getState().get("Agent") == 1)
+				agentMovement(c, current_states, next_states);
 		}
 		super.setUpdates(cells, next_states);
 	}
@@ -46,7 +47,7 @@ public class SugarScapeRule extends Rule {
 			for (int id : cells.keySet()) {
 				Cell c = cells.get(id);
 				Map<String, Double> cell_state = c.getState();
-				double sugar_level = cell_state.get("sugar_level");
+				double sugar_level = cell_state.get("State");
 				double max_sugar_level = cell_state.get("max_sugar_level");
 				double temp_sugar_level = sugar_level + sugar_grow_back_rate;
 				if (temp_sugar_level <= max_sugar_level) {
@@ -54,7 +55,7 @@ public class SugarScapeRule extends Rule {
 				} else { 
 					sugar_level = max_sugar_level;
 				}
-				cell_state.put("sugar_level", sugar_level);
+				cell_state.put("State", sugar_level);
 			}
 			sugar_time = sugar_grow_back_rate;
 		}
@@ -73,7 +74,7 @@ public class SugarScapeRule extends Rule {
 		double highest_sugar_value = cell_state.get("State");
 		
 		double vision = cell_state.get("vision");
-		for (int i = 1; i < vision; i++) {
+		for (int i = 1; i <= vision; i++) {
 			while(!cells_to_traverse.isEmpty()) {
 				Cell next_cell = cells_to_traverse.poll();
 				boolean consider_next_cell = true;
