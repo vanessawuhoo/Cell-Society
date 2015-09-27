@@ -64,6 +64,7 @@ public class XMLLoader extends NodeTraverser{
 		ruleMap.put("waTor", new WaTorDataParser());
 		ruleMap.put("gameOfLife", new GameOfLifeDataParser());
 		ruleMap.put("sugarScape", new SugarScapeDataParser());
+		ruleMap.put("sugarScapeReproduction", new SugarScapeReproductionDataParser());
 	}
 
 	public void setHub(Hub h) {
