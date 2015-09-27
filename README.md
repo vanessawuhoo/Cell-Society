@@ -1,14 +1,24 @@
 ## Cell Society Team 1##
 Kevin Wang, Vanessa Wu, Chris Hong
+
 **Date Started:** 9/12
+
 **Date Ended:** 9/13
+
 **Hours worked:** 70 hours
+
 **Resource Used:** Java Docs, TAs
+
 **Starting Files:** Main.java
+
 **Testing Files:** DataTester.java
+
 **Data Files:** The XMLs
+
 **Instructions:** Mostly self explanatory. Input the xml you want and then run.
+
 **Bugs:** Have to stop the sim before you load another or change the shape etc...
+
 **Extra Features:** Beyond sprint 3, can change the colors that states represent dynamically
 
 ## Modifying the XMLs ##
