@@ -55,8 +55,8 @@
 			<Probability State="10">0.1</Probability>
 		</State>
 		<Agent>
-			<Probability Agent="0">0.9</Probability>
-			<Probability Agent="1">0.1</Probability>
+			<Probability Agent="0">0.95</Probability>
+			<Probability Agent="1">0.05</Probability>
 		</Agent>
 		<max_sugar_level>
 			<Probability max_sugar_level="5">1</Probability>

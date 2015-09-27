@@ -15,12 +15,10 @@ public class SugarScapeReproductionRule extends SugarScapeRule{
 
 	private int fertile_limit;
 	private Random random;
-	private boolean reproduce;
 	
 	public SugarScapeReproductionRule(int sugar_grow_back_rate, int sugar_grow_back_interval, int fertile_limit) {
 		super(sugar_grow_back_rate, sugar_grow_back_interval);
 		this.fertile_limit = fertile_limit;
-		reproduce = false;
 		random = new Random();
 	}
 	
@@ -33,22 +31,19 @@ public class SugarScapeReproductionRule extends SugarScapeRule{
 	 */
 	@Override
 	public void updateCells(Map<Integer, Cell> cells) {
-		if (!reproduce) {
-			patchGrowBack(cells);
-			Map<Integer, Map<String, Double>> current_states = super.getStates(cells);
-			Map<Integer, Map<String, Double>> next_states = new HashMap<Integer, Map<String, Double>>();
-			for (int id : cells.keySet()) {
-				Cell c = cells.get(id);
-				if (c.getState().get("Agent") == 1)
-					agentMovement(c, current_states, next_states);
-			}
-			super.setUpdates(cells, next_states);
-		} else {
-			ageAgents(cells);
-			Map<Integer, Map<String, Double>> next_states_1 = agentReproduction(cells);
-			super.setUpdates(cells, next_states_1);
+		ageAgents(cells);
+		patchGrowBack(cells);
+		Map<Integer, Map<String, Double>> current_states = super.getStates(cells);
+		Map<Integer, Map<String, Double>> next_states = new HashMap<Integer, Map<String, Double>>();
+		for (int id : cells.keySet()) {
+			Cell c = cells.get(id);
+			if (c.getState().get("Agent") == 1)
+				agentMovement(c, current_states, next_states);
 		}
-		reproduce = !reproduce;
+		super.setUpdates(cells, next_states);
+		
+		Map<Integer, Map<String, Double>> next_states_1 = agentReproduction(cells);
+		super.setUpdates(cells, next_states_1);
 	}
 	
 	private void ageAgents(Map<Integer, Cell> cells) {
