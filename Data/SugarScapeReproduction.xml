@@ -6,6 +6,7 @@
 		<X>8</X>
 		<Y>8</Y>
 	</Dimension>
+	<Color State="-2">#FF00FF</Color>
 	<Color State="-1">#000000</Color>
 	<Color State="0">#FFFFFF</Color>
 	<Color State="1">#FFE7E7</Color>
@@ -21,7 +22,7 @@
 	<Parameters>
 	<GrowBackRate>22</GrowBackRate>
 	<GrowBackInterval>2</GrowBackInterval>
-	<FertileLimit>3</FertileLimit>
+	<FertileLimit>20</FertileLimit>
 	</Parameters>
 	<Shape>SQUARE4</Shape>
 	<Toroidal>0</Toroidal>
@@ -73,8 +74,8 @@
 			<Probability init_sugar="5">1</Probability>
 		</init_sugar>	
 		<gender>
-			<Probability gender="0">0.3</Probability>
-			<Probability gender="1">0.7</Probability>
+			<Probability gender="0">0.5</Probability>
+			<Probability gender="1">0.5</Probability>
 		</gender>
 		<age>
 			<Probability age="1">0.1</Probability>
@@ -82,7 +83,7 @@
 			<Probability age="3">0.6</Probability>
 		</age>
 		<max_age>
-			<Probability max_age="10">1</Probability>
+			<Probability max_age="80">1</Probability>
 		</max_age>
 	</ProbFill>
 	<Cell>

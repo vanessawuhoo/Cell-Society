@@ -61,7 +61,17 @@ public class CellGraph {
 			if (c.getState().containsKey("Agent")) {
 				Double agent = c.getState().get("Agent");
 				if (agent == 1) {
-					s = -1;
+					if (c.getState().containsKey("gender")) {
+						Double gender = c.getState().get("gender");
+						if (gender == 0.0) {
+							s = -1;
+						} else {
+							s = -2;
+						}
+					} else {
+						s = -1;
+					}
+					
 				} else {
 					s = c.getState().get("State");
 				}
