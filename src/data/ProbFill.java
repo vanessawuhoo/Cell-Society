@@ -32,7 +32,7 @@ public class ProbFill extends CellFill {
 					Node tempInnerNode = innerProbList.item(j);
 					if (tempInnerNode.getNodeType() == Node.ELEMENT_NODE) {
 						double value = Double.parseDouble(this.getNodeValue(tempInnerNode));
-						double key = Double.parseDouble(this.getNodeAttr("state", tempInnerNode));
+						double key = Double.parseDouble(this.getNodeAttr(stateKey, tempInnerNode));
 						cume = cume + value;
 						tempMap.put(key, cume);
 					}
