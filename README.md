@@ -3,7 +3,7 @@ Kevin Wang, Vanessa Wu, Chris Hong
 
 **Date Started:** 9/12
 
-**Date Ended:** 9/13
+**Date Ended:** 9/23
 
 **Hours worked:** 70 hours
 
